@@ -1,0 +1,149 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Terrains {% endblock %}
+
+{% load static %}
+
+{% block real_estate_active %} active {% endblock %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    </br></br></br></br>
+    <!-- Page content-->
+    <!-- Product gallery + info-->
+    <section class="sidebar-enabled sidebar-end border-bottom mb-5 mb-md-6">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 content py-4">
+                    <nav aria-label="breadcrumb">
+                        <ol class="py-1 my-2 breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'land_project' %}">Vente/Achat/Location/Devis Terrains</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Détails sur le terrain</li>
+                        </ol>
+                    </nav>
+                    <h1 class="mb-3 pb-4">Terrain #{{land.id}}</h1>
+                    <!-- Product gallery-->
+                    <div class="product-gallery">
+                        <div class="product-gallery-preview order-sm-2">
+                            {% for img in images %}
+                                {% if img.land_id == land.id %}
+                                    {% if forloop.counter == 1 %}
+                                        <div class="product-gallery-preview-item active" id="first">
+                                            <img src="{{img.image.url}}">
+                                        </div>
+                                    {% else %}
+                                        <div class="product-gallery-preview-item" id="counter{{forloop.counter}}">
+                                            <img src="{{img.image.url}}">
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="product-gallery-thumblist order-sm-1">
+                            {% for img in images %}
+                                {% if img.land_id == land.id %}
+                                    {% if forloop.counter == 1 %}
+                                        <a class="product-gallery-thumblist-item active" href="#first">
+                                            <img src="{{img.image.url}}">
+                                        </a>
+                                    {% else %}
+                                        <a class="product-gallery-thumblist-item" href="#counter{{forloop.counter}}">
+                                            <img src="{{img.image.url}}">
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                   
+                </div>
+                <!-- Product info-->
+                <div class="col-lg-4 sidebar bg-secondary pt-5 ps-lg-4 pb-md-2">
+                    <div class="ps-lg-4 pb-5">
+                        <a class="d-inline-block text-decoration-none" href="#reviews" data-scroll></a>
+                        <div class="star-rating-lg mt-n1 me-2 star-rating mt-n1">
+                            <i class="sr-star ai-star-filled active"></i>
+                            <i class="sr-star ai-star-filled active"></i>
+                            <i class="sr-star ai-star-filled active"></i>
+                            <i class="sr-star ai-star-filled active"></i>
+                            <i class="sr-star ai-star"></i>
+                        </div>
+                        <div class="py-4">
+                            <span class="h4 mb-0">{{land.price}} fcfa</span>
+                        </div>
+                        <ul>
+                            <li>
+                                <b>Type de terrain:</b>
+                                {% for land_type in land_types %}
+                                    {% if land_type.id == land_project.land_type_id %}
+                                        <span style="color: #d4ac0d;">{{land_type.name}}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                            <li>
+                                <b>Type de service:</b>
+                                {% for service_type in service_types %}
+                                    {% if service_type.id == land_project.service_type_id %}
+                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                            <span style="color: #d4ac0d;">Mise en Location</span>
+                                        {% else %}
+                                            <span style="color: #d4ac0d;">{{service_type.name}}</span>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul>
+                                    <li>Region : <span style="color: #d4ac0d;">{{land.region}}</span> </li>
+                                    <li>Adresse : <span style="color: #d4ac0d;">{{land.adress}}</span> </li>
+                                    <li>Prix : <span style="color: #d4ac0d;">{{land.price}} fcfa</span> </li>
+                                    <li>Plan de situation :
+                                        {% for plan in land_plan_situation %}
+                                            {% if land.land_plan_situation_id == plan.id %}
+                                                <span style="color: #d4ac0d;">{{plan.name}}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </li>
+                                    <li>Surface : <span style="color: #d4ac0d;">{{land.area}} m²</span> </li>
+                                    <hr>
+                                    <li>Informations supplémentaires:</br>
+                                        <span style="color: #d4ac0d;">{{land.additional_info}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <form class="w3-content" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="land_id" value="{{land.id}}">
+                            <input type="hidden" name="property_id" value="0">
+                            <button type="submit" class="btn btn-success" style="width: 100%">
+                                Ajouter à mon panier
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block footer %}
+
+
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'base_app/vendor/lightgallery.js/dist/js/lightgallery.min.js' %}"></script>
+{% endblock %}

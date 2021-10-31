@@ -1,0 +1,173 @@
+              {% extends 'base_app/base.html' %}
+
+{% block title %} Mon Profile {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Slanted background-->
+    <div class="position-relative bg-gradient" style="height: 480px;">
+        <div class="shape shape-bottom shape-slant bg-secondary d-none d-lg-block">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 260">
+                <polygon fill="currentColor" points="0,257 0,260 3000,260 3000,0"></polygon>
+            </svg>
+        </div>
+    </div>
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2" src="https://www.shareicon.net/data/512x512/2016/01/13/702410_users_512x512.png" width="110">
+                        <h6 class="mb-0 pt-1">{{user.first_name}} {{user.last_name}}</h6><span class="text-muted fs-sm">@{{user.username}}</span>
+                    </div>
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Account menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Tableau de bord</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'cart' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mon Panier
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'construction_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets de Construction
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'real_estate_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets Immobiliers
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="#">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets d'Investissements
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Paramètres du compte</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'profile' %}">
+                            Mon Profile
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'user_password_change' %}">
+                            Modification du mot de passe
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="#">
+                            Méthodes de payement
+                        </a>
+                        <div class="d-flex align-items-center border-top"><a class="d-block w-100 nav-link-style px-4 py-3" href="account-notifications.html">Notifications</a>
+                            <div class="ms-auto px-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="notifications-switch" data-master-checkbox-for="#notification-settings" checked>
+                                    <label class="form-check-label" for="notifications-switch"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'logout_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="width:100%">Déconnexion</button>
+                        </form>
+                    </div>
+                </div>
+              </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+                    <div class="py-2 p-md-3">
+                        <!-- Title + Filters-->
+                        <div class="d-sm-flex align-items-center justify-content-between pb-2">
+                            <h1 class="h3 mb-3 text-center text-sm-start">Liste de vos projets Immobilier</h1>
+                            <div class="d-flex align-items-center mb-3">
+                                <label class="form-label text-nowrap pe-1 me-2 mb-0">Sort orders</label>
+                                <select class="form-select form-select-sm">
+                                    <option>All</option>
+                                    <option>In progress</option>
+                                    <option>Delivered</option>
+                                    <option>Canceled</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {% if error %}
+                            <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                                {{ error }}
+                            </div>
+                        {% else %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                        {{message}}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+
+                        <!-- Accordion with orders-->
+                        <div class="accordion" id="orders-accordion">
+                            <!-- Order-->
+                            {% for projects in land_projects %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="order-header-1">
+                                        <button class="accordion-button no-indicator d-flex flex-wrap align-items-center justify-content-between pe-4" data-bs-toggle="collapse" data-bs-target="#order-collapse-{{projects.id}}" aria-expanded="true" aria-controls="order-collapse-{{projects.id}}">
+                                            <div class="fs-sm fw-medium text-nowrap my-1 me-2"><i class="ai-hash fs-base me-1"></i><span class="d-inline-block align-middle">{{projects.id}}</span></div>
+                                            <div class="text-nowrap text-body fs-sm fw-normal my-1 me-2">
+                                                <i class="ai-clock text-muted me-1"></i>
+                                                {% load i18n %}
+                                                {% language 'fr' %}
+                                                    {{projects.created|date:'d F Y'}}
+                                                {% endlanguage %}
+                                            </div>
+                                            {% if projects.statut == "In progress" %}
+                                                <div class="bg-faded-info text-info fs-xs fw-medium py-1 px-3 rounded-1 my-1 me-2">En cours..</div>
+                                            {% elif projects.statut == "Done" %}
+                                                <div class="bg-faded-warning text-success fs-xs fw-medium py-1 px-3 rounded-1 my-1 me-2">Terminé</div>
+                                            {% endif %}
+                                            <div class="text-body fs-sm fw-medium my-1">
+                                                {% for types in real_estate_projects_type %}
+                                                    {% if types.id == projects.real_estate_project_type_id %}
+                                                        {{types.name}}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" id="order-collapse-{{projects.id}}" aria-labelledby="order-header-{{projects.id}}" data-bs-parent="#orders-accordion">
+                                        <div class="align-items-center justify-content-between border-top">
+                                            <div class="accordion-body bg-secondary">
+                                                <!-- Item-->
+                                                <div class="row">
+                                                    <div class="col-sm-12" align="center" style="margin-top:20px">
+                                                        <a type="button" href="{% url 'project_detail' projects.id %}" class="btn btn-outline-info" role="button" data-toggle="tooltip" data-placement="top" title="Informations supplémentaires !" style="margin-right: 20%">
+                                                            <i class="ai-info" style="font-size: 40px"></i>
+                                                        </a>
+                                                        {% if projects.accepted == False %}
+                                                            <a type="button" href="{% url 'real_estate_project_deletion' projects.id %}" class="btn btn-outline-danger" role="button" data-toggle="tooltip" data-placement="top" title="Supprimer ce projet !">
+                                                                <i class="ai-trash" style="font-size: 40px"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

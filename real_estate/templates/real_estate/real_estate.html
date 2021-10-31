@@ -1,0 +1,117 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Immobilier {% endblock %}
+
+{% load static %}
+
+{% block real_estate_active %} active {% endblock %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <section class="container-fluid px-0 pb-5 pb-md-6">
+        <div class="row g-0 align-items-xl-center">
+            <div class="col-lg-6 col-md-7 text-end order-md-2">
+                <img class="d-inline-block" src="{% static 'real_estate/images/immobilier2.jpg' %}" alt="Real_estate_image" style="border-radius: 50%" width="945">
+            </div>
+            <div class="col-lg-6 col-md-5 pt-5 pb-3 py-md-5">
+                <div class="mx-auto me-md-5 me-xl-7 ps-3 py-md-3 order-md-1" style="max-width: 516px;">
+                    <h1 class="mb-grid-gutter pb-1">L'<span style="color: #d4ac0d">IMMOBILIER</span>, un des secteurs les plus rentables au Sénégal</h1>
+                    <p class="callout d-block d-md-none d-lg-block fs-lg text-muted mb-grid-gutter">
+                       Depuis les années 2000, le secteur <span style="color: #d4ac0d">IMMOBILIER</span> a connu une croissance énorme, l'apport locatif à augmenter de plus de
+                      <span style="color: #d4ac0d">30%</span> et le prix du mètre carré dans la ville de Dakar est actuellement en moyenne à <span style="color: #d4ac0d">550,000 FCFA</span> soit <span style="color: #d4ac0d">838,22 Euro</span>
+                      , ce qui fait de ce secteur un domaine d'investissement très rentable.
+                    </p>
+                    <div class="pt-2">
+                        <a class="btn btn-video-sm me-3" style="background-color: #d4ac0d"></a>
+                        <a class="btn btn-video-sm me-3" style="background-color: #d4ac0d"></a>
+                        <a class="btn btn-video-sm me-3" style="background-color: #d4ac0d"></a>
+                        <a class="btn btn-video-sm me-3" style="background-color: #d4ac0d"></a>
+                        <a class="btn btn-video-sm me-3" style="background-color: #d4ac0d"></a>
+                        <a class="btn btn-video-sm me-3" style="background-color: #d4ac0d"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- CTA-->
+    <section class="bg-secondary bg-size-cover py-5 py-md-6" style="background-image: url(img/demo/business-consulting/cta-bg.png);">
+        <div class="container py-3 py-md-0">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6 text-center text-md-start">
+                    <h2 class="mb-4 pb-3 pb-md-0 mb-md-0">Obtenez une consultation gratuite</h2>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="d-flex align-items-center justify-content-center justify-content-sm-start pt-4 pt-sm-2 pt-md-4">
+                        <i class="ai-phone fs-xl me-2"></i>
+                        <span class="me-2">Appelez-nous</span>
+                        <a type="button" class="btn text-white nav-link-style" href="tel:+221338840720" style="background-color: #d4ac0d">+ 221 33 884 07 20</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services-->
+    <section class="container py-5 py-md-6 py-lg-7 my-3">
+        <div class="row align-items-center">
+              <div class="col-lg-4 col-md-5 text-center text-md-start mb-5 mb-md-0">
+                  <h2 class="mb-3">Nos services</h2>
+              </div>
+              <div class="col-lg-8 col-md-7 bg-position-center bg-repeat-0" style="background-image: url(img/demo/business-consulting/services/bg-shape.svg);">
+                  <div class="mx-auto" style="max-width: 610px;">
+                      <div class="row align-items-center">
+                          <div class="col-sm-6">
+                              <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                  <center>
+                                      <img class="d-inline-block mb-4 mt-2" src="{% static 'real_estate/images/land.png' %}" alt="land" width="100" style="border-radius:40%">
+                                      <h3 class="h5 mb-2" style="color: #d4ac0d">Achat de Terrains</h3>
+                                  </center>
+                              </div>
+                              <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                  <center>
+                                      <img class="d-inline-block mb-4 mt-2" src="{% static 'real_estate/images/sell_land.jpg' %}" width="100" style="border-radius:40%">
+                                      <h3 class="h5 mb-2">Vente de Terrains</h3>
+                                  </center>
+                              </div>
+                              <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                  <center>
+                                      <img class="d-inline-block mb-4 mt-2" src="{% static 'real_estate/images/rent_land.png' %}" width="100" style="border-radius:40%">
+                                      <h3 class="h5 mb-2">Location de Terrains</h3>
+                                  </center>
+                              </div>
+                              <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                  <center>
+                                      <img class="d-inline-block mb-4 mt-2" src="{% static 'real_estate/images/inspection_property.jpg' %}" width="100" style="border-radius:40%">
+                                      <h3 class="h5 mb-2">Inspection technique de biens Immobilier</h3>
+                                  </center>
+                              </div>
+                          </div>
+                          <div class="col-sm-6">
+                              <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                  <center>
+                                      <img class="d-inline-block mb-4 mt-2" src="{% static 'real_estate/images/buy_property.png' %}" width="100" style="border-radius:40%">
+                                      <h3 class="h5 mb-2">Achat de biens Immobilier</h3>
+                                  </center>
+                              </div>
+                              <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                  <center>
+                                      <img class="d-inline-block mb-4 mt-2" src="{% static 'real_estate/images/sell_property.png' %}" width="100" style="border-radius:40%">
+                                      <h3 class="h5 mb-2">Vente de biens Immobilier</h3>
+                                  </center>
+                              </div>
+                              <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                  <center>
+                                      <img class="d-inline-block mb-4 mt-2" src="{% static 'real_estate/images/estimate_property.png' %}" width="100" style="border-radius:40%">
+                                      <h3 class="h5 mb-2">Devis de biens Immobilier</h3>
+                                  </center>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+        </div>
+    </section>
+{% endblock %}

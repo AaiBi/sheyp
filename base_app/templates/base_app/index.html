@@ -1,0 +1,774 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Acceuil {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Intro-->
+    <section class="d-flex align-items-center position-relative bg-dark bg-size-cover bg-position-center min-vh-100 overflow-hidden pt-6 pb-lg-5" style="background-image: url(img/demo/presentation/intro/bg.jpg);">
+        <div class="container-fluid pt-4 pb-5 py-lg-5">
+            <div class="row align-items-center py-3">
+                <div class="col-xl-6 col-lg-5 d-flex justify-content-end">
+                    <div class="pt-2 mx-auto mb-5 mb-lg-0 ms-lg-0 me-xl-7 text-center text-lg-start" style="max-width: 495px;">
+                        <h1 class="display-4 text-light pb-2">Sheyp!</h1>
+                        <p class="h4 fw-light text-light opacity-70 line-height-base">
+                            Investir au Sénégal et le piloter à distance.
+                        </p>
+                        <a class="d-inline-flex align-items-center text-decoration-none pt-2 mt-4 mb-5" href="#advertising" data-scroll>
+                            <span class="btn btn-icon rounded-circle border-light flex-shrink-0 px-3">
+                                <i class="ai-arrow-down h4 text-light my-1"></i>
+                            </span>
+                            <span class="ms-3 text-light fw-medium">Voir la vidéo publicitaire</span>
+                        </a>
+                        <hr class="hr-light mt-0 mb-5">
+                        <div class="row">
+                            <div class="col-sm-4 mb-4 mb-sm-0">
+                              <div class="h1 text-light mb-1">+</div>
+                              <div class="h5 text-light fw-normal opacity-70 mb-2">
+                                  Construction
+                              </div>
+                            </div>
+                            <div class="col-sm-4 mb-4 mb-sm-0">
+                              <div class="h1 text-light mb-1">+</div>
+                              <div class="h5 text-light fw-normal opacity-70 mb-1">Immobilier</div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="h1 text-light mb-1">+</div>
+                              <div class="h5 text-light fw-normal opacity-70 mb-1">Gestion d'Investissements</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <div class="parallax ms-lg-n5" style="max-width: 920px;">
+                        <div class="parallax-layer position-relative" data-depth="0.1">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer01.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" style="z-index: 2;" data-depth="0.3">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer02.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.2">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer03.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" style="z-index: 3;" data-depth="0.1">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer04.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.15">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer05.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" style="z-index: 4;" data-depth="0.25">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer06.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.3">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer07.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.4">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer08.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.35">
+                            <img src="{% static 'base_app/img/demo/presentation/intro/layer09.png' %}" alt="Layer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- advertising video-->
+    </br></br></br>
+    <section class="container-fluid" id="advertising">
+        <video width="100%" height="400" controls autoplay>
+            <source src="{% static 'base_app/videos/advertising_video.mp4' %}" type=video/mp4 style="width: 100%">
+        </video>
+    </section>
+
+    <!-- about us-->
+    <section class="container my-lg-2 pt-5 pb-lg-7">
+        <div class="row align-items-center">
+            <div class="col-lg-5 py-3 py-lg-0">
+                <h1>Nos Objectifs. Notre mission.</h1>
+                <h2 class="h3">Nous vous apportons de l'innovation et de la transparence totale.</h2>
+                <div class="py-4">
+                    <p class="callout">
+                        SHEYP est une société de construction, d'immobilier et de gestion d'investissement innovante qui est la
+                        première en Afrique à mettre à la disposition de ses clients un système de suivie à distance permettant
+                        d'investir et piloter son projet au Sénégal depuis quel pays en toute sécurité.
+                    </p>
+                    <p class="callout">
+
+                    </p>
+                </div>
+                <a class="btn-video btn-video-primary btn-video-sm me-3" href="#"></a>
+                <span class="fs-sm text-muted">Regarder notre vidéo publicitaire</span>
+            </div>
+            <div class="col-xl-6 col-lg-7 offset-xl-1 position-relative">
+                <div class="py-5" style="min-height: 543px;">
+                    <div class="d-none d-lg-block position-absolute bg-no-repeat bg-position-center h-100" style="top: 0; left: -45px; width: 646px; background-image: url({% static 'base_app/img/pages/about/bg-shape.svg'%});"></div>
+                    <div class="row g-0 mx-n2 pt-lg-4">
+                        <div class="col-sm-4 px-2 mb-3">
+                            <a class="card h-100 card-body py-5 justify-content-center border-0 shadow-lg text-center" href="#">
+                                <i class="ai-thumbs-up text-primary h1 mb-3"></i>
+                                <h3 class="h5 mb-0">Professionnalisme</h3>
+                            </a>
+                        </div>
+                        <div class="col-sm-4 px-2 mb-3">
+                            <a class="card card-body py-5 border-0 shadow-lg text-center mb-3" href="#">
+                                <i class="ai-sun text-danger h1 mb-3"></i>
+                                <h3 class="h5 mb-0">Transparence</h3>
+                            </a>
+                            <a class="card card-body py-5 border-0 shadow-lg text-center" href="#">
+                                <i class="ai-smile text-info h1 mb-3"></i>
+                                <h3 class="h5 mb-0">Intégrité</h3>
+                            </a>
+                        </div>
+                        <div class="col-sm-4 px-2 mb-3">
+                            <a class="card card-body py-5 border-0 shadow-lg text-center mb-3" href="#">
+                                <i class="ai-zap text-success h1 mb-3"></i>
+                                <h3 class="h5 mb-0">Innovation</h3>
+                            </a>
+                            <a class="card card-body py-5 border-0 shadow-lg text-center" href="#">
+                                <i class="ai-trending-up text-warning h1 mb-3"></i>
+                                <h3 class="h5 mb-0">Qualité</h3>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section>
+    <!-- about us suit -->
+    <section class="container pt-5 pt-lg-6">
+        <h2 class="text-center">Le Problème</h2>
+        <h3 class="text-center text-muted mb-0">
+            Le Sénégal est un beau pays avec un climat économique apaisant. Mais cela n’empêche pas aux particuliers de rencontrer
+            des difficultés dans la mise en œuvre de leurs projets immobiliers ou d’investissements. A qui faire confiance ?
+            Dans quels secteurs investir ? Qui pour m’accompagner ? Sont les questions qu’ils se posent. Le plus grand obstacle
+            reste sans conteste le manque de confiance vis-à-vis des partenaires locaux. Il est difficile de trouver des
+            professionnelles sérieux, rigoureux et réactifs.
+        </h3></br></br>
+
+        <h2 class="text-center">Notre Solution</h2>
+        <h3 class="text-center text-muted mb-0">
+            SHEYP vous accompagne en vous édifiant sur les réalités du Sénégal en toute transparence.
+            Grâce à notre plateforme vous pourrez garder un œil sur les avancées de vos projets avec les ressources qui leur
+            seront allouées. Notre principale solution est en réalite une innovation première au Sénégal, nous avions investis
+            dans les nouvelles technologies informatiques pour vous offir un contrôle et un suivit en temps réel depuis n'importe
+            quel pays du monde. Plus besoin de se soucier de quoi que ce soit, notre système vous offre une visibilité absolue sur
+            tous les détails consernants votre projet.
+        </h3></br></br>
+
+        <h2 class="text-center">Ce que nous offrons</h2>
+        <h4 class="text-center text-muted mb-0">
+            SHAPE vous apporte la garantie de prestations de qualité, appuyée par une expertise certifiée dans son domaine
+            d’activité. La société est en mesure d’étudier toute offre dans sa globalité et ainsi de couvrir l’ensemble des lots
+            composant votre projet. Les coordonateurs de projets sont expérimentés, ils prennent en charge la réalisation et le
+            suivi des projets dans leur intégralité. Les chefs de chantier, organisés et réactifs, gèrent des hommes de terrain
+            qualifiés possédants de l’expérience dans les divers domaines d’intervention. Respectueuse des règles de sécurité en
+            vigueur sur les chantiers. Ce que nous faisons pour vous dans :
+        </h4>
+        <!-- Construction-->
+        <div class="row align-items-center border-bottom py-5">
+            <div class="col-md-6 py-3">
+                <img class="d-block mx-auto" src="{% static 'base_app/img/construction2.jpg' %}">
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6 offset-lg-1 py-3">
+                <h3 class="h4 mb-4">La Construction</h3>
+                <ul class="list-unstyled">
+                    <li class="d-flex mb-2 pb-1">
+                        <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                        <span>
+                            Notre équipe d'ingénieurs qualifiés assurera la construction de vos maisons avec un style en béton
+                            armé ou écologique tout en respectant les normes en vigueur.
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Real estate-->
+        <div class="row align-items-center border-bottom py-5">
+            <div class="col-md-6 offset-lg-1 py-3 order-md-2">
+                <img class="d-block mx-auto" src="{% static 'base_app/img/real_estate.jpg' %}">
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6 offset-xl-1 py-3 order-md-1">
+                <h3 class="h4 mb-4">Immobilier</h3>
+                <ul class="list-unstyled">
+                    <li class="d-flex mb-2 pb-1">
+                        <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                        <span>
+                            Nous vous accompagnerons dans l'acquisition de biens immobiliers (Terrains, Appartements, etc...)
+                        </span>
+                    </li>
+                    <li class="d-flex mb-2 pb-1">
+                        <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                        <span>
+                            Nous assurerons la gestion (location ou vente) vos bien immobiliers.
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Investment-->
+        <div class="row align-items-center border-bottom py-5">
+            <div class="col-md-6 py-3">
+                <img class="d-block mx-auto" src="{% static 'base_app/img/investment.jpg' %}">
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6 offset-lg-1 py-3">
+                <h3 class="h4 mb-4">Conseil, Consultance et Gestion d'Investissements</h3>
+                <ul class="list-unstyled">
+                    <li class="d-flex mb-2 pb-1">
+                        <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                        <span>
+                            Nous vous conseillons sur les niches dans lesquels investir au Sénégal.
+                        </span>
+                    </li>
+                    <li class="d-flex mb-2 pb-1">
+                        <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                        <span>
+                            Nous vous accompagnons dans le choix de vos investissements.
+                        </span>
+                    </li>
+                    <li class="d-flex mb-2 pb-1">
+                        <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                        <span>
+                            Nous vous assistons dans la gestion de vos projets au Sénégal.
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+      </section>
+
+    <!-- Statistics-->
+    <section class="bg-secondary py-5 mt-n4 mb-6 mt-lg-0 mb-lg-7">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 text-center py-3">
+                    <h3 class="display-4">0</h3>
+                    <p class="text-muted mb-0">Années d'expérience</p>
+                </div>
+                <div class="col-md-3 col-sm-6 text-center py-3">
+                    <h3 class="display-4">0</h3>
+                    <p class="text-muted mb-0">Employés et partenaires</p>
+                </div>
+                <div class="col-md-3 col-sm-6 text-center py-3">
+                    <h3 class="display-4">100%</h3>
+                    <p class="text-muted mb-0">Commentaire positif</p>
+                </div>
+                <div class="col-md-3 col-sm-6 text-center py-3">
+                    <h3 class="display-4">1</h3>
+                    <p class="text-muted mb-0">Successfully completed projects</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Team-->
+    <section class="container mb-5 pb-3 pb-lg-0 mb-lg-7">
+        <h2 class="pb-4 mb-4 text-center">La Team Sheyp</h2>
+        <div class="row mb-3">
+            <div class="col-lg-4 mb-grid-gutter">
+                <div class="card card-curved-body card-hover border-0 shadow mx-auto" style="max-width: 21rem;">
+                    <a class="card-floating-icon" href="http://linkedin.com/in/adama-ndiaye-ingénieure">
+                        <i class="ai-linkedin"></i>
+                    </a>
+                    <div class="card-img-top card-img-gradient">
+                        <img src="{% static 'base_app/img/team/01.jpg' %}">
+                    </div>
+                    <div class="card-body">
+                        <h3 class="h6 card-title mb-2 text-center">Adama Ndiaye</h3>
+                        <p class="fs-xs text-body mb-0 text-center">Co-fondatrice et Directrice</p>
+                        <hr>
+                        <ul>
+                            <li>
+                                <b>Diplôme</b>: Ingénieur en génie civil.
+                            </li>
+                            <li>
+                                <b>Expérience professionnelle</b>: 4ans dans la gestion de projets de construction.
+                                Je suis aussi propriétaire de CAB ENERGIE qui est une entreprise spécialisée dans les
+                                Énergies
+                                renouvelable.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-grid-gutter">
+                <div class="card card-curved-body card-hover border-0 shadow mx-auto" style="max-width: 21rem;">
+                    <a class="card-floating-icon" href="mailto:charlie.welch@example.com">
+                        <i class="ai-linkedin"></i>
+                    </a>
+                    <div class="card-img-top card-img-gradient">
+                        <img src="{% static 'base_app/img/team/ibou.jpg' %}" style="height: 340px">
+                    </div>
+                    <div class="card-body text-center">
+                        <h3 class="h6 card-title mb-2">Ibrahima Ba</h3>
+                        <p class="fs-xs text-body mb-0">Co-fondateur & Informaticien</p>
+                        <hr>
+                        <ul>
+                            <li>
+                                 <b>Diplôme</b>: Ingenieur en programmation informatique.
+                            </li>
+                            <li>
+                                <b>Expérience professionnelle</b>: Plus 4ans dans la developpement de logiciels web.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-grid-gutter">
+                <div class="card card-curved-body card-hover border-0 shadow mx-auto" style="max-width: 21rem;">
+                    <a class="card-floating-icon" href="mailto:emma.brown@example.com">
+                        <i class="ai-mail"></i>
+                    </a>
+                    <div class="card-img-top card-img-gradient">
+                        <img src="{% static 'base_app/img/team/03.jpg' %}" alt="Emma Brown">
+                    </div>
+                    <div class="card-body text-center">
+                        <h3 class="h6 card-title mb-2">Malal Diallo</h3>
+                        <p class="fs-xs text-body mb-0">Director of Marketing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-body py-5 text-center text-md-end">
+            <div class="d-md-flex justify-content-center align-items-center">
+                <div class="mb-4 mb-md-0 me-md-5 me-lg-6 me-xl-7">
+                    <h3>Vous voulez faire partie de notre équipe? Nous recrutons</h3>
+                    <p class="text-muted mb-0">Consultez nos offres d'emploi actuelles et soumettez votre candidature</p>
+                </div><a class="btn btn-gradient" href="#">Soumettez votre candidature</a>
+            </div>
+        </div>
+    </section>
+    <!-- Partners-->
+    <section class="container pb-5 pb-lg-6">
+        <h2 class="mb-5 text-center">Nous travaillons avec les meilleurs dans leur domaine</h2>
+        <div class="row">
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/01_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/01_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/02_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/02_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/03_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/03_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/04_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/04_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/05_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/05_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/06_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/06_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/07_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/07_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/08_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/08_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/09_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/09_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/10_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/10_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/11_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/11_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+          <div class="col-md-3 col-sm-4 col-6 mb-grid-gutter"><a class="card border-0 shadow card-hover py-3 py-sm-4" href="#">
+              <div class="card-body px-1 py-0 text-center">
+                <div class="swap-image"><img class="swap-to" src="img/shop/brands/12_color.png" alt="Brand logo" width="150"><img class="swap-from" src="img/shop/brands/12_gray.png" alt="Brand logo" width="150"></div>
+              </div></a></div>
+        </div>
+      </section>
+    <!-- Investment field-->
+    <section class="bg-secondary py-5 py-md-6 mt-n4">
+        <div class="container py-2">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-10 text-center">
+                    <h2>Domaines dans lesquels il faut investir</h2>
+                    <p class="text-muted mb-5 pb-2">
+                        Le Sénégal est la deuxième puissance économique de la zone francophone d'Afrique et la
+                        4e de la sous-région ouest africaine avec une croissance du PIB estimée à 6% en 2019.
+                        C’est un pays qui est stable politiquement qui a été classé en 2020 4e pays les plus attractif
+                        pour les investisseurs, ce qui fait de lui un endroit d'investissement idéal.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/agriculture1.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">Agriculture</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/elevage.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                          <h3 class="h5 mb-0">Élevage</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/numerique.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">Numérique</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/education.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                          <h3 class="h5 mb-0">Éducation</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/industrial_transformation.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                          <h3 class="h5 mb-0">Transformation Industrielle</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/sante.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">Santé</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/tourisme.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">Tourisme</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/mines.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">Mines</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/transport.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">Transport</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews-->
+    <section class="bg-secondary py-5 py-md-6 mt-4 mt-md-5" id="reviews">
+        <div class="container-fluid py-3 py-md-0">
+            <h2 class="mb-5 text-center">Ce que disent les gens à notre propos</h2>
+
+            <center class="mb-4">
+                <a class="nav-link-style fs-sm text-nowrap btn btn-info text-white" href="#modal-notation_system" data-bs-toggle="modal" data-view="#modal-notation_system-view">
+                    Donnez-nous votre avis
+                </a>
+            </center>
+
+            <div class="tns-carousel-wrapper">
+                <div class="tns-carousel-inner"  data-carousel-options="{&quot;items&quot;: 2, &quot;controls&quot;: false, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1, &quot;gutter&quot;: 16}, &quot;520&quot;:{&quot;items&quot;:2, &quot;gutter&quot;: 12}, &quot;860&quot;:{&quot;items&quot;:3, &quot;gutter&quot;: 23}, &quot;1080&quot;:{&quot;items&quot;:4, &quot;gutter&quot;: 23}, &quot;1380&quot;:{&quot;items&quot;:5, &quot;gutter&quot;: 23}, &quot;1600&quot;:{&quot;items&quot;:6, &quot;gutter&quot;: 23}}}">
+                    <!-- Review Card-->
+                    {% for review in reviews %}
+                        <div class="py-2">
+                        <div class="card h-100 border-0 shadow mx-1">
+                            <div class="card-body">
+                                <a class="d-flex align-items-center nav-heading mb-3">
+                                    <div class="fs-md fw-medium ps-2 ms-1">{{review.name|capfirst}}</div>
+                                </a>
+                                <div class="mb-2 pb-1 star-rating mt-n1">
+                                    {% if review.stars == 1 %}
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star"></i>
+                                        <i class="sr-star ai-star"></i>
+                                        <i class="sr-star ai-star"></i>
+                                        <i class="sr-star ai-star"></i>
+                                    {% elif review.stars == 2 %}
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star"></i>
+                                        <i class="sr-star ai-star"></i>
+                                        <i class="sr-star ai-star"></i>
+                                    {% elif review.stars == 3 %}
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star"></i>
+                                        <i class="sr-star ai-star"></i>
+                                    {% elif review.stars == 4 %}
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star"></i>
+                                    {% elif review.stars == 5 %}
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                        <i class="sr-star ai-star-filled active"></i>
+                                    {%endif%}
+                                </div>
+                                <p class="fs-sm mb-0">{{review.message|capfirst}}</p>
+                            </div>
+                            <footer class="fs-sm px-4 pb-4">
+                                <div class="d-flex align-items-center border-top mb-n2 pt-3">
+                                    <div class="text-heading fw-medium ps-2 ms-1 mt-n1 text-uppercase">{{review.country}}</div>
+                                </div>
+                            </footer>
+                        </div>
+                  </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ-->
+    <section class="container py-5 my-4 my-sm-0 py-sm-6 py-md-7">
+        <h2 class="text-center pb-2 mb-5">Les questions populaires</h2>
+        <div class="row pb-2">
+            <div class="col-lg-6">
+                <div class="accordion" id="faq">
+                    <div class="accordion-item shadow">
+                        <h2 class="accordion-header" id="faq-heading-1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1" aria-expanded="true" aria-controls="faq-content-1">
+                                Comment piloter mon projet à distance?
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse show" id="faq-content-1" aria-labelledby="faq-heading-1" data-bs-parent="#faq">
+                            <div class="accordion-body">
+                                <div class="fs-sm">
+                                    Tous les clients de Sheyp auront accès a un espace dans leur compte utilisateur qui leur permettra
+                                    de suivre les avancées de leurs différents projets de manière quotidienne.</br>
+                                    De cet espace il y'aura un <b>système de suivi intelligent</b> qui informera le client sur tous ce qui se
+                                    passe avec des preuves à l'appui (vidéos, photos, documents, reçus, etc...) et le <b>compteur
+                                    automatique</b> lui montrera comment son argent est dépenser en fonction de l'avancée des travaux.
+
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    <div class="accordion-item shadow">
+                        <h2 class="accordion-header" id="faq-heading-2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2" aria-expanded="false" aria-controls="faq-content-2">
+                                J'habite en France, quelle garantie juridique j'ai en travaillant avec Sheyp qui se trouve au Sénégal ?
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" id="faq-content-2" aria-labelledby="faq-heading-2" data-bs-parent="#faq">
+                            <div class="accordion-body">
+                                <div class="fs-sm">
+                                    Sheyp a été créé pour en partie régler le problème de la diaspora qui des fois a du mal à investir
+                                    au Sénégal de manière sécurisée. Dans le but de rassurer nos clients, nous :
+                                    <ul class="list-unstyled">
+                                        <li class="d-flex mb-2 pb-1">
+                                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                                            <span>
+                                                avons lier un
+                                                partenariat avec une des meilleures agences de <b>Notaire</b> du pays qui va
+                                                intervenir dans
+                                                certaines de nos activités surtout dans le domaine Immobilier. Ils ne valideront aucun bien
+                                                Immobilier sans être sûr qu'il n'a aucun problème.
+                                            </span>
+                                        </li>
+                                        <li class="d-flex mb-2 pb-1">
+                                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                                            <span>
+                                                ferons une vérification au niveau du <b>Domain et Impôt</b> (l'agence qui gère le foncier
+                                                au Sénégal) de tout bien Immobilier avant tout achat afin de s'assurer de sa
+                                                légalité.
+                                            </span>
+                                        </li>
+                                        <li class="d-flex mb-2 pb-1">
+                                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                                            <span>
+                                                mis en place un système de suivi qui permettrons aux clients de suivre leur projet.
+                                            </span>
+                                        </li>
+                                        <li class="d-flex mb-2 pb-1">
+                                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                                            <span>
+                                                ferons une double signature pour tout projet consernant les personnes de la diaspora.
+                                                En plus de la signature de la Directrice de Sheyp, nos cofondateurs qui résident
+                                                aux USA et en Belgique ajouteront les leurs dans le but de donner une garantie
+                                                supplémentaire et donc offrir aux clients une chance de poursuite judiciaire dans ces
+                                                pays dans le cas d'une arnaque par exemple.
+                                            </span>
+                                        </li>
+                                        <li class="d-flex mb-2 pb-1">
+                                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                                            <span>
+
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    <div class="accordion-item shadow">
+                        <h2 class="accordion-header" id="faq-heading-3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3" aria-expanded="false" aria-controls="faq-content-3">
+                                Comment éviter les problèmes fonciers au niveau de l'achat de Terrains?
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" id="faq-content-3" aria-labelledby="faq-heading-3" data-bs-parent="#faq">
+                            <div class="accordion-body">
+                                <div class="fs-sm">
+                                    Sheyp encourage beaucoup plus ses clients à choisir des terrains avec un <b>Titre Foncier</b>
+                                    ou <b>Bail</b> qui sont les plus surs mais aussi les plus chères.
+                                    En plus de ce choix, nous ajouterons une validation de notre <b>Notaire</b> et
+                                    vérification au niveau du <b>Domaine et Impôt</b>.</br>
+                                    <a href="{% url 'land_project' %}">
+                                        <span class="badge rounded-pill bg-success">
+                                            Plus d'infos sur les Titres Fonciers, Bails et Délibérations
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="d-none d-lg-block col-lg-5 offset-lg-1">
+                <img src="{% static 'base_app/img/demo/booking/illustration.svg' %}" alt="Illustration">
+            </div>
+        </div>
+      </section>
+
+    <!-- Success stories-->
+    <section class="py-5 py-md-6 mt-n4" style="background-color: #d4ac0d;">
+        <div class="container py-2">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-10 text-center text-white">
+                    <h2>Nos success stories </h2>
+                    <p class="mb-5 pb-2">
+                        Ils nous ont fait confiance et ne l'ont pas regretté
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/agriculture1.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">Agriculture</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/elevage.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                          <h3 class="h5 mb-0">Élevage</h3>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
+                    <a class="card card-hover border-0 shadow mx-auto" href="#" style="max-width: 400px;">
+                        <img class="card-img-top" src="{% static 'base_app/img/numerique.jpg' %}" style="max-width: 400px; max-height: 220px;">
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">Numérique</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business provider -->
+    <section class="bg-secondary">
+        <div class="row g-0">
+            <div class="col-md-6 jarallax py-7" data-jarallax data-speed="0.3">
+                <span class="position-absolute top-0 start-0 w-100 h-100 bg-black" style="opacity: 40%;"></span>
+                <div class="jarallax-img" style="background-image: url({% static 'base_app/img/make_money.jpg' %});"></div>
+            </div>
+            <div class="col-md-6 px-3 pe-xl-0 ps-lg-5 ps-xl-6 py-2 py-lg-4">
+                <div class="ms-sm-4 py-5 my-sm-0 py-md-6 py-lg-7" style="max-width: 520px;">
+                    <h2 class="mb-5">Comment gagner de l'argent sans bosser pour Sheyp ?</h2>
+                    <h5 class="text-center text-muted mb-0">
+                        Et OUI c'est bien possible !</br>
+                        Sheyp récompense ses apporteurs d'affaires en fonction des projets. Vous aviez un parent qui veut réaliser
+                        quelque chose qui concerne nos domaines d'activités, si vous arriviez a le convaincre a venir travailler avec
+                        nous, nous allons vous rémunérer de la façon suivante:
+                    </h5></br>
+                    <ul class="list-unstyled">
+                        <li class="d-flex mb-2 pb-1">
+                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                            <span>
+                                Pour un projet dont le cout total est compris entre <b>2 et 4 millions fcfa</b>, l'apporteur d'
+                                affaire recevra <b>100.000 fcfa</b>.
+                            </span>
+                        </li>
+                        <li class="d-flex mb-2 pb-1">
+                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                            <span>
+                                Pour un projet dont le cout total est compris entre <b>5 et 10 millions fcfa</b>, l'apporteur d'
+                                affaire recevra <b>250.000 fcfa</b>.
+                            </span>
+                        </li>
+                        <li class="d-flex mb-2 pb-1">
+                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                            <span>
+                                Pour un projet dont le cout total est compris entre <b>11 et 20 millions fcfa</b>, l'apporteur d'
+                                affaire recevra <b>350.000 fcfa</b>.
+                            </span>
+                        </li>
+                        <li class="d-flex mb-2 pb-1">
+                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                            <span>
+                                Pour un projet dont le cout total est compris entre <b>21 et 49 millions fcfa</b>, l'apporteur d'
+                                affaire recevra <b>400.000 fcfa</b>.
+                            </span>
+                        </li>
+                        <li class="d-flex mb-2 pb-1">
+                            <i class="ai-check-circle text-success fs-xl mt-1 me-3"></i>
+                            <span>
+                                Pour un projet dont le cout total est compris entre <b>50 millions fcfa et plus</b>, l'apporteur d'
+                                affaire recevra <b>500.000 fcfa</b>.
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    </br></br></br></br>
+
+{% endblock %}

@@ -1,0 +1,262 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Payement {% endblock %}
+
+{% load static %}
+
+{% block real_estate_active %} active {% endblock %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    </br></br></br></br>
+    <!-- Shopping cart off-canvas-->
+    <div class="offcanvas offcanvas-end" id="shoppingCart">
+        <div class="offcanvas-header navbar-shadow px-4 mb-2">
+            <h5 class="mt-1 mb-0">Votre Panier</h5>
+            <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body p-4" data-simplebar>
+            <div class="d-flex align-items-center mb-3"><a class="d-block flex-shrink-0" href="shop-single.html"><img class="rounded" src="img/demo/shop-homepage/thumbnails/05.jpg" alt="Product" width="60"></a>
+                <div class="w-100 ps-2 ms-1">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="me-3">
+                            <h4 class="nav-heading fs-md mb-1">
+                                <a class="fw-medium" href="shop-single.html">Smart Watch Series 5</a>
+                            </h4>
+                            <div class="d-flex align-items-center fs-sm">
+                                <span class="me-2">$364.99</span>
+                                <span class="me-2">x</span>
+                                <input class="form-control form-control-sm px-2" type="number" style="max-width: 3.5rem;" min="1" value="1">
+                            </div>
+                        </div>
+                        <div class="ps-3 border-start">
+                            <a class="d-block text-danger text-decoration-none fs-xl" href="#" data-bs-toggle="tooltip" title="Remove">
+                                <i class="ai-x-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="offcanvas-footer d-block border-top px-4 mb-2">
+            <div class="d-flex justify-content-between mb-4">
+                <span>Total:</span>
+                <span class="h6 mb-0">$776.99</span>
+            </div>
+            <a class="btn btn-primary btn-sm d-block w-100" href="checkout.html">
+                <i class="ai-credit-card fs-base me-2"></i>
+                Payement
+            </a>
+        </div>
+      </div>
+
+      <!-- Page content-->
+      <form class="sidebar-enabled sidebar-end needs-validation" novalidate>
+          <div class="container">
+              <div class="row">
+                  <!-- Content-->
+                  <div class="col-lg-8 content py-4">
+                      <nav aria-label="breadcrumb">
+                          <ol class="py-1 my-2 breadcrumb">
+                              <li class="breadcrumb-item">
+                                  <a href="{% url 'land_project' %}">Vente/Achat/Location/Devis Terrains</a>
+                              </li>
+                              <li class="breadcrumb-item">
+                                  <a href="{% url 'cart' %}">Mon Panier</a>
+                              </li>
+                              <li class="breadcrumb-item active" aria-current="page">Payment</li>
+                          </ol>
+                      </nav>
+                      <h1 class="mb-3 pb-4">Payement</h1>
+
+                      <h2 class="h3 pb-3">Détails de la facturation</h2>
+                      <div class="row mb-4">
+                        <div class="col-sm-6 mb-3 pb-1">
+                          <label class="form-label" for="ch-fn">First name<sup class="text-danger ms-1">*</sup></label>
+                          <input class="form-control" type="text" id="ch-fn" required>
+                        </div>
+                        <div class="col-sm-6 mb-3 pb-1">
+                          <label class="form-label" for="ch-ln">Last names<sup class="text-danger ms-1">*</sup></label>
+                          <input class="form-control" type="text" id="ch-ln" required>
+                        </div>
+                        <div class="col-12 mb-3 pb-1">
+                          <label class="form-label" for="ch-company">Company name</label>
+                          <input class="form-control" type="text" id="ch-company">
+                        </div>
+                        <div class="col-12 mb-3 pb-1">
+                          <label class="form-label" for="ch-country">Country<sup class="text-danger ms-1">*</sup></label>
+                          <select class="form-select" id="ch-country" required>
+                            <option value="" selected disabled hidden>Choose country</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Canada">Canada</option>
+                            <option value="Francee">France</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Switzerland">Switzerland</option>
+                            <option value="USA">USA</option>
+                          </select>
+                        </div>
+                        <div class="col-12 mb-3 pb-1">
+                          <label class="form-label" for="ch-address">Street address<sup class="text-danger ms-1">*</sup></label>
+                          <input class="form-control" type="text" id="ch-address" placeholder="House number and street name" required>
+                        </div>
+                        <div class="col-12 mb-3 pb-1">
+                          <input class="form-control" type="text" placeholder="Apartment, suite, unit, etc. (optional)">
+                        </div>
+                        <div class="col-12 mb-3 pb-1">
+                          <label class="form-label" for="ch-city">Town / City<sup class="text-danger ms-1">*</sup></label>
+                          <input class="form-control" type="text" id="ch-city" required>
+                        </div>
+                        <div class="col-12 mb-3 pb-1">
+                          <label class="form-label" for="ch-county">County</label>
+                          <input class="form-control" type="text" id="ch-county">
+                        </div>
+                        <div class="col-12 mb-3 pb-1">
+                          <label class="form-label" for="ch-postcode">Postcode<sup class="text-danger ms-1">*</sup></label>
+                          <input class="form-control" type="text" id="ch-postcode" required>
+                        </div>
+                        <div class="col-sm-6 mb-3 pb-1">
+                          <label class="form-label" for="ch-phone">Phone<sup class="text-danger ms-1">*</sup></label>
+                          <input class="form-control" type="text" id="ch-phone" required>
+                        </div>
+                        <div class="col-sm-6 mb-3 pb-1">
+                          <label class="form-label" for="ch-email">Email address<sup class="text-danger ms-1">*</sup></label>
+                          <input class="form-control" type="email" id="ch-email" required>
+                        </div>
+                      </div>
+                      <h2 class="h3 pb-3">Additional information</h2>
+                      <div class="mb-3 pb-1 pb-3 pb-lg-5">
+                        <label class="form-label" for="ch-order-notes">Order notes</label>
+                        <textarea class="form-control" id="ch-order-notes" rows="5" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                      </div>
+                    </div>
+                  <!-- Sidebar-->
+                  <div class="col-lg-4 sidebar bg-secondary pt-5 ps-lg-4 pb-md-2">
+                  <div class="ps-lg-4 mb-3 pb-5">
+                    <h2 class="h4 pb-3">Your cart</h2>
+                    <div class="d-flex align-items-center mb-4"><a class="d-block flex-shrink-0" href="shop-single.html"><img class="rounded" src="img/demo/shop-homepage/thumbnails/05.jpg" alt="Product" width="60"></a>
+                      <div class="w-100 ps-2 ms-1">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="me-3">
+                            <h4 class="nav-heading fs-md mb-1"><a class="fw-medium" href="shop-single.html">Smart Watch Series 5</a></h4>
+                            <div class="d-flex align-items-center fs-sm"><span class="me-2">$364.99</span><span class="me-2">x</span>
+                              <input class="form-control form-control-sm px-2" type="number" style="max-width: 3.5rem;" min="1" value="1">
+                            </div>
+                          </div>
+                          <div class="ps-3 border-start"><a class="d-block text-danger text-decoration-none fs-xl" href="#" data-bs-toggle="tooltip" title="Remove"><i class="ai-x-circle"></i></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4"><a class="d-block flex-shrink-0" href="shop-single.html"><img class="rounded" src="img/demo/shop-homepage/thumbnails/02.jpg" alt="Product" width="60"></a>
+                      <div class="w-100 ps-2 ms-1">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="me-3">
+                            <h4 class="nav-heading fs-md mb-1"><a class="fw-medium" href="shop-single.html">Running Sneakers, Collection</a></h4>
+                            <div class="d-flex align-items-center fs-sm"><span class="me-2">$145.00</span><span class="me-2">x</span>
+                              <input class="form-control form-control-sm px-2" type="number" style="max-width: 3.5rem;" min="1" value="1">
+                            </div>
+                          </div>
+                          <div class="ps-3 border-start"><a class="d-block text-danger text-decoration-none fs-xl" href="#" data-bs-toggle="tooltip" title="Remove"><i class="ai-x-circle"></i></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-4"><a class="d-block flex-shrink-0" href="shop-single.html"><img class="rounded" src="img/demo/shop-homepage/thumbnails/06.jpg" alt="Product" width="60"></a>
+                      <div class="w-100 ps-2 ms-1">
+                        <div class="d-flex align-items-center justify-content-between">
+                          <div class="me-3">
+                            <h4 class="nav-heading fs-md mb-1"><a class="fw-medium" href="shop-single.html">Wireless Bluetooth Headset</a></h4>
+                            <div class="d-flex align-items-center fs-sm"><span class="me-2">$258.00</span><span class="me-2">x</span>
+                              <input class="form-control form-control-sm px-2" type="number" style="max-width: 3.5rem;" min="1" value="1">
+                            </div>
+                          </div>
+                          <div class="ps-3 border-start"><a class="d-block text-danger text-decoration-none fs-xl" href="#" data-bs-toggle="tooltip" title="Remove"><i class="ai-x-circle"></i></a></div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="mt-0 mb-4">
+                    <div class="d-flex justify-content-between mb-3"><span class="h6 mb-0">Subtotal:</span><span class="text-nav">$776.99</span></div>
+                    <div class="d-flex justify-content-between mb-3"><span class="h6 mb-0">Tax:</span><span class="text-nav">&mdash;</span></div>
+                    <div class="d-flex justify-content-between mb-3"><span class="h6 mb-0">Shipping:</span><span class="text-nav">$12.35</span></div>
+                    <div class="d-flex justify-content-between mb-3"><span class="h6 mb-0">Total:</span><span class="h6 mb-0">$789.34</span></div>
+                    <div class="accordion pt-4 mb-grid-gutter" id="payment-methods">
+                      <div class="accordion-item bg-white shadow">
+                        <h2 class="accordion-header" id="heading-1">
+                          <button class="accordion-button no-indicator" type="button">
+                            <div class="form-check w-100" data-bs-toggle="collapse" data-bs-target="#credit-card" aria-expanded="true" aria-controls="credit-card">
+                              <input class="form-check-input" type="radio" id="credit-card-radio" name="payment_method" checked>
+                              <label class="form-check-label d-flex align-items-center fs-base text-heading mb-0 mt-1" for="credit-card-radio"><span>Credit Card</span><img class="ms-3" src="img/shop/cards.png" alt="Accepted cards" width="130"></label>
+                            </div>
+                          </button>
+                        </h2>
+                        <div class="accordion-collapse collapse show" id="credit-card" aria-labelledby="heading-1" data-bs-parent="#payment-methods">
+                          <div class="accordion-body">
+                            <div class="mb-3 pb-1">
+                              <label class="form-label" for="cc-number">Card number</label>
+                              <input class="form-control bg-none" type="text" id="cc-number" data-format="card" placeholder="0000 0000 0000 0000">
+                            </div>
+                            <div class="row g-0">
+                              <div class="col-7 px-2">
+                                <label class="form-label" for="cc-expiry">Expiry date</label>
+                                <input class="form-control bg-none" type="text" id="cc-expiry" data-format="date" placeholder="mm/yy">
+                              </div>
+                              <div class="col-5 px-2">
+                                <label class="form-label" for="cc-cvc">CVC</label>
+                                <input class="form-control bg-none" type="text" id="cc-cvc" data-format="cvc" placeholder="000">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion-item bg-white shadow">
+                        <h2 class="accordion-header" id="heading-2">
+                          <button class="accordion-button no-indicator" type="button">
+                            <div class="form-check w-100" data-bs-toggle="collapse" data-bs-target="#paypal" aria-expanded="false" aria-controls="paypal">
+                              <input class="form-check-input" type="radio" id="paypal-radio" name="payment_method">
+                              <label class="form-check-label d-flex align-items-center fs-base text-heading mb-0 mt-1" for="paypal-radio"><span>PayPal</span><img class="ms-3" src="img/shop/paypal.png" alt="PayPal" width="20"></label>
+                            </div>
+                          </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" id="paypal" aria-labelledby="heading-2" data-bs-parent="#payment-methods">
+                          <div class="accordion-body">
+                            <p class="fs-ms">By clicking on the button below you will be redirected to your PayPal account to complete the payment.</p><a class="d-inline-block" href="#"><img class="d-block" src="img/shop/paypal-button.png" alt="PayPal" width="200"></a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion-item bg-white shadow">
+                        <h2 class="accordion-header" id="heading-3">
+                          <button class="accordion-button no-indicator collapsed" type="button">
+                            <div class="form-check w-100" data-bs-toggle="collapse" data-bs-target="#cash" aria-expanded="false" aria-controls="cash">
+                              <input class="form-check-input" type="radio" id="cash-radio" name="payment_method">
+                              <label class="form-check-label d-flex align-items-center fs-base text-heading mb-0 mt-1" for="cash-radio">Cash on delivery</label>
+                            </div>
+                          </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" id="cash" aria-labelledby="heading-3" data-bs-parent="#payment-methods">
+                          <div class="accordion-body">
+                            <p class="fs-ms mb-0">You have selected to pay with cash upon delivery.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary d-block w-100" type="submit">Place order</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </form>
+
+
+{% endblock %}
+
+{% block footer %}
+
+
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Terrains {% endblock %}
+
+{% load static %}
+
+{% block real_estate_active %} active {% endblock %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Page title-->
+    <section class="position-relative bg-dark pt-7 pb-5 pb-md-7 bg-size-cover bg-attachment-fixed"
+         style="background-image: url({% static 'real_estate/images/cubes-bg.jpg' %});" xmlns="http://www.w3.org/1999/html">
+        <div class="shape shape-bottom shape-curve bg-body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path fill="currentColor" d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg>
+        </div>
+        <div class="container position-relative zindex-5 text-center pt-md-6 pt-lg-7 py-5 my-lg-3">
+            <h1 class="text-light mb-0">
+                Achat/Vente/Location de Terrains
+            </h1>
+        </div>
+    </section>
+
+    </br></br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="py-1 my-2 breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'land_operation_part1' land_project.id %}">Retour à la Phase 2</a>
+                        </li>
+                        <li class="breadcrumb-item"></li>
+                    </ol>
+                </nav>
+
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                        {{ error }}
+                    </div>
+                {% else %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+
+                <form class="w3-content" method="POST">
+                    {% csrf_token %}
+                    <center class="card">
+
+                        <div class="card-header bg-danger">
+                            <h3>Suppression du terrain #{{land.id}}</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row" style="font-size: 20px">
+                                <div class="col-sm-4">
+                                    <p> Region :
+                                        <span class="badge bg-secondary text-white">
+                                            {{land.region}}
+                                        </span>
+                                    </p>
+                                    <p> Adresse :
+                                        <span class="badge bg-secondary text-white">
+                                            {{land.adress}}
+                                        </span>
+                                    </p>
+                                    <p> Surface :
+                                        <span class="badge bg-secondary text-white">
+                                            {{land.area}}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p> Plan de situation :
+                                        {% for plan in land_plan_situation %}
+                                            {% if land.land_plan_situation_id == plan.id %}
+                                                <span class="badge bg-secondary text-white">{{plan.name}}</span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                    {% for service_location in service_types_location2 %}
+                                        {% if service_location.id == land_project.service_type_id %}
+                                            <li>
+                                                Budget minimum : <span class="badge bg-secondary text-white">{{land.minimum_price}}</span>
+                                            </li>
+                                            <li>
+                                                Budget maximum : <span class="badge bg-secondary text-white">{{land.maximum_price}}</span>
+                                            </li>
+                                        {% else %}
+                                            <p>
+                                                Prix : <span class="badge bg-secondary text-white">{{land.price}}</span>
+                                            </p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="col-sm-4">
+                                    <p> Type de Papier:
+                                        <span class="badge bg-secondary text-white">
+                                            {% for land_papier_type in land_papier_types %}
+                                                {% if land_papier_type.id == land.land_paper_type_id %}
+                                                    {{land_papier_type.name}}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <p> Infos Suplémentaires:</br>
+                                        <span class="badge bg-secondary text-white">
+                                            {{land.additional_info}}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            </br></br>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <h4>Voulez-vous vraiment supprimer ce terrain ?</h4>
+                                <button type="submit" class="btn btn-danger">delete</button>
+                            </form>
+                        </div>
+                    </center>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </br></br></br></br></br></br>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
+
+{% block js %}
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="{% static 'base_app/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'base_app/vendor/shufflejs/dist/shuffle.min.js' %}"></script>
+{% endblock %}

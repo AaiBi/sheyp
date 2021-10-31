@@ -1,0 +1,304 @@
+              {% extends 'base_app/base.html' %}
+
+{% block title %} Mon Panier {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Slanted background-->
+    <div class="position-relative bg-gradient" style="height: 480px;">
+        <div class="shape shape-bottom shape-slant bg-secondary d-none d-lg-block">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 260">
+                <polygon fill="currentColor" points="0,257 0,260 3000,260 3000,0"></polygon>
+            </svg>
+        </div>
+    </div>
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2" src="https://www.shareicon.net/data/512x512/2016/01/13/702410_users_512x512.png" width="110">
+                        <h6 class="mb-0 pt-1">{{user.first_name}} {{user.last_name}}</h6><span class="text-muted fs-sm">@{{user.username}}</span>
+                    </div>
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Account menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Tableau de bord</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'cart' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mon Panier
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'construction_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets de Construction
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'real_estate_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets Immobiliers
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="#">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets d'Investissements
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Paramètres du compte</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'profile' %}">
+                            Mon Profile
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'user_password_change' %}">
+                            Modification du mot de passe
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="#">
+                            Méthodes de payement
+                        </a>
+                        <div class="d-flex align-items-center border-top"><a class="d-block w-100 nav-link-style px-4 py-3" href="account-notifications.html">Notifications</a>
+                            <div class="ms-auto px-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="notifications-switch" data-master-checkbox-for="#notification-settings" checked>
+                                    <label class="form-check-label" for="notifications-switch"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'logout_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="width:100%">Déconnexion</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+<!--                    <nav aria-label="breadcrumb">-->
+<!--                        <ol class="py-1 my-2 breadcrumb">-->
+<!--                            <li class="breadcrumb-item"><a href="{% url 'profile' %}">Profile</a></li>-->
+<!--                            <li class="breadcrumb-item"><a href="{% url 'real_estate_projects' %}">Mes Projets Immobilier</a></li>-->
+<!--                            <li class="breadcrumb-item"></li>-->
+<!--                        </ol>-->
+<!--                    </nav>-->
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="py-2 p-md-3">
+                        <!-- Title + Filters-->
+                        <div class="d-sm-flex align-items-center justify-content-between pb-2">
+                            <h1 class="h3 mb-3 text-center text-sm-start">Vos commandes</h1>
+                        </div>
+                        <!-- Accordion with orders-->
+                        <div class="accordion" id="orders-accordion">
+                            <!-- Order-->
+                            {% if cart %}
+
+                                {% for order in cart %}
+
+                                     <!--we show the land projects-->
+                                    {% for land in lands %}
+                                        {% if land.id == order.land_id  %}
+                                            <div class="accordion-item shadow">
+                                                <h2 class="accordion-header" id="faq-heading-1">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{land.id}}" aria-expanded="true" aria-controls="faq-content-{{land.id}}">
+                                                        Terrain Numéro<span style="color: #d4ac0d;">#{{land.id}}</span>
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse" id="faq-content-{{land.id}}" aria-labelledby="faq-heading-{{land.id}}" data-bs-parent="#faq">
+                                                    <div class="accordion-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <ul>
+                                                                    {% for land_project in land_projects %}
+                                                                        {% if land_project.id == land.land_project_id  %}
+                                                                            <li>
+                                                                                <b>Type de terrain:</b>
+                                                                                {% for land_type in land_types %}
+                                                                                    {% if land_type.id == land_project.land_type_id %}
+                                                                                        <span style="color: #d4ac0d;">{{land_type.name}}</span>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </li>
+                                                                            <li>
+                                                                                <b>Type de service:</b>
+                                                                                {% for service_type in service_types %}
+                                                                                    {% if service_type.id == land_project.service_type_id %}
+                                                                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                                                            <span style="color: #d4ac0d;">Mise en Location</span>
+                                                                                        {% else %}
+                                                                                            <span style="color: #d4ac0d;">{{service_type.name}}</span>
+                                                                                        {% endif %}
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </li>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <ul>
+                                                                    <li>Region : {{land.region}}</li>
+                                                                    <li>Adresse : {{land.adress}}</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <ul>
+                                                                    <li>Prix : {{land.price}} fcfa</li>
+                                                                    <li>Plan de situation :
+                                                                        {% for plan in land_plan_situation %}
+                                                                            {% if land.land_plan_situation_id == plan.id %}
+                                                                                <span style="color: #d4ac0d;">{{plan.name}}</span>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <ul>
+                                                                    <li>Surface : {{land.area}} m²</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <center><b>Informations supplémentaires</b></center>
+                                                                {{land.additional_info}}
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <a type="button" class="btn btn-info d-block w-100 mb-grid-gutter" href="{% url 'cart_payment' land.id %}">
+                                                                    <i class="ai-money fs-lg me-2"></i>Faire le payement
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Project gallery-->
+                                                        <section class="pt-4 mt-lg-2 pb-lg-0">
+                                                            <div class="gallery row">
+                                                                {% for img in images %}
+                                                                    {% if img.land_id == lands_list.id %}
+                                                                        <div class="col-md-4 col-sm-6 mb-grid-gutter">
+                                                                            <a class="gallery-item rounded-3" href="{{img.image.url}}">
+                                                                                <img src="{{img.image.url}}" alt="Gallery thumbnail">
+                                                                            </a>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                     <!--we show the property management projects-->
+                                    {% for property in properties %}
+                                        {% if property.id == order.property_id  %}
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="order-header-6">
+                                                    <button class="accordion-button collapsed accordion-button no-indicator d-flex flex-wrap align-items-center justify-content-between pe-4" type="button" data-bs-toggle="collapse" data-bs-target="#order-collapse-5" aria-expanded="false" aria-controls="order-collapse-5">
+                                                        <div class="fs-sm fw-medium text-nowrap my-1 me-2">
+                                                            <i class="ai-hash fs-base me-1"></i>
+                                                            <span class="d-inline-block align-middle">502TR872W2</span>
+                                                        </div>
+                                                        <div class="text-nowrap text-body fs-sm fw-normal my-1 me-2"><i class="ai-clock text-muted me-1"></i>Apr 05, 2020</div>
+                                                        <div class="bg-faded-success text-success fs-xs fw-medium py-1 px-3 rounded-1 my-1 me-2">Delivered</div>
+                                                        <div class="text-body fs-sm fw-medium my-1">$128.00</div>
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse" id="order-collapse-6" aria-labelledby="order-header-5" data-bs-parent="#orders-accordion">
+                                                  <div class="accordion-body pt-4 bg-secondary rounded-top-0 rounded-3">
+                                                    <!-- Item-->
+                                                    <div class="d-sm-flex justify-content-between mb-3 pb-1">
+                                                      <div class="order-item d-block d-sm-flex me-sm-3"><a class="d-table mx-sm-0 mx-auto flex-shrink-0" href="#"><img class="d-block rounded" src="img/dashboard/orders/10.jpg" alt="Thumbnail" width="105"></a>
+                                                        <div class="fs-sm pt-2 ps-sm-3 text-center text-sm-start">
+                                                          <h5 class="nav-heading fs-sm mb-2"><a href="#">Military Cotton Cap</a></h5>
+                                                          <div><span class="text-muted me-1">Category:</span>Accessories</div>
+                                                          <div><span class="text-muted me-1">Color:</span>Military</div>
+                                                        </div>
+                                                      </div>
+                                                      <div class="fs-sm text-center pt-2 me-sm-3">
+                                                        <div class="text-muted">Quantity:</div>
+                                                        <div class="fw-medium">1</div>
+                                                      </div>
+                                                      <div class="fs-sm text-center pt-2">
+                                                        <div class="text-muted">Subtotal:</div>
+                                                        <div class="fw-medium">$16.00</div>
+                                                      </div>
+                                                    </div>
+                                                    <!-- Item-->
+                                                    <div class="d-sm-flex justify-content-between mb-3 pb-1">
+                                                      <div class="order-item d-block d-sm-flex me-sm-3"><a class="d-table mx-sm-0 mx-auto flex-shrink-0" href="#"><img class="d-block rounded" src="img/dashboard/orders/11.jpg" alt="Thumbnail" width="105"></a>
+                                                        <div class="fs-sm pt-2 ps-sm-3 text-center text-sm-start">
+                                                          <h5 class="nav-heading fs-sm mb-2"><a href="#">Women Colorblock Sneakers</a></h5>
+                                                          <div><span class="text-muted me-1">Size:</span>8.5</div>
+                                                        </div>
+                                                      </div>
+                                                      <div class="fs-sm text-center pt-2 me-sm-3">
+                                                        <div class="text-muted">Quantity:</div>
+                                                        <div class="fw-medium">1</div>
+                                                      </div>
+                                                      <div class="fs-sm text-center pt-2">
+                                                        <div class="text-muted">Subtotal:</div>
+                                                        <div class="fw-medium">$102.00</div>
+                                                      </div>
+                                                    </div>
+                                                    <div class="d-flex flex-wrap align-items-center justify-content-between pt-3 border-top">
+                                                      <div class="fs-sm my-2 me-2"><span class="text-muted me-1">Subtotal:</span><span class="fw-medium">$118.00</span></div>
+                                                      <div class="fs-sm my-2 me-2"><span class="text-muted me-1">Shipping:</span><span class="fw-medium">$7.50</span></div>
+                                                      <div class="fs-sm my-2 me-2"><span class="text-muted me-1">Tax:</span><span class="fw-medium">$2.50</span></div>
+                                                      <div class="fs-sm my-2"><span class="text-muted me-1">Total:</span><span class="fw-medium">$128.00</span></div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                {% endfor %}
+
+                            {% else %}
+                                <div class="alert alert-danger alert-dismissible"  role="alert">
+                                    Vous n'aviez pas encore fait de commandes !
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

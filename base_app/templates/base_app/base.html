@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %} {% endblock %}</title>
+        <!-- SEO Meta Tags-->
+        <meta name="description" content="Sheyp - Societe">
+        <meta name="keywords" content="bootstrap, business, consulting, coworking space, services, creative agency, dashboard, e-commerce, mobile app showcase, multipurpose, product landing, shop, software, ui kit, web studio, landing, html5, css3, javascript, gallery, slider, touch, creative">
+        <meta name="author" content="Createx Studio">
+        <!-- Viewport-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Favicon and Touch Icons-->
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'base_app/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'base_app/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'base_app/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'base_app/site.webmanifest' %}">
+        <link rel="mask-icon" color="#5bbad5" href="{% static 'base_app/safari-pinned-tab.svg' %}">
+        <meta name="msapplication-TileColor" content="#766df4">
+        <meta name="theme-color" content="#ffffff">
+        <!-- Page loading styles-->
+        <style>
+            .page-loading {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                -webkit-transition: all .4s .2s ease-in-out;
+                transition: all .4s .2s ease-in-out;
+                background-color: #fff;
+                opacity: 0;
+                visibility: hidden;
+                z-index: 9999;
+            }
+            .page-loading.active {
+                opacity: 1;
+                visibility: visible;
+            }
+            .page-loading-inner {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                width: 100%;
+                text-align: center;
+                -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+                -webkit-transition: opacity .2s ease-in-out;
+                transition: opacity .2s ease-in-out;
+                opacity: 0;
+            }
+            .page-loading.active > .page-loading-inner {
+                opacity: 1;
+            }
+            .page-loading-inner > span {
+                display: block;
+                font-family: 'Inter', sans-serif;
+                font-size: 1rem;
+                font-weight: normal;
+                color: #737491;
+            }
+            .page-spinner {
+                display: inline-block;
+                width: 2.75rem;
+                height: 2.75rem;
+                margin-bottom: .75rem;
+                vertical-align: text-bottom;
+                border: .15em solid #766df4;
+                border-right-color: transparent;
+                border-radius: 50%;
+                -webkit-animation: spinner .75s linear infinite;
+                animation: spinner .75s linear infinite;
+            }
+            @-webkit-keyframes spinner {
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+            @keyframes spinner {
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+        {% block css_styles %} {% endblock %}
+        <style>
+            .active{
+            color: #d4ac0d;
+        }
+        </style>
+        <!-- Page loading scripts-->
+        <script>
+
+            (function () {
+                window.onload = function () {
+                    var preloader = document.querySelector('.page-loading');
+                    preloader.classList.remove('active');
+                    setTimeout(function () {
+                        preloader.remove();
+                    }, 2000);
+                };
+            })();
+
+        </script>
+        <!-- Vendor Styles-->
+        <link rel="stylesheet" media="screen" href="{% static 'base_app/vendor/tiny-slider/dist/tiny-slider.css' %}"/>
+        <link rel="stylesheet" media="screen" href="{% static 'base_app/vendor/lightgallery.js/dist/css/lightgallery.min.css' %}"/>
+        <link rel="stylesheet" media="screen" href="{% static 'base_app/vendor/flatpickr/dist/flatpickr.min.css' %}"/>
+
+        <!-- Vendor Styles-->
+        <link rel="stylesheet" media="screen" href="{% static 'base_app/vendor/simplebar/dist/simplebar.min.css' %}"/>
+        <!-- Main Theme Styles + Bootstrap-->
+        <link rel="stylesheet" media="screen" href="{% static 'base_app/css/theme.min.css' %}">
+    </head>
+    <!-- Body-->
+    <body>
+        <!-- Page loading spinner-->
+        <div class="page-loading active">
+            <div class="page-loading-inner">
+                <div class="page-spinner"></div><span>Loading...</span>
+            </div>
+        </div>
+
+        <main class="page-wrapper">
+            <header class="header navbar navbar-expand-lg navbar-dark navbar-floating navbar-sticky" data-fixed-element style="background-color: white;">
+                <div class="container px-0 px-xl-3">
+                    <button class="navbar-toggler ms-n2 me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a class="navbar-brand flex-shrink-0 order-lg-1 mx-auto ms-lg-0 pe-lg-2 me-lg-4" href="{% url 'index' %}">
+                        <img class="navbar-floating-logo d-none d-lg-block" src="{% static 'base_app/img/logo/logo.jpg' %}" alt="Sheyp" width="153">
+                        <img class="d-lg-none" src="{% static 'base_app/img/logo/logo.jpg' %}" alt="Around" width="58">
+                    </a>
+                    <div class="d-flex align-items-center order-lg-3 ms-lg-auto">
+                        {%if user.is_authenticated %}
+                            <div class="navbar-tool me-2">
+                                <a class="navbar-tool-icon-box" href="{% url 'cart' %}">
+                                    <i class="ai-shopping-cart" style="color: #d4ac0d;"></i>
+                                    {% if cart_count %}
+                                        {% for cart in cart_count %}
+                                            {% if cart.user_id == user.id %}
+                                                <span class="navbar-tool-badge">{{cart.count}}</span>
+                                            {% else %}
+                                                <span class="navbar-tool-badge">0</span>
+                                            {%endif%}
+                                        {%endfor%}
+                                    {% else %}
+                                            <span class="navbar-tool-badge">0</span>
+                                    {%endif%}
+                                </a>
+                            </div>
+                        {% else %}
+                            <a class="nav-link-style fs-sm text-white btn" type="button" href="{% url 'login_user' %}" style="background-color: #d4ac0d;">
+                                <i class="ai-user fs-xl me-2 align-middle">Connexion</i>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="offcanvas offcanvas-collapse order-lg-2" id="primaryMenu">
+                        <div class="offcanvas-header navbar-shadow">
+                            <h5 class="mt-1 mb-0">Menu</h5>
+                            <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                        <!-- Menu-->
+                            <ul class="navbar-nav">
+                                <li class="nav-item {% block construction_active %} {% endblock %}">
+                                    <a class="nav-link" href="{% url 'construction' %}" style="color: #737491">Construction</a>
+                                </li>
+                                <li class="nav-item dropdown dropdown-mega {% block real_estate_active %} {% endblock %}">
+                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="color: #737491">Immobilier</a>
+                                    <div class="dropdown-menu" style="width: 310px">
+                                        <div class="dropdown-column mb-2 mb-lg-0">
+                                            <a class="dropdown-item" href="{% url 'real_estate' %}">
+                                                <h5 class="dropdown-header">Immobilier</h5>
+                                            </a>
+                                            <a class="dropdown-item" href="{% url 'land_project' %}">Vente/Achat/Location/Devis Terrains</a>
+                                            <a class="dropdown-item" href="{% url 'property_management' %}">Vente/Achat/Location/Devis Immobilière</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item {% block investment_active %} {% endblock %}">
+                                    <a class="nav-link" href="{% url 'investment' %}" style="color: #737491">Investissement</a>
+                                </li>
+                                {%if user.is_authenticated %}
+                                    <li class="nav-item {% block profile_active %} {% endblock %}">
+                                        <a class="nav-link" href="{% url 'profile' %}" style="color: #737491">Profile</a>
+                                    </li>
+                                {% endif %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'contact_page' %}" style="color: #737491">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                  </div>
+            </header>
+
+            {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                        {{ error }}
+                    </div>
+              {% else %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+              {% endif %}
+
+            {% block content %} {% endblock %}
+        </main>
+
+        </br></br></br></br></br></br></br>
+        <footer class="footer container-fluid bg-dark">
+            </br>
+            <div class="row">
+                <div class="col-xl-5 col-lg-5 col-md-4 mb-5 text-center text-md-start">
+                    <h2 class="mb-4 text-white">Suivez-nous sur les réseaux sociaux</h2>
+                    <div class="pt-2">
+                        <a class="btn-social bs-outline bs-lg bs-facebook me-2 mb-2" href="#"><i class="ai-facebook"></i></a>
+                        <a class="btn-social bs-outline bs-lg bs-twitter me-2 mb-2" href="#"><i class="ai-twitter"></i></a>
+                        <a class="btn-social bs-outline bs-lg bs-instagram me-2 mb-2" href="#"><i class="ai-instagram"></i></a>
+                        <a class="btn-social bs-outline bs-lg bs-google me-2 mb-2" href="#"><i class="ai-google"></i></a>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-8 mb-5">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="widget">
+                                <h4 class="widget-title text-white">Sheyp</h4>
+                                <ul>
+                                    <li><a class="widget-link text-white" href="{% url 'index' %}">Acceuil</a></li>
+                                    <li><a class="widget-link text-white" href="{% url 'contact_page' %}">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="widget">
+                                <h4 class="widget-title text-white">Services</h4>
+                                <ul>
+                                    <li><a class="widget-link text-white" href="{% url 'construction' %}">Construction</a></li>
+                                    <li><a class="widget-link text-white" href="real_estate">Immobilier</a></li>
+                                    <li><a class="widget-link text-white" href="#">Gestion d'Investissements</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-top py-4">
+            <div class="d-md-flex align-items-center justify-content-between py-2 text-center text-md-start">
+              <p class="fs-sm mb-0 me-3 order-md-1"><span class="text-muted me-1">© All rights reserved. Made by</span><a class="nav-link-style fw-normal" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a></p>
+            </div>
+          </div>
+        </footer>
+
+        <!--notation system modal-->
+        <div class="modal fade" id="modal-notation_system" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content border-0">
+                    <div class="view show" id="modal-notation_system-view">
+                        <div class="modal-header border-0 bg-dark px-4">
+                            <h4 class="modal-title text-light">Votre avis nous intéresse</h4>
+                            <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="btn-close "></button>
+                        </div>
+                        <div class="modal-body px-4">
+                            <form class="needs-validation" method="POST">
+                                {% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <i class="ai-user position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                                    <input class="form-control rounded" type="text" placeholder="Entrez votre nom " name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <input class="form-control rounded" type="number" placeholder="Vous pouvez nous noter sur 5 étoiles" name="stars" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <input class="form-control rounded" type="text" placeholder="Entrer votre pays de résidence" name="country" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 pb-1">
+                                    <textarea class="form-control" rows="4" placeholder="Laissez un message" name="message" required></textarea>
+                                </div>
+                                <button class="btn btn-primary d-block w-100" type="submit">Envoyer le message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to top button--><a class="btn-scroll-top" href="#top" data-scroll data-fixed-element><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon ai-arrow-up">   </i></a>
+
+        <!-- Vendor scrits: js libraries and plugins-->
+        <script src="{% static 'base_app/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'base_app/vendor/simplebar/dist/simplebar.min.js' %}"></script>
+        <script src="{% static 'base_app/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+        <script src="{% static 'base_app/vendor/parallax-js/dist/parallax.min.js' %}"></script>
+        <script src="{% static 'base_app/vendor/tiny-slider/dist/min/tiny-slider.js' %}"></script>
+
+        <script src="{% static 'base_app/vendor/lightgallery.js/dist/js/lightgallery.min.js' %}"></script>
+        <script src="{% static 'base_app/vendor/lg-fullscreen.js/dist/lg-fullscreen.min.js' %}"></script>
+
+        <script src="{% static 'base_app/vendor/lg-zoom.js/dist/lg-zoom.min.js' %}"></script>
+        <script src="{% static 'base_app/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+        <script src="{% static 'base_app/vendor/shufflejs/dist/shuffle.min.js' %}"></script>
+        <script src="{% static 'base_app/vendor/flatpickr/dist/flatpickr.min.js' %}"></script>
+
+        <!-- Main theme script-->
+        <script src="{% static 'base_app/js/theme.min.js' %}"></script>
+        <script>
+            var alert1 = document.getElementById("alert1");
+            var alert2 = document.getElementById("alert2");
+            setTimeout(function(){
+               alert1.style.display = "none";
+            }, 10000);
+            setTimeout(function(){
+               alert2.style.display = "none";
+            }, 15000);
+            // Timeout is 15 sec, you can change it
+        </script>
+        {% block js %} {% endblock %}
+  </body>
+</html>

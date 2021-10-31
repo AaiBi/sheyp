@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from base_app.models import Provider, Notation_System
+
+admin.site.register(Provider)
+admin.site.register(Notation_System)

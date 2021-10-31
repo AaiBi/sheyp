@@ -1,0 +1,345 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Construction {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Hero-->
+<section class="position-relative bg-secondary pt-5 pt-lg-7 pb-7 overflow-hidden" xmlns="http://www.w3.org/1999/html">
+        <div class="shape shape-bottom shape-curve bg-body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path fill="currentColor" d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z">
+                </path>
+            </svg>
+        </div>
+
+        {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                {{ error }}
+            </div>
+        {% else %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+
+        <!-- Content-->
+        <div class="container pt-3 pb-4 pt-lg-0">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mt-lg-n7 pb-5 mb-sm-3 mb-lg-0 pb-lg-0 text-center text-lg-start">
+                    <h1 class="display-4">La Construction c'est de l'art</h1>
+                    <p class="pb-2">Nous donnons vies à vos projets les plus fous</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-primary" name="construction_project_submit" value="construction_project_submit">
+                            <i class="fas fa-plus"></i>Construire ma maison
+                        </button>
+                    </form>
+                </div>
+                <div class="col-lg-7">
+                    <div class="parallax mx-auto" style="max-width: 705px;">
+                        <div class="parallax-layer position-relative" data-depth="0.1">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer01.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.35">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer02.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.2">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer03.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.5">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer04.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.6">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer05.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.4">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer06.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.25">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer07.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.35">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer08.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.6">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer09.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.45">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer10.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.7">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer11.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.3">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer12.svg' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.15">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer13.png' %}" alt="Layer">
+                        </div>
+                        <div class="parallax-layer" data-depth="0.9">
+                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer14.svg' %}" alt="Layer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About-->
+    <section class="container position-relative zindex-5" style="margin-top: -175px;">
+        <div class="bg-light rounded-3 shadow py-5 py-md-6 px-4 px-md-0">
+            <div class="row align-items-center py-3 py-md-0">
+                <div class="col-xl-6 col-lg-5 col-md-4 text-center">
+                    <h2 class="pb-3 pb-md-0">
+                        <span class="d-block text-body opacity-25">Quelque chose</span>
+                        À propos de la Construction
+                    </h2>
+                </div>
+                <div class="col-xl-5 col-lg-6 col-md-7 text-center text-md-start">
+                    <h5>
+                        Le secteur de la construction au Sénégal est en évolution, surtout la construction d’habitats
+                        sociaux mais malheureusement ce sont les artisans plus précisément les maçons qui dominent
+                        ce secteur sans réellement avoir les compétences requises. </br>
+                        SHEYP dans l’optique de participer à l'amélioration de la sécurité et de la qualité d’exécution,
+                        met à la disposition de ses clients une équipe expérimentée dirigée par une Ingénieur en
+                        Génie Civile qui a 4ans d’expériences. </br>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services-->
+    <section class="container py-5 py-md-6 py-lg-7">
+        <div class="row align-items-center mt-3 mt-md-0">
+            <div class="col-lg-4 col-md-5 order-md-2 text-center text-md-start mb-5 mb-md-0">
+                <h2 class="mb-3">Nos services</h2>
+            </div>
+            <div class="col-lg-8 col-md-7 order-md-1 bg-position-start-bottom bg-repeat-0" style="background-image: url({% static 'base_app/img/demo/marketing-seo/services/bg-shape.svg' %});">
+                <div class="mx-auto mx-md-0 ms-xl-7" style="max-width: 600px;">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                <img class="d-inline-block mb-4 mt-2" src="{% static 'construction/images/architecture.png' %}" alt="Icon" width="100">
+                                <h3 class="h5 mb-2">Architecture</h3>
+                                <p class="mb-0">
+                                    Vu que nous ne sommes pas un cabinet d’architecture, ce service est disponible
+                                    seulement pour les projets de moins de 30 millions fcfa. Au-delà de ça, le client
+                                    devra travailler avec une entreprise d’architecture.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                <img class="d-inline-block mb-4 mt-2" src="{% static 'construction/images/renovation.png' %}" alt="Icon" width="100">
+                                <h3 class="h5 mb-2">Rénovation</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-auto mx-md-0" style="max-width: 600px;">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                          <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                              <img class="d-inline-block mb-4 mt-2" src="{% static 'construction/images/devis.png' %}" width="100">
+                              <h3 class="h5 mb-2">Devis</h3>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                                <img class="d-inline-block mb-4 mt-2" src="{% static 'construction/images/bulding_house.png' %}" width="100">
+                                <h3 class="h5 mb-2">Construction neuve</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-auto mx-md-0" style="max-width: 600px;">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                          <div class="bg-light shadow-lg rounded-3 p-4 mb-grid-gutter text-center text-sm-start">
+                              <img class="d-inline-block mb-4 mt-2" src="{% static 'construction/images/inspection_house.png' %}" width="100">
+                              <h3 class="h5 mb-2">Inspection de bâtiment</h3>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Icon + text-->
+    <section class="container pt-5 pb-4 mt-3 mt-md-0 mb-md-3 pb-md-5 pt-md-7">
+        <h2 class="text-center mb-5">Comment se deroulera votre projet de construction avec nous ?</h2>
+        <h4 class="text-center">
+            La construction chez Sheyp suit la procédure suivante qui est divisée en deux principale partie :
+        </h4>
+        <div class="accordion" id="faq">
+            <ul>
+                <li>
+                    <div class="accordion-item shadow">
+                        <h2 class="accordion-header" id="faq-heading-1">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1" aria-expanded="true" aria-controls="faq-content-1" style="color: #d4ac0d;">
+                                Informations générales
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse show" id="faq-content-1" aria-labelledby="faq-heading-1" data-bs-parent="#faq">
+                            <div class="accordion-body">
+                                Les informations suivantes sont indispensables à la réalisation de tout projet de
+                                construction et permettrons de faire une étude de faisabilite.
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                        </br>
+                                        <div class="mx-auto mb-5 text-center" style="max-width: 280px;">
+                                            <img class="mb-3" src="{% static 'construction/images/construction_type.png' %}" width="112">
+                                            <h3 class="h5">Type de Construction</h3>
+                                            <p class="fs-sm mb-0">
+                                                Définition du type de construction (une construction en béton armé
+                                                ou une construction écologique en terre cuite).
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        </br>
+                                        <div class="mx-auto mb-5 text-center" style="max-width: 280px;">
+                                            <img class="mb-3" src="{% static 'construction/images/architecture_type.png' %}" width="112">
+                                            <h3 class="h5">Type d'Architecture</h3>
+                                            <p class="fs-sm mb-0">
+                                                Définition du type d’architecture (si vous n'en disposez pas).
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        </br>
+                                        <div class="mx-auto mb-5 text-center" style="max-width: 280px;">
+                                            <img class="mb-3" src="{% static 'construction/images/land_location.png' %}" width="112">
+                                            <h3 class="h5">Localisation du Terrain</h3>
+                                            <p class="fs-sm mb-0">
+                                                Fournir la localisation du terrain sur lequel aura lieu la
+                                                construction afin que nous puissions évaluer la faisabilité.</br>
+                                                Et si vous n'en disposez pas, Sheyp pourra vous aidez à en trouver.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="accordion-item shadow">
+                        <h2 class="accordion-header" id="faq-heading-2">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2" aria-expanded="true" aria-controls="faq-content-2" style="color: #d4ac0d;">
+                                Offre technique et Financière
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse" id="faq-content-2" aria-labelledby="faq-heading-2" data-bs-parent="#faq">
+                            <div class="accordion-body">
+                                Suite aux informations qui auront été fournie, une offre technique et financière très détaillée vous sera presenté.
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                        </br>
+                                        <div class="mx-auto mb-5 text-center" style="max-width: 280px;">
+                                            <img class="mb-3" src="{% static 'construction/images/technical_advice.png' %}" width="112">
+                                            <h3 class="h5">Avis Technique</h3>
+                                            <p class="fs-sm mb-0">
+                                                Notre avis technique global sur la faisabilité de votre projet.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        </br>
+                                        <div class="mx-auto mb-5 text-center" style="max-width: 280px;">
+                                            <img class="mb-3" src="{% static 'construction/images/financial_offer.png' %}" width="112">
+                                            <h3 class="h5">0ffre Financière 1</h3>
+                                            <p class="fs-sm mb-0">
+                                                Une offre financière sur la réalisation des plans architecturaux.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        </br>
+                                        <div class="mx-auto mb-5 text-center" style="max-width: 280px;">
+                                            <img class="mb-3" src="{% static 'construction/images/financial_offer2.png' %}" width="112">
+                                            <h3 class="h5">0ffre Financière 2</h3>
+                                            <p class="fs-sm mb-0">
+                                                Une offre financière sur la réalisation des plans d’études de votre projet
+                                                ( plans de coffrages ou plan béton armé). Ces plans permettrons de connaître
+                                                les dimensions des éléments qui composeront votre structure tels que les
+                                                poutres, les poteaux, les plancher...
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        </br>
+                                        <div class="mx-auto mb-5 text-center" style="max-width: 280px;">
+                                            <img class="mb-3" src="{% static 'construction/images/planning.png' %}" width="112">
+                                            <h3 class="h5">Planning</h3>
+                                            <p class="fs-sm mb-0">
+                                                Nous vous fournirons un planning détaillé de la réalisation de
+                                                votre projet avec l’ensemble des activités qui composent votre
+                                                projet et leur délais de réalisation.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6">
+                                        </br>
+                                        <div class="mx-auto mb-5 text-center" style="max-width: 280px;">
+                                            <img class="mb-3" src="{% static 'construction/images/estimation.png' %}" width="112">
+                                            <h3 class="h5">Devis</h3>
+                                            <p class="fs-sm mb-0">
+                                                Et enfin nous vous proposons un devis estimatif basé sur les résultats de notre
+                                                études de faisabilité.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+      </section>
+{% endblock %}
+
+{% block footer %}
+    <footer class="footer bg-dark pt-5 pt-md-6 pt-lg-7">
+      <div class="container pt-3 pt-md-0">
+        <div class="pb-md-4 text-center">
+          <h3 class="text-light fw-light mb-3">Still not convinced?</h3>
+          <h2 class="text-light mb-5">Add premium support and lifetime updates to this.</h2><a class="btn btn-primary" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener"><i class="ai-shopping-cart fs-lg me-2"></i>Buy Around</a>
+        </div>
+        <hr class="hr-light my-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 col-md-7 pb-md-4 text-center">
+            <h4 class="text-light mb-grid-gutter">Subscribe to Newsletter</h4>
+            <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+              <div class="input-group flex-nowrap"><i class="ai-mail position-absolute top-50 start-0 translate-middle-y text-muted ms-3"></i>
+                <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="Your email">
+                <button class="btn btn-primary" type="submit" name="subscribe">Subscribe*</button>
+              </div>
+              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+              <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
+              </div>
+              <div class="form-text text-light opacity-50">*Subscribe to our newsletter to receive early discount offers and new templates info.</div>
+              <div class="subscription-status"></div>
+            </form>
+          </div>
+        </div>
+        <hr class="hr-light my-5">
+        <p class="fs-sm text-center mb-0 pb-5"><span class="text-light opacity-50 me-1">© All rights reserved. Made by</span><a class="nav-link-style nav-link-light" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a></p>
+      </div>
+    </footer>
+{% endblock %}

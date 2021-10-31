@@ -1,0 +1,97 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Suppression {% endblock %}
+
+{% load static %}
+
+{% block real_estate_active %} active {% endblock %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page title-->
+    <section class="position-relative bg-dark pt-7 pb-md-7 bg-size-cover bg-attachment-fixed">
+         <h1 align="center" class="text-white" style="margin-top: 4%">
+            Achat/Vente/Location de Terrains
+         </h1>
+    </section>
+    </br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="py-1 my-2 breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'land_operation_part1' land_project.id %}">Retouner à la phase 2</a>
+                        </li>
+                        <li class="breadcrumb-item"></li>
+                    </ol>
+                </nav>
+                <p></p>
+
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                        {{ error }}
+                    </div>
+                {% else %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <center class="card">
+
+                        <div class="card-header bg-danger">
+                            <h3>Suppression du Projet #{{land_project.id}}</h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row" style="font-size: 20px">
+                                <div class="col-sm-6">
+                                    Type de Terrain :
+                                    {% for land_type in land_types %}
+                                        {% if land_type.id == land_project.land_type_id %}
+                                            <span class="badge bg-secondary text-white">{{land_type.name}}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="col-sm-6">
+                                    Type de Service :
+                                    {% for service_type in service_types %}
+                                        {% if service_type.id == land_project.service_type_id %}
+                                            <span class="badge bg-secondary text-white">{{service_type.name}}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div></br>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <h4>Voulez-vous vraiment supprimer ce terrain ?</h4>
+                                <button type="submit" class="btn btn-danger">delete</button>
+                            </form>
+                        </div>
+                    </center>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block js %}
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="{% static 'base_app/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'base_app/vendor/shufflejs/dist/shuffle.min.js' %}"></script>
+{% endblock %}

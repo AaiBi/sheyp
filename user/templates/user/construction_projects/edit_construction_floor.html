@@ -1,0 +1,284 @@
+              {% extends 'base_app/base.html' %}
+
+{% block title %} Mon Profile {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+    <style>
+        .shake {
+              position: relative;
+              text-decoration: none;
+              color: white;
+              display: inline-block;
+              animation: .8s shake infinite alternate;
+        }
+
+        @keyframes shake {
+          0% { transform: skewX(-15deg); }
+          5% { transform: skewX(15deg); }
+          10% { transform: skewX(-15deg); }
+          15% { transform: skewX(15deg); }
+          20% { transform: skewX(0deg); }
+          100% { transform: skewX(0deg); }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Slanted background-->
+    <div class="position-relative bg-gradient" style="height: 480px;">
+        <div class="shape shape-bottom shape-slant bg-secondary d-none d-lg-block">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 260">
+                <polygon fill="currentColor" points="0,257 0,260 3000,260 3000,0"></polygon>
+            </svg>
+        </div>
+    </div>
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2" src="https://www.shareicon.net/data/512x512/2016/01/13/702410_users_512x512.png" width="110">
+                        <h6 class="mb-0 pt-1">{{user.first_name}} {{user.last_name}}</h6><span class="text-muted fs-sm">@{{user.username}}</span>
+                    </div>
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Account menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Tableau de bord</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'cart' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mon Panier
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'construction_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets de Construction
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'real_estate_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets Immobiliers
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="#">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets d'Investissements
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Paramètres du compte</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'profile' %}">
+                            Mon Profile
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'user_password_change' %}">
+                            Modification du mot de passe
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="#">
+                            Méthodes de payement
+                        </a>
+                        <div class="d-flex align-items-center border-top"><a class="d-block w-100 nav-link-style px-4 py-3" href="account-notifications.html">Notifications</a>
+                            <div class="ms-auto px-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="notifications-switch" data-master-checkbox-for="#notification-settings" checked>
+                                    <label class="form-check-label" for="notifications-switch"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'logout_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="width:100%">Déconnexion</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+                    <nav aria-label="breadcrumb">
+                        <ol class="py-1 my-2 breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'profile' %}">Profile</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'construction_projects' %}">
+                                    Mes Projets de Construction
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'construction_project_detail' construction_project.id %}">
+                                    Projet de Construction
+                                    <span style="color: #d4ac0d;">
+                                        #{{construction_project.id}}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item"></li>
+                        </ol>
+                    </nav>
+                    <!-- Title -->
+                    <div class="align-items-center justify-content-between">
+                        <h1 class="h3 mb-3 text-center text-sm-start" align="center">
+                            Projet de Construction <span style="color: #d4ac0d;">#{{construction_project.id}}</span>
+                            <span style="float:right">
+                                {% if construction_project.statut == "In progress" %}
+                                    <i class="badge bg-success">
+                                        En cours
+                                    </i>
+                                {% elif construction_project.statut == "Done" %}
+                                    <i class="badge bg-danger">
+                                        Terminé
+                                    </i>
+                                {%endif%}
+                            </span>
+                        </h1>
+                    </div>
+                    <hr>
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <form class="w3-content" method="POST">
+                        {% csrf_token %}
+                        <center class="card">
+
+                            <div class="card-header bg-warning text-white">
+                                <h5>Modification des Informations de l'étage
+                                    #{{construction_floor.floor_level}} du Project de Construction
+                                    #{{construction_project.id}}
+                                </h5>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Sélectionner le niveau</label>
+                                            <select class="form-select form-control" name="floor_level" disabled>
+                                                <option selected value="{{construction_floor.floor_level}}">Étage {{construction_floor.floor_level}}</option>
+                                                <option value="0">Étage 0 (rez-de-chaussée)</option>
+                                                <option value="1">Étage 1</option>
+                                                <option value="2">Étage 2</option>
+                                                <option value="3">Étage 3</option>
+                                                <option value="4">Étage 4</option>
+                                                <option value="5">Étage 5</option>
+                                                <option value="6">Étage 6</option>
+                                                <option value="7">Étage 7</option>
+                                                <option value="8">Étage 8</option>
+                                                <option value="9">Étage 9</option>
+                                                <option value="10">Étage 10</option>
+                                                <option value="11">Étage 11</option>
+                                                <option value="12">Étage 12</option>
+                                                <option value="13">Étage 13</option>
+                                                <option value="14">Étage 14</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                     <input type="hidden" name="floor_level" value="{{construction_floor.floor_level}}">
+                                     <div class="col-md-6">
+                                         <div class="form-group">
+                                             <label>Nombre de chambres avec toilette interne</label>
+                                             <input type="number" name="number_bedroom_with_bathroom" class="form-control" value="{{construction_floor.number_bedroom_with_bathroom}}">
+                                         </div>
+                                     </div>
+                                     <p></p>
+                                     <div class="col-md-6">
+                                         <div class="form-group">
+                                             <label>Nombre de chambres simples</label>
+                                             <input type="number" name="number_bedroom_without_bathroom" class="form-control" value="{{construction_floor.number_bedroom_without_bathroom}}">
+                                         </div>
+                                     </div>
+                                     <div class="col-md-6">
+                                         <div class="form-group">
+                                             <label>Nombre de toilettes externes</label>
+                                             <input type="number" name="number_shared_bathroom" class="form-control" value="{{construction_floor.number_shared_bathroom}}">
+                                         </div>
+                                     </div>
+                                     <p></p>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                             <label>Nombre de salons</label>
+                                             <input type="number" name="number_living_room" class="form-control" value="{{construction_floor.number_living_room}}">
+                                         </div>
+                                     </div>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                             <label>Nombre de cuisines</label>
+                                             <input type="number" name="number_kitchen" class="form-control" value="{{construction_floor.number_kitchen}}">
+                                         </div>
+                                     </div>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                             <label>Espace de stockage</label>
+                                             <select class="form-select form-control" name="closette">
+                                                 <option selected value="{{construction_floor.closette}}">{{construction_floor.closette}}</option>
+                                                 <option value="Yes">Oui</option>
+                                                 <option value="No">Non</option>
+                                            </select>
+                                         </div>
+                                     </div>
+                                     <p></p>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                            <label>Garage</label>
+                                            <select class="form-select form-control" name="garage">
+                                                <option selected value="{{construction_floor.garage}}">{{construction_floor.garage}}</option>
+                                                <option value="Yes">Oui</option>
+                                                <option value="No">Non</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                            <label>Terrasse</label>
+                                            <select class="form-select form-control" name="terace">
+                                                <option selected value="{{construction_floor.terace}}">{{construction_floor.terace}}</option>
+                                                <option value="Yes">Oui</option>
+                                                <option value="No">Non</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                            <label>Balcon</label>
+                                            <select class="form-select form-control" name="balcony">
+                                                <option selected value="{{construction_floor.balcony}}">{{construction_floor.balcony}}</option>
+                                                <option value="Yes">Oui</option>
+                                                <option value="No">Non</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                     <p></p>
+                                     <div class="col-md-12">
+                                         <div class="form-group">
+                                            <textarea class="form-control" name="aditionnal_info">{{construction_floor.aditionnal_info}}</textarea>
+                                         </div>
+                                     </div>
+                                 </div>
+                                </div>
+
+                            <button type="submit" class="btn btn-warning">Modifier</button>
+                        </center></br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

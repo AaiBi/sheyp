@@ -1,0 +1,295 @@
+{% extends 'base_app/base.html' %}
+
+{% load humanize %}
+
+{% block title %} Sheyp Compteur Automatique {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Slanted background-->
+    <div class="position-relative bg-gradient" style="height: 480px;">
+        <div class="shape shape-bottom shape-slant bg-secondary d-none d-lg-block">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 260">
+                <polygon fill="currentColor" points="0,257 0,260 3000,260 3000,0"></polygon>
+            </svg>
+        </div>
+    </div>
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2" src="https://www.shareicon.net/data/512x512/2016/01/13/702410_users_512x512.png" width="110">
+                        <h6 class="mb-0 pt-1">{{user.first_name}} {{user.last_name}}</h6><span class="text-muted fs-sm">@{{user.username}}</span>
+                    </div>
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Account menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Tableau de bord</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'cart' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mon Panier
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'construction_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets de Construction
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'real_estate_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets Immobiliers
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="#">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets d'Investissements
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Paramètres du compte</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'profile' %}">
+                            Mon Profile
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'user_password_change' %}">
+                            Modification du mot de passe
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="#">
+                            Méthodes de payement
+                        </a>
+                        <div class="d-flex align-items-center border-top"><a class="d-block w-100 nav-link-style px-4 py-3" href="account-notifications.html">Notifications</a>
+                            <div class="ms-auto px-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="notifications-switch" data-master-checkbox-for="#notification-settings" checked>
+                                    <label class="form-check-label" for="notifications-switch"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'logout_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="width:100%">Déconnexion</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+                    <nav aria-label="breadcrumb">
+                        <ol class="py-1 my-2 breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'profile' %}">Profile</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'construction_projects' %}">Mes Projets de Construction</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'construction_project_detail' construction_project.id %}">
+                                    Projet de Construction #{{construction_project.id}}
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'construction_project_tracker' construction_project.id tracker.id %}">
+                                    Sheyp Tracker #{{tracker.id}}
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item"></li>
+                        </ol>
+                    </nav>
+
+                    <!-- Title -->
+                    <div class="align-items-center justify-content-between">
+                        <h1 class="h3 mb-3 text-center text-sm-start" align="center">
+                            <span style="color: #d4ac0d;">Sheyp Automatic Counter</span> -
+                            Projet de Construction <span style="color: #d4ac0d;">#{{construction_project.id}}</span>
+                        </h1>
+                    </div>
+
+                    <hr>
+                    <!-- Sheyp automatic counter-->
+                    <div class="row mb-4">
+                        <div class="col-sm-8 mb-2">
+                            <a href="{% url 'construction_project_automatic_counter' construction_project.id tracker.id %}" data-bs-toggle="tooltip" title="Cliquer pour plus de détails" style="text-decoration: none;">
+                                <div class="bg-secondary h-100 p-4 text-center rounded text-heading" align="center">
+                                    <h3 class="fw-medium">Votre Balance actuelle</h3></br>
+                                    <h4>{{total|floatformat:2|intcomma }} fcfa</h4>
+                                    </br>
+                                    Dernière mis-à-jour :
+                                    {% if construction_expense_payments or step_realisation_payments or construction_delivery_payment %}
+
+                                        {% for construction_expense_payment in construction_expense_payments %}
+                                            {% for step_realisation_payment in step_realisation_payments %}
+                                                {% if step_realisation_payment.created > construction_expense_payment.created %}
+
+                                                    {% load i18n %}
+                                                    {% language 'fr' %}
+                                                        {{step_realisation_payment.created|date:'d F Y'}}
+                                                    {% endlanguage %}
+
+                                                {% else %}
+
+                                                    {% for delivery_payment in construction_delivery_payment %}
+                                                        {% if step_realisation_payment.created > delivery_payment.created %}
+
+                                                            {% load i18n %}
+                                                            {% language 'fr' %}
+                                                                {{step_realisation_payment.created|date:'d F Y'}}
+                                                            {% endlanguage %}
+
+                                                        {% else %}
+
+                                                            {% load i18n %}
+                                                            {% language 'fr' %}
+                                                                {{delivery_payment.created|date:'d F Y'}}
+                                                            {% endlanguage %}
+
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endfor %}
+
+                                    {% else %}
+                                        null
+                                    {% endif %}
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-4 mb-2">
+                            <a href="{% url 'construction_project_deliveries' construction_project.id tracker.id %}" data-bs-toggle="tooltip" title="Cliquer pour plus de détails" style="text-decoration: none;">
+                                <img src="{% static 'user/images/construction/fast-delivery.png' %}">
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <h3 class="fw-medium">Les différentes dépenses concernant votre projet</h3></br>
+
+                    {% if step_realisation_payments or construction_expense_payments or construction_delivery %}
+
+                        <!--Realisations step payments-->
+                        {% for step_realisation_payment in step_realisation_payments %}
+                            <article class="card gallery card-horizontal card-hover mb-grid-gutter">
+                                <a class="card-img-top gallery-item" href="{{step_realisation_payment.image.url}}" style="background-image: url({{step_realisation_payment.image.url}});">
+                                </a>
+                                <div class="card-body">
+                                    <span class="d-inline-block mb-2 pb-1 fs-sm text-muted">
+                                        <i class="ai-clock fs-base me-2 mt-n1"></i>
+                                        {% load i18n %}
+                                        {% language 'fr' %}
+                                            {{step_realisation_payment.created|date:'d F Y'}}
+                                        {% endlanguage %}
+                                    </span>
+                                    <h2 class="h4 nav-heading text-capitalize mb-3">
+                                        {% for construction_tracker_step in construction_tracker_steps %}
+                                            {% if step_realisation_payment.construction_tracker_step_id == construction_tracker_step.id %}
+                                                {{construction_tracker_step.name}}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </h2>
+                                    <h5 class="text-capitalize">
+                                        {{step_realisation_payment.amount|floatformat:2|intcomma}} fcfa
+                                    </h5>
+                                    <p class="mb-0 fs-sm text-muted">
+                                        {{step_realisation_payment.additonnal_info}}
+                                    </p>
+                                </div>
+                            </article>
+                        {% endfor %}
+
+                        <!--other expenses-->
+                        {% for construction_expense_payment in construction_expense_payments %}
+                            <article class="card gallery card-horizontal card-hover mb-grid-gutter">
+                                <a class="card-img-top gallery-item" href="{{construction_expense_payment.image.url}}" style="background-image: url({{construction_expense_payment.image.url}});">
+                                </a>
+                                <div class="card-body">
+                                    <span class="d-inline-block mb-2 pb-1 fs-sm text-muted">
+                                        <i class="ai-clock fs-base me-2 mt-n1"></i>
+                                        {% load i18n %}
+                                        {% language 'fr' %}
+                                            {{construction_expense_payment.created|date:'d F Y'}}
+                                        {% endlanguage %}
+                                    </span>
+                                    <h2 class="h4 nav-heading text-capitalize mb-3">
+                                        <a href="#">
+                                            {{construction_expense_payment.title}}
+                                        </a>
+                                    </h2>
+                                    <h5 class="text-capitalize">
+                                        {{construction_expense_payment.amount|floatformat:2|intcomma}} fcfa
+                                    </h5>
+                                    <p class="mb-0 fs-sm text-muted">
+                                        {{construction_expense_payment.additonnal_info}}
+                                    </p>
+                                </div>
+                            </article>
+                        {% endfor %}
+
+                        <!--delivery payments-->
+                        {% for delivery in construction_delivery %}
+                            {% for payment in construction_delivery_payment %}
+                                {% if payment.construction_delivery_id == delivery.id %}
+                                    <article class="card gallery card-horizontal card-hover mb-grid-gutter">
+                                        <a class="card-img-top gallery-item" href="{{payment.image.url}}" style="background-image: url({{payment.image.url}});">
+                                        </a>
+                                        <div class="card-body">
+                                            <span class="d-inline-block mb-2 pb-1 fs-sm text-muted">
+                                                <i class="ai-clock fs-base me-2 mt-n1"></i>
+                                                {% load i18n %}
+                                                {% language 'fr' %}
+                                                    {{payment.created|date:'d F Y'}}
+                                                {% endlanguage %}
+                                            </span>
+                                            <h2 class="h4 nav-heading text-capitalize mb-3">
+                                                <a href="#">
+                                                    {{payment.title}}
+                                                </a>
+                                            </h2>
+                                            <h5 class="text-capitalize">
+                                                {{payment.amount|floatformat:2|intcomma}} fcfa
+                                            </h5>
+                                            <p class="mb-0 fs-sm text-muted">
+                                                {{payment.additonnal_info}}
+                                            </p>
+                                        </div>
+                                    </article>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+
+                    {% else %}
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            Aucun payement n'a été fait encore
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div></br></br>
+{% endblock %}

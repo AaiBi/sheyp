@@ -1,0 +1,277 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Terrains {% endblock %}
+
+{% load static %}
+
+{% block real_estate_active %} active {% endblock %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Page title-->
+    <section class="position-relative bg-dark pt-7 pb-5 pb-md-7 bg-size-cover bg-attachment-fixed"
+         style="background-image: url({% static 'real_estate/images/cubes-bg.jpg' %});" xmlns="http://www.w3.org/1999/html">
+        <div class="shape shape-bottom shape-curve bg-body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path fill="currentColor" d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg>
+        </div>
+        <div class="container position-relative zindex-5 text-center pt-md-6 pt-lg-7 py-5 my-lg-3">
+            <h1 class="text-light mb-0">
+                Achat/Vente/Location de Terrains
+            </h1>
+        </div>
+    </section>
+
+    </br></br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="py-1 my-2 breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'land_operation_part1' land_project.id %}">Retour à la Phase 2</a>
+                        </li>
+                        <li class="breadcrumb-item"></li>
+                    </ol>
+                </nav>
+
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                        {{ error }}
+                    </div>
+                {% else %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+
+                <form class="w3-content" method="POST">
+                    {% csrf_token %}
+                    <center class="card">
+                        <!-- -->
+                        <div class="mySlides">
+
+                            <div class="card-header text-white" style="background-color: #d4ac0d">
+                                <h2>Modification</h2>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Sélectionner la région</label>
+                                            <select class="form-select form-control" name="region">
+                                                <option selected value="{{land.region}}">{{land.region}}</option>
+                                                <option value="Dakar">Dakar</option>
+                                                <option value="Diourbel">Diourbel</option>
+                                                <option value="Saint-Louis">Saint-Louis</option>
+                                                <option value="Thiès">Thiès</option>
+                                                <option value="Kaolack">Kaolack</option>
+                                                <option value="Tambacounda">Tambacounda</option>
+                                                <option value="Louga">Louga</option>
+                                                <option value="Fatick">Fatick</option>
+                                                <option value="Kolda">Kolda</option>
+                                                <option value="Matam">Matam</option>
+                                                <option value="Kaffrine">Kaffrine</option>
+                                                <option value="Kédougou">Kédougou</option>
+                                                <option value="Sédhiou">Sédhiou</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>L'adresse du bien</label>
+                                            <input type="text" name="adress" class="form-control" value="{{land.adress}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Surface du bien en m²</label>
+                                            <input type="number" name="area" class="form-control" value="{{land.area}}">
+                                            <div id="emailHelp" class="form-text">10.000m² = 1hectare</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Plan de situation du terrain</label>
+                                            <select class="form-select form-control" name="land_plan_situation_id">
+                                                {% for plan in land_plan_situation %}
+                                                    {% if plan.id == land.land_plan_situation_id %}
+                                                        <option selected value="{{plan.id}}">{{plan.name}}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% for plan in land_plan_situation %}
+                                                    <option value="{{plan.id}}">{{plan.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Type de Papier</label>
+                                            <select class="form-select form-control" name="land_paper_type_id" required="">
+                                                {% for land_papier_type in land_papier_types %}
+                                                    {% if land_papier_type.id == land.land_paper_type_id %}
+                                                        <option selected value="{{land_papier_type.id}}">{{land_papier_type.name}}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% for land_papier_type in land_papier_types %}
+                                                    <option value="{{land_papier_type.id}}">{{land_papier_type.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {% for service_vente in service_types_vente %}
+                                        {% if service_vente.id == land_project.service_type_id %}
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Prix de vente (en fcfa)</label>
+                                                    <input type="number" name="price" class="form-control" value="{{land.price}}" required>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="minimum_price" value="{{land.minimum_price}}">
+                                            <input type="hidden" name="maximum_price" value="{{land.maximum_price}}">
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% for location in service_types_location1 %}
+                                        {% if location.id == land_project.service_type_id %}
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Prix de location (en fcfa)</label>
+                                                    <input type="number" name="price" class="form-control" value="{{land.price}}" required>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="minimum_price" value="{{land.minimum_price}}">
+                                            <input type="hidden" name="maximum_price" value="{{land.maximum_price}}">
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% for location in service_types_location2 %}
+                                        {% if location.id == land_project.service_type_id %}
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Budget minimum (en fcfa)</label>
+                                                    <input type="number" name="minimum_price" class="form-control" value="{{land.minimum_price}}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Budget maximum (en fcfa)</label>
+                                                    <input type="number" name="maximum_price" class="form-control" value="{{land.maximum_price}}" required>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="price" value="0">
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% for service_achat in service_types_achat %}
+                                        {% if service_achat.id == land_project.service_type_id %}
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Prix minimum (en fcfa)</label>
+                                                    <input type="number" name="minimum_price" class="form-control" value="{{land.minimum_price}}" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Prix maximum (en fcfa)</label>
+                                                    <input type="number" name="maximum_price" class="form-control" value="{{land.maximum_price}}" required>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="price" value="0">
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="additional_info">{{land.additional_info}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn" style="background-color: #d4ac0d">Envoyer</button>
+                    </center></br>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </br></br></br></br></br></br>
+{% endblock %}
+
+{% block footer %}
+
+    <footer class="footer bg-dark pt-5 pt-md-6">
+      <div class="container pt-3 pt-md-0">
+        <div class="row pb-3">
+          <div class="col-md-4 mt-n2 pb-3 pb-md-0 mb-4"><a class="d-block mb-3" href="index.html" style="width: 153px;"><img src="img/logo/logo-footer-alt.png" alt="Around"></a>
+            <p class="fs-sm text-light opacity-60 pb-2 pb-sm-3">Highly customizable and modular official multipurpose Bootstrap template and UI kit.</p><a class="btn-social bs-outline bs-facebook bs-light bs-lg me-2 mb-2" href="#"><i class="ai-facebook"></i></a><a class="btn-social bs-outline bs-twitter bs-light bs-lg me-2 mb-2" href="#"><i class="ai-twitter"></i></a><a class="btn-social bs-outline bs-instagram bs-light bs-lg me-2 mb-2" href="#"><i class="ai-instagram"></i></a><a class="btn-social bs-outline bs-google bs-light bs-lg me-2 mb-2" href="#"><i class="ai-google"></i></a>
+          </div>
+          <div class="col-md-2 col-sm-4 ms-auto pb-1 mb-4">
+            <div class="widget widget-light">
+              <h4 class="widget-title">Company</h4>
+              <ul>
+                <li><a class="widget-link" href="#">About</a></li>
+                <li><a class="widget-link" href="#">Careers</a></li>
+                <li><a class="widget-link" href="#">Press</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-4 pb-1 mb-4">
+            <div class="widget widget-light">
+              <h4 class="widget-title">Communities</h4>
+              <ul>
+                <li><a class="widget-link" href="#">For artists</a></li>
+                <li><a class="widget-link" href="#">Developers</a></li>
+                <li><a class="widget-link" href="#">Brands</a></li>
+                <li><a class="widget-link" href="#">Investors</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-4 mb-4">
+            <div class="widget widget-light">
+              <h4 class="widget-title">Our news</h4>
+              <ul>
+                <li><a class="widget-link" href="#">Latest news</a></li>
+                <li><a class="widget-link" href="#">Updates</a></li>
+                <li><a class="widget-link" href="#">Campaigns</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <hr class="my-0 border-light">
+        <div class="row align-items-center mt-3 py-4">
+          <div class="col-md-6 order-md-2 text-md-end mb-3">
+            <ul class="list-inline fs-sm mb-0">
+              <li class="list-inline-item"><a class="nav-link-style nav-link-light" href="#">Support</a></li>
+              <li class="list-inline-item"><a class="nav-link-style nav-link-light" href="#">Contacts</a></li>
+              <li class="list-inline-item"><a class="nav-link-style nav-link-light" href="#">Terms &amp; Conditions</a></li>
+            </ul>
+          </div>
+          <div class="col-md-6 order-md-1 mb-3">
+            <p class="fs-sm mb-0"><span class="text-light opacity-50 me-1">© All rights reserved. Made by</span><a class="nav-link-style nav-link-light" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+{% endblock %}
+
+{% block js %}
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="{% static 'base_app/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'base_app/vendor/shufflejs/dist/shuffle.min.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Terrains {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Page title-->
+    <section class="position-relative bg-dark pt-7 pb-5 pb-md-7 bg-size-cover bg-attachment-fixed"
+         style="background-image: url({% static 'real_estate/images/cubes-bg.jpg' %});" xmlns="http://www.w3.org/1999/html">
+        <div class="shape shape-bottom shape-curve bg-body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path fill="currentColor" d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg>
+        </div>
+        <div class="container position-relative zindex-5 text-center pt-md-6 pt-lg-7 py-5 my-lg-3">
+            <h1 class="text-light mb-0">
+                Achat/Vente/Location de Terrains
+            </h1>
+        </div>
+    </section>
+    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <ul class="list-group">
+                            <li class="list-group-item bg-light">
+                                <b>Phase 1</b>
+                                <ul>
+                                    {% for land_type in land_types %}
+                                        {% if land_type.id == land_project.land_type_id %}
+                                            <li>
+                                                Type de terrain : <span class="badge bg-info">{{land_type.name}}</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for service in service_types %}
+                                        {% if service.id == land_project.service_type_id %}
+                                            <li>
+                                                Type de service : <span class="badge bg-info">{{service.name}}</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="list-group-item bg-secondary">
+                                <b>Phase 2</b>
+                                <ul>
+                                    {% for land in lands %}
+                                        <li>
+                                            Terrain : <span class="badge bg-light">#{{land.id}}</span>
+                                            <ul>
+                                                <li>
+                                                    Region : <span class="badge bg-info">{{land.region}}</span>
+                                                </li>
+                                                <li>
+                                                    Adresse : <span class="badge bg-info">{{land.adress}}</span>
+                                                </li>
+                                                <li>
+                                                    Surface : <span class="badge bg-info">{{land.area}}m²</span>
+                                                </li>
+                                                <li>
+                                                    Plan de situation :
+                                                    {% for plan in land_plan_situation %}
+                                                        {% if land.land_plan_situation_id == plan.id %}
+                                                            <span class="badge bg-info">{{plan.name}}</span>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </li>
+                                                {% for service_type in service_types %}
+                                                    {% if service_type.id == land_project.service_type_id %}
+                                                        {% if service_type.name == "Achat" or "Recherche de Location d'un logement/Terrain" %}
+                                                            <li>
+                                                                Budget minimum : <span class="badge bg-info">{{land.minimum_price}} cfa</span>
+                                                            </li>
+                                                            <li>
+                                                                Bidget maximum : <span class="badge bg-info">{{land.maximum_price}} cfa</span>
+                                                            </li>
+                                                        {% else %}
+                                                            <li>
+                                                                Prix : <span class="badge bg-info">{{land.price}} cfa</span>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul></br>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+              </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+                    <nav aria-label="breadcrumb">
+                        <ol class="py-1 my-2 breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'land_operation_part1' land_project.id %}">Retour à la Phase 1</a>
+                            </li>
+                            <li class="breadcrumb-item"></li>
+                        </ol>
+                    </nav>
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <center class="card">
+                            <div class="card-header text-white" style="background-color: #d4ac0d;">
+                                <h2>Phase 3</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <select class="form-select form-control" name="land_id" required="">
+                                            <option selected disabled value="">Selectionner le terrain</option>
+                                            {% for l in lands %}
+                                                 <option value="{{l.id}}">#{{l.id}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <input type="file" class="form-control-file" name="image" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Envoyer</button>
+                        </center>
+                    </form>
+                    <!-- Project gallery-->
+                    <section class="pt-4 mt-lg-2 pb-lg-0">
+                        <div class="gallery row">
+                            {% for lands_list in lands %}
+                                <div class="card">
+                                    <div class="card-header bg-secondary" align="center">Terrain #{{lands_list.id}}</div>
+                                </div>
+                                {% for img in images %}
+                                    {% if img.land_id == lands_list.id %}
+                                        <div class="col-md-4 col-sm-6 mb-grid-gutter">
+                                            <a class="gallery-item rounded-3" href="{{img.image.url}}">
+                                                <img src="{{img.image.url}}" style="height:150px">
+                                            </a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    </section></br></br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success" name="complete_land_operation" value="complete_land_operation" style="margin-left: 73%">
+                            Terminer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div></br></br></br></br>
+{% endblock %}

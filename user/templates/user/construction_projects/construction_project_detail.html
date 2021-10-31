@@ -1,0 +1,323 @@
+              {% extends 'base_app/base.html' %}
+
+{% block title %} Mon Profile {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+    <style>
+        .shake {
+              position: relative;
+              text-decoration: none;
+              color: white;
+              display: inline-block;
+              animation: .8s shake infinite alternate;
+        }
+
+        @keyframes shake {
+          0% { transform: skewX(-15deg); }
+          5% { transform: skewX(15deg); }
+          10% { transform: skewX(-15deg); }
+          15% { transform: skewX(15deg); }
+          20% { transform: skewX(0deg); }
+          100% { transform: skewX(0deg); }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Slanted background-->
+    <div class="position-relative bg-gradient" style="height: 480px;">
+        <div class="shape shape-bottom shape-slant bg-secondary d-none d-lg-block">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 260">
+                <polygon fill="currentColor" points="0,257 0,260 3000,260 3000,0"></polygon>
+            </svg>
+        </div>
+    </div>
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2" src="https://www.shareicon.net/data/512x512/2016/01/13/702410_users_512x512.png" width="110">
+                        <h6 class="mb-0 pt-1">{{user.first_name}} {{user.last_name}}</h6><span class="text-muted fs-sm">@{{user.username}}</span>
+                    </div>
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Account menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Tableau de bord</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'cart' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mon Panier
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'construction_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets de Construction
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'real_estate_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets Immobiliers
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="#">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets d'Investissements
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Paramètres du compte</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'profile' %}">
+                            Mon Profile
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'user_password_change' %}">
+                            Modification du mot de passe
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="#">
+                            Méthodes de payement
+                        </a>
+                        <div class="d-flex align-items-center border-top"><a class="d-block w-100 nav-link-style px-4 py-3" href="account-notifications.html">Notifications</a>
+                            <div class="ms-auto px-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="notifications-switch" data-master-checkbox-for="#notification-settings" checked>
+                                    <label class="form-check-label" for="notifications-switch"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'logout_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="width:100%">Déconnexion</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+                    <nav aria-label="breadcrumb">
+                        <ol class="py-1 my-2 breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'profile' %}">Profile</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'construction_projects' %}">Mes Projets de Construction</a></li>
+                            <li class="breadcrumb-item"></li>
+                        </ol>
+                    </nav>
+                    <!-- Title -->
+                    <div class="align-items-center justify-content-between">
+                        <h1 class="h3 mb-3 text-center text-sm-start" align="center">
+                            Projet de Construction <span style="color: #d4ac0d;">#{{construction_project.id}}</span>
+                            <span style="float:right">
+                                {% if construction_project.statut == "In progress" %}
+                                    <i class="badge bg-success">
+                                        En cours
+                                    </i>
+                                {% elif construction_project.statut == "Done" %}
+                                    <i class="badge bg-danger">
+                                        Terminé
+                                    </i>
+                                {%endif%}
+                            </span>
+                        </h1>
+                    </div>
+                    <hr>
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <a class="card" href="{% url 'construction_project_tracker' construction_project.id tracker.id %}" data-bs-toggle="tooltip" title="Cliquer pour plus de détails">
+                        <div class="card-body bg-secondary" align="center">
+                            <p class="card-text">
+                                <h3 class="fw-medium">
+                                    Sheyp Tracker
+                                </h3>
+                                <h5 class="shake text-dark" style="">
+                                    Suivez les avancées de votre projet grâce à notre Tracker !
+                                    <i class="ai-bell" style="color:red"></i>
+                                </h5>
+                            </p>
+                        </div>
+                    </a>
+                    </br>
+
+                    <div class="row" style="font-size: 20px">
+                        <div class="col-sm-12">
+                            <ul>
+                                <li>
+                                    <b>Type de construction:</b>
+                                    {% for construction_type in construction_types %}
+                                        {% if construction_type.id == construction_project.construction_type_id %}
+                                            <span style="color: #d4ac0d;">{{construction_type.name}}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </li>
+                                <li>
+                                    <b>Region:</b>
+                                    <span style="color: #d4ac0d;">{{construction_project.region}}</span>
+                                </li>
+                                <li>
+                                    <b>Adresse:</b>
+                                    <span style="color: #d4ac0d;">{{construction_project.adress}}</span>
+                                </li>
+                                <li>
+                                    <b>Surface:</b>
+                                    <span style="color: #d4ac0d;">{{construction_project.area}} m2</span>
+                                </li>
+                                <li>
+                                    <b>Surface utilisable:</b>
+                                    <span style="color: #d4ac0d;">{{construction_project.area_usable}} m2</span>
+                                </li>
+                                <li>
+                                    <b>Nombre d'étage:</b>
+                                    <span style="color: #d4ac0d;">{{construction_project.number_floor}}</span>
+                                </li>
+                                <li>
+                                    <b>Adresse:</b>
+                                    <span style="color: #d4ac0d;">{{construction_project.adress}}</span>
+                                </li>
+
+                                <li>
+                                    <b>Informations supplémentaires:</b></br>
+                                    <span style="color: #d4ac0d;">{{construction_project.aditionnal_info}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!--floors-->
+                    <div class="accordion" id="faq">
+                        {% for construction_floor in construction_floors %}
+                            {% if construction_floor.construction_project_id == construction_project.id %}
+                                <div class="accordion-item shadow">
+                                    <h2 class="accordion-header" id="faq-heading-1">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{construction_floor.id}}" aria-expanded="true" aria-controls="faq-content-{{construction_floor.id}}">
+                                            Niveau d'étage <span style="color: #d4ac0d;">#{{construction_floor.floor_level}}</span>
+                                            <a type="button" href="{% url 'edit_construction_floor' construction_project.id construction_floor.id %}" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Modification !" style="margin-left: 40%">
+                                                <i class="ai-edit"></i>
+                                            </a>
+                                            {% if construction_project.accepted == False %}
+                                                <a type="button" href="{% url 'delete_construction_floor' construction_project.id construction_floor.id %}" class="btn btn-danger" role="button" data-toggle="tooltip" data-placement="top" title="Suppression !" style="margin-left: 5%">
+                                                    <i class="ai-trash"></i>
+                                                </a>
+                                            {% endif %}
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" id="faq-content-{{construction_floor.id}}" aria-labelledby="faq-heading-{{construction_floor.id}}" data-bs-parent="#faq">
+                                        <div class="accordion-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <ul>
+                                                        <li>Niveau d'étage :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.floor_level}}</span>
+                                                        </li>
+                                                        <li>
+                                                            Nombre de chambres avec salles de bain :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.number_bedroom_with_bathroom}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ul>
+                                                        <li>
+                                                            Nombre de chambres sans salles de bain :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.number_bedroom_without_bathroom}}</span>
+                                                        </li>
+                                                        <li>
+                                                            Nombre de toilettes externes :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.number_shared_bathroom}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ul>
+                                                        <li>
+                                                            Nombre de salons :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.number_living_room}}</span>
+                                                        </li>
+                                                        <li>
+                                                            Nombre de cuisines :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.number_kitchen}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ul>
+                                                        <li>
+                                                            Garage :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.garage}}</span>
+                                                        </li>
+                                                        <li>
+                                                            Espace de stockage :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.closette}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <ul>
+                                                        <li>
+                                                            Terrasse :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.terace}}</span>
+                                                        </li>
+                                                        <li>
+                                                            Balcon :
+                                                            <span style="color: #d4ac0d;">{{construction_floor.balcony}}</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <center><b>Informations supplémentaires</b></center>
+                                                    <span style="color: #d4ac0d;">{{construction_floor.aditionnal_info}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    <!-- Project gallery-->
+                    <hr>
+                    <b style="font-size: 20px" class="text-center">
+                        Architecture
+                    </b>
+                    <section class="pt-4 mt-lg-2 pb-lg-0">
+                        <div class="gallery row">
+                            {% for img in images %}
+                                {% if img.construction_project_id == construction_project.id %}
+                                    <div class="col-md-4 col-sm-6 mb-grid-gutter">
+                                        <a class="gallery-item rounded-3" href="{{img.image.url}}">
+                                            <img src="{{img.image.url}}">
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Page de connexion {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+        <section class="container d-flex justify-content-center align-items-center pt-7 pb-4" style="flex: 1 0 auto;">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8" align="center">
+                    </br>
+                    <h1 class="h1" style="position:relative; z-index:9;">Pas de compte? Inscrivez-vous</h1>
+                    </br>
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <form class="row needs-validation" novalidate method="POST">
+                        {% csrf_token %}
+                        <div class="col-sm-12 mb-3">
+                            <label class="form-label" for="reg-fn">Prénom<sup class="text-danger ms-1">*</sup></label>
+                            <input class="form-control" type="text" name="first_name" required id="reg-fn">
+                            <div class="invalid-feedback">Veuillez entrer votre prénom s'il vous plaît!</div>
+                        </div>
+                        <div class="col-sm-12 mb-3">
+                            <label class="form-label" for="reg-ln">Nom de famille<sup class="text-danger ms-1">*</sup></label>
+                            <input class="form-control" type="text" name="last_name" required id="reg-ln">
+                            <div class="invalid-feedback">Veuillez entrer votre nom de famille s'il vous plaît!</div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label" for="reg-ln">Nom d'utilisateur<sup class="text-danger ms-1">*</sup></label>
+                            <input class="form-control" type="text" name="username" required id="reg-us">
+                            <div class="invalid-feedback">Veuillez entrer votre nom d'utilisateur s'il vous plaît!</div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label" for="reg-email">Email<sup class="text-danger ms-1">*</sup></label>
+                            <input class="form-control" type="email" name="email" required id="reg-email">
+                            <div class="invalid-feedback">Veuillez entrer un email valide s'il vous plaît!</div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label" for="reg-password">Mot de passe<sup class="text-danger ms-1">*</sup></label>
+                            <input class="form-control" type="password" name="password" required id="reg-password">
+                            <div class="invalid-feedback">Veuillez entrez votre mot de passe plaît!</div>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label class="form-label" for="reg-confirm-password">Confirmer votre mot de passe<sup class="text-danger ms-1">*</sup></label>
+                            <input class="form-control" type="password" name="password1" required id="reg-confirm-password">
+                            <div class="invalid-feedback">Les deux mots de passe ne se correspondent pas!</div>
+                        </div>
+                        <div class="col-sm-12">
+                            <button class="btn text-white d-block w-100" type="submit" style="background-color: #d4ac0d;">Créer mon compte</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+        </section>
+{% endblock %}

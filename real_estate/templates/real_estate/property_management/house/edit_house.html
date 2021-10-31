@@ -1,0 +1,233 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Modification {% endblock %}
+
+{% load static %}
+
+{% block real_estate_active %} active {% endblock %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Page title-->
+    <section class="position-relative bg-dark pt-7 pb-5 pb-md-7 bg-size-cover bg-attachment-fixed"
+         style="background-image: url({% static 'real_estate/images/cubes-bg.jpg' %});" xmlns="http://www.w3.org/1999/html">
+        <div class="shape shape-bottom shape-curve bg-body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path fill="currentColor" d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg>
+        </div>
+        <div class="container position-relative zindex-5 text-center pt-md-6 pt-lg-7 py-5 my-lg-3">
+            <h1 class="text-light mb-0">
+                Achat/Vente/Location de Biens Immobilier
+            </h1>
+        </div>
+    </section>
+    </br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="py-1 my-2 breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'property_management_part1' property.id %}">Property management part 1</a>
+                        </li>
+                        <li class="breadcrumb-item"></li>
+                    </ol>
+                </nav>
+                <p></p>
+
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                        {{ error }}
+                    </div>
+                {% else %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+
+                <form class="w3-content" method="POST">
+                    {% csrf_token %}
+                    <center class="card">
+                        <!-- -->
+                        <div class="mySlides">
+
+                            <div class="card-header bg-warning text-white">
+                                <h2>Modification des Informations de la maison #{{house.id}}</h2>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Adresse</label>
+                                            <input type="text" name="adress" class="form-control" value="{{house.adress}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Surface du bien en m²</label>
+                                            <input type="number" name="area" class="form-control" value="{{house.area}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nombre de salons</label>
+                                            <input type="number" name="number_living_room" class="form-control" value="{{house.number_living_room}}">
+                                        </div>
+                                    </div>
+                                </div> </br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nombre de salles de bain externes</label>
+                                            <input type="number" name="number_shared_bathroom" class="form-control" value="{{house.number_shared_bathroom}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nombre de salles de bain internes</label>
+                                            <input type="number" name="number_private_bathroom" class="form-control" value="{{house.number_private_bathroom}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Nombre de chambres</label>
+                                            <input type="number" name="number_bedroom" class="form-control" value="{{house.number_bedroom}}">
+                                        </div>
+                                    </div>
+                                </div></br>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Nombre de cusines</label>
+                                            <input type="number" name="number_kitchen" class="form-control" value="{{house.number_kitchen}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="form-check">
+                                             <label class="form-check-label">Espace de stockage</label>
+                                             <select class="form-select form-control" name="closette">
+                                                 <option selected value="{{house.closette}}">{{house.closette}}</option>
+                                                 <option value="Yes">Oui</option>
+                                                 <option value="No">Non</option>
+                                             </select>
+                                         </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="form-check">
+                                             <label class="form-check-label">Terrasse</label>
+                                             <select class="form-select form-control" name="terace">
+                                                 <option selected value="{{house.terace}}">{{house.terace}}</option>
+                                                 <option value="Yes">Oui</option>
+                                                 <option value="No">Non</option>
+                                             </select>
+                                         </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="form-check">
+                                             <label class="form-check-label">Garage</label>
+                                             <select class="form-select form-control" name="garage">
+                                                 <option selected value="{{house.garage}}">{{house.garage}}</option>
+                                                 <option value="Yes">Oui</option>
+                                                 <option value="No">Non</option>
+                                             </select>
+                                         </div>
+                                    </div>
+                                </div></br>
+                                <div class="row">
+                                    {% for service_type in service_types %}
+                                        {% if service_type.id == property.service_type_id %}
+
+                                            {% if service_type.name == "Achat" %}
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Budget minimum (en fcfa)</label>
+                                                        <input type="number" name="minimum_price" class="form-control" value="{{house.minimum_price}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Budget maximum (en fcfa)</label>
+                                                        <input type="number" name="maximum_price" class="form-control" value="{{house.maximum_price}}">
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="rent_price" value="{{house.rent_price}}">
+                                                <input type="hidden" name="sale_price" value="{{house.sale_price}}">
+
+                                            {% elif service_type.name == "Vente" %}
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Prix de vente (en fcfa)</label>
+                                                        <input type="number" name="sale_price" class="form-control" value="{{house.sale_price}}">
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="minimum_price" value="{{house.minimum_price}}">
+                                                <input type="hidden" name="rent_price" value="{{house.rent_price}}">
+                                                <input type="hidden" name="maximum_price" value="{{house.maximum_price}}">
+
+                                            {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terain" %}
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Prix de location (en fcfa)</label>
+                                                        <input type="number" name="rent_price" class="form-control" value="{{house.rent_price}}">
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="minimum_price" value="{{house.minimum_price}}">
+                                                <input type="hidden" name="sale_price" value="{{house.sale_price}}">
+                                                <input type="hidden" name="maximum_price" value="{{house.maximum_price}}">
+
+                                            {% elif service_type.name == "Recherche de Location d'un logement/Terain" %}
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Budget (en fcfa)</label>
+                                                        <input type="number" name="rent_price" class="form-control" value="{{house.rent_price}}">
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="minimum_price" value="{{house.minimum_price}}">
+                                                <input type="hidden" name="sale_price" value="{{house.sale_price}}">
+                                                <input type="hidden" name="maximum_price" value="{{house.maximum_price}}">
+
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div></br>
+                                <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="aditionnal_info">{{house.aditionnal_info}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning">Modifier</button>
+                    </center></br>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </br></br></br></br></br></br>
+{% endblock %}
+
+{% block footer %}
+
+
+{% endblock %}
+
+{% block js %}
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="{% static 'base_app/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'base_app/vendor/shufflejs/dist/shuffle.min.js' %}"></script>
+{% endblock %}

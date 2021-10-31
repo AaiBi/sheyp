@@ -1,0 +1,200 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Construction {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Page title-->
+    <section class="position-relative bg-dark pt-7 pb-5 pb-md-7 bg-size-cover bg-attachment-fixed"
+         style="background-image: url({% static 'real_estate/images/cubes-bg.jpg' %});" xmlns="http://www.w3.org/1999/html">
+        <div class="shape shape-bottom shape-curve bg-body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path fill="currentColor" d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg>
+        </div>
+        <div class="container position-relative zindex-5 text-center pt-md-6 pt-lg-7 py-5 my-lg-3">
+            <h1 class="text-light mb-0">
+                Construction
+            </h1>
+        </div>
+    </section>
+    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <ul class="list-group">
+                            <li class="list-group-item bg-light">
+                                <h3>Phase 1</h3>
+                                <ul>
+                                    <span class="badge bg-info">
+                                        <h5>Project de Construction #{{construction_project.id}}</h5>
+                                    </span></br>
+                                    <li>
+                                        Région : <span class="badge bg-info">{{construction_project.region}}</span>
+                                    </li>
+                                    <li>
+                                        Adresse : <span class="badge bg-info">{{construction_project.adress}}</span>
+                                    </li>
+                                    <li>
+                                        Superficie : <span class="badge bg-info">{{construction_project.area}} m2</span>
+                                    </li>
+                                    <li>
+                                        Surface utilisable : <span class="badge bg-info">{{construction_project.area_usable}} m2</span>
+                                    </li>
+                                    <li>
+                                        Nombre d'étage : <span class="badge bg-info">{{construction_project.number_floor}}</span>
+                                    </li>
+                                    <li>
+                                        Informations supplémentaires : <span class="badge bg-info">{{construction_project.aditionnal_info}}</span>
+                                    </li>
+                                    {% for construction_type in construction_types %}
+                                        {% if construction_type.id == construction_project.construction_type_id %}
+                                            <li>
+                                                Type de construction : <span class="badge bg-info">{{construction_type.name}}</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="list-group-item bg-secondary">
+                                <b>Phase 2</b>
+                                <ul>
+                                    {% for construction_floor in construction_floors %}
+                                        <li>
+                                            Étage : <span class="badge bg-info">#{{construction_floor.floor_level}}</span></br>
+                                            <ul>
+                                                <li>
+                                                    Nombre de chambre avec salle de bain :
+                                                    <span class="badge bg-info">{{construction_floor.number_bedroom_with_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Nombre de chambre simple :
+                                                    <span class="badge bg-info">{{construction_floor.number_bedroom_without_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Nombre de salon : <span class="badge bg-info">{{construction_floor.number_living_room}}</span>
+                                                </li>
+                                                <li>
+                                                    Nombre de toilettes externes :
+                                                    <span class="badge bg-info">{{construction_floor.number_shared_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Nombre de cuisine : <span class="badge bg-info">{{construction_floor.number_kitchen}}</span>
+                                                </li>
+                                                {% if construction_floor.floor_level == 0 %}
+                                                    <li>
+                                                        Garage : <span class="badge bg-info">{{construction_floor.garage}}</span>
+                                                    </li>
+                                                {%endif%}
+                                                <li>
+                                                    Balcon : <span class="badge bg-info">{{construction_floor.balcony}}</span>
+                                                </li>
+                                                <li>
+                                                    Terrasse : <span class="badge bg-info">{{construction_floor.terace}}</span>
+                                                </li>
+                                                <li>
+                                                    Espace de stockage : <span class="badge bg-info">{{construction_floor.closette}}</span>
+                                                </li>
+                                                <li>
+                                                    Informations supplémentaires : <span class="badge bg-info">{{construction_floor.aditionnal_info}}</span>
+                                                </li>
+                                            </ul></br>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="list-group-item bg-light text-white">
+                                <b>Phase 3</b>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+              </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                         <div class="card-header text-white" style="background-color: #d4ac0d; border-radius:10px;">
+                             <center><h2>Phase 3</h2></center>
+                             <center><h5>Ajout d'images</h5></center>
+                         </div></br>
+
+                        <div class="alert bg-info" role="alert">
+                             <h5 class="text-white">
+                                 Si vous aviez déjà une architecture, veuillez les prendre en photo et les ajouter ici !
+                             </h5>
+                        </div>
+                        </br>
+
+                         <div class="card card-body">
+                             <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <input type="file" class="form-control-file" name="image" required>
+                                </div>
+                            </div></br>
+
+                             <button type="submit" class="btn btn-success" style="width: 100%">Envoyer</button>
+                        </div>
+                    </form></br>
+
+                    <!-- Project gallery-->
+                    <section class="pt-4 mt-lg-2 pb-lg-0">
+                        <div class="gallery row">
+                            {% for img in images %}
+                                {% if img.construction_project_id == construction_project.id %}
+                                    <div class="col-md-4 col-sm-6 mb-grid-gutter">
+                                        <a class="gallery-item rounded-3" href="{{img.image.url}}">
+                                            <img src="{{img.image.url}}" style="height:150px">
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </section></br></br>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success" name="complete_construction_project_info" value="complete_construction_project_info" style="margin-left: 73%">
+                            Terminer
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div></br></br></br></br></br></br></br></br>
+{% endblock %}

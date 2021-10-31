@@ -1,0 +1,976 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Opération Immobilière Partie 1 {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Page title-->
+    <section class="position-relative bg-dark pt-7 pb-5 pb-md-7 bg-size-cover bg-attachment-fixed"
+         style="background-image: url({% static 'real_estate/images/cubes-bg.jpg' %});" xmlns="http://www.w3.org/1999/html">
+        <div class="shape shape-bottom shape-curve bg-body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path fill="currentColor" d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg>
+        </div>
+        <div class="container position-relative zindex-5 text-center pt-md-6 pt-lg-7 py-5 my-lg-3">
+            <h1 class="text-light mb-0">
+                Achat/Vente/Location de Biens Immobilier
+            </h1>
+        </div>
+    </section>
+    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <ul class="list-group">
+                            <li class="list-group-item bg-light">
+                                <b>Phase 1</b>
+
+                                {% if not apartments and not studios and not houses and not rooms %}
+                                    <a type="button" class="btn btn-danger" style="margin-left: 80%" href="{% url 'property_management_deletion' property.id %}">
+                                        <i class="ai-trash"></i>
+                                    </a>
+                                {% endif %}
+
+                                <ul>
+                                    <li>
+                                        Code : <span class="badge bg-info">#{{property.id}}</span>
+                                    </li>
+                                    {% for property_type in property_types %}
+                                        {% if property_type.id == property.property_type_id %}
+                                            <li>
+                                                Type de bien Immobilier : <span class="badge bg-info">{{property_type.name}}</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% for service in service_types %}
+                                        {% if service.id == property.service_type_id %}
+                                            <li>
+                                                Type de service : <span class="badge bg-info">{{service.name}}</span>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <li>
+                                        Region : <span class="badge bg-info">{{property.region}}</span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item bg-secondary">
+                                <b>Phase 2</b>
+                                <ul>
+                                    {% for apartment_list in apartments %}
+                                        <li>
+                                            Appartement : <span class="badge bg-info">#{{apartment_list.id}}</span></br>
+                                            <a type="button" class="btn btn-danger" href="{% url 'delete_apartment' property.id apartment_list.id %}" style="font-size: 10px; margin-left:40%;">
+                                                <i class="ai-trash"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-warning" href="{% url 'edit_apartment' property.id apartment_list.id %}" style="font-size: 10px">
+                                                <i class="ai-edit"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-success" href="{% url 'clone_apartment' property.id apartment_list.id %}" style="font-size: 10px">
+                                                <i class="ai-plus"></i>
+                                            </a>
+                                            <ul>
+                                                <li>
+                                                    Adresse : <span class="badge bg-info">{{apartment_list.adress}}</span>
+                                                </li>
+                                                <li>
+                                                    Superficie : <span class="badge bg-info">{{apartment_list.area}} m2</span>
+                                                </li>
+                                                <li>
+                                                    Étage : <span class="badge bg-info">{{apartment_list.floor_level}}er/ème étage</span>
+                                                </li>
+                                                {% for service_type in service_types %}
+                                                    {% if service_type.id == property.service_type_id %}
+
+                                                        <!--we check if the apartement is related to the property-->
+                                                        {% if property.id == apartment_list.property_id %}
+
+                                                            {% if service_type.name == "Achat" %}
+                                                                <li>
+                                                                    Budget Minimum : <span class="badge bg-info">{{apartment_list.minimum_price}} fcfa</span>
+                                                                </li>
+                                                                <li>
+                                                                    Budget Maximum : <span class="badge bg-info">{{apartment_list.maximum_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Vente" %}
+                                                                <li>
+                                                                    Prix : <span class="badge bg-info">{{apartment_list.sale_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                                <li>
+                                                                    Prix : <span class="badge bg-info">{{apartment_list.rent_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Recherche de Location d'un logement/Terrain" %}
+                                                                <li>
+                                                                    Budget : <span class="badge bg-info">{{apartment_list.rent_price}} fcfa</span>
+                                                                </li>
+                                                            {% endif %}
+
+                                                        {% endif %}
+
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <li>
+                                                    Salle de bain externe : <span class="badge bg-info">{{apartment_list.number_shared_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain interne : <span class="badge bg-info">{{apartment_list.number_private_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salon : <span class="badge bg-info">{{apartment_list.number_living_room}}</span>
+                                                </li>
+                                                <li>
+                                                    Chambre à coucher : <span class="badge bg-info">{{apartment_list.number_bedroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Cuisine : <span class="badge bg-info">{{apartment_list.number_kitchen}}</span>
+                                                </li>
+                                                <li>
+                                                    Terrasse :
+                                                    <span class="badge bg-info">
+                                                        {{apartment_list.terace}}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Balcon :
+                                                    <span class="badge bg-info">
+                                                        {{apartment_list.balcony}}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Espace de stockage :
+                                                    <span class="badge bg-info">
+                                                        {{apartment_list.closette}}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Informations supplementaires : <span class="badge bg-info">{{apartment_list.aditionnal_info}}</span>
+                                                </li>
+                                            </ul></br>
+                                        </li>
+                                    {% endfor %}
+
+                                    {% for studio_list in studios %}
+                                        <li>
+                                            Studio : <span class="badge bg-info">#{{studio_list.id}}</span></br>
+                                            <a type="button" class="btn btn-danger" href="{% url 'delete_studio' property.id studio_list.id %}" style="font-size: 10px; margin-left:40%;">
+                                                <i class="ai-trash"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-warning" href="{% url 'edit_studio' property.id studio_list.id %}" style="font-size: 10px">
+                                                <i class="ai-edit"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-success" href="{% url 'clone_studio' property.id studio_list.id %}" style="font-size: 10px">
+                                                <i class="ai-plus"></i>
+                                            </a>
+                                            <ul>
+                                                <li>
+                                                    Adresse : <span class="badge bg-info">{{studio_list.adress}}</span>
+                                                </li>
+                                                <li>
+                                                    Superficie : <span class="badge bg-info">{{studio_list.area}} m2</span>
+                                                </li>
+                                                {% for service_type in service_types %}
+                                                    {% if service_type.id == property.service_type_id %}
+
+                                                        <!--we check if the apartement is related to the property-->
+                                                        {% if property.id == studio_list.property_id %}
+
+                                                            {% if service_type.name == "Achat" %}
+                                                                <li>
+                                                                    Budget Minimum : <span class="badge bg-info">{{studio_list.minimum_price}} fcfa</span>
+                                                                </li>
+                                                                <li>
+                                                                    Budget Maximum : <span class="badge bg-info">{{studio_list.maximum_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Vente" %}
+                                                                <li>
+                                                                    Prix : <span class="badge bg-info">{{studio_list.sale_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                                <li>
+                                                                    Prix : <span class="badge bg-info">{{studio_list.rent_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Recherche de Location d'un logement/Terrain" %}
+                                                                <li>
+                                                                    Budget : <span class="badge bg-info">{{studio_list.rent_price}} fcfa</span>
+                                                                </li>
+                                                            {% endif %}
+
+                                                        {% endif %}
+
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <li>
+                                                    Espace de stockage : <span class="badge bg-info">{{studio_list.closette}}</span>
+                                                </li>
+                                                <li>
+                                                    Terasse : <span class="badge bg-info">{{studio_list.terace}}</span>
+                                                </li>
+                                                <li>
+                                                    Balcon : <span class="badge bg-info">{{studio_list.balcony}}</span>
+                                                </li>
+                                                <li>
+                                                    Informations supplementaires : <span class="badge bg-info">{{studio_list.aditionnal_info}}</span>
+                                                </li>
+                                            </ul></br>
+                                        </li>
+                                    {% endfor %}
+
+                                    {% for house_list in houses %}
+                                        <li>
+                                            House : <span class="badge bg-info">#{{house_list.id}}</span></br>
+                                            <a type="button" class="btn btn-danger" href="{% url 'delete_house' property.id house_list.id %}" style="font-size: 10px; margin-left:40%;">
+                                                <i class="ai-trash"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-warning" href="{% url 'edit_house' property.id house_list.id %}" style="font-size: 10px">
+                                                <i class="ai-edit"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-success" href="{% url 'clone_house' property.id house_list.id %}" style="font-size: 10px">
+                                                <i class="ai-plus"></i>
+                                            </a>
+                                            <ul>
+                                                <li>
+                                                    Adresse : <span class="badge bg-info">{{house_list.adress}}</span>
+                                                </li>
+                                                <li>
+                                                    Superficie : <span class="badge bg-info">{{house_list.area}} m2</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain externe : <span class="badge bg-info">{{house_list.number_shared_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain interne : <span class="badge bg-info">{{house_list.number_private_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salon : <span class="badge bg-info">{{house_list.number_living_room}}</span>
+                                                </li>
+                                                <li>
+                                                    Chambre à coucher : <span class="badge bg-info">{{house_list.number_bedroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Cuisine : <span class="badge bg-info">{{house_list.number_kitchen}}</span>
+                                                </li>
+                                                {% for service_type in service_types %}
+                                                    {% if service_type.id == property.service_type_id %}
+
+                                                        <!--we check if the house is related to the property-->
+                                                        {% if property.id == house_list.property_id %}
+
+                                                            {% if service_type.name == "Achat" %}
+                                                                <li>
+                                                                    Budget Minimum : <span class="badge bg-info">{{house_list.minimum_price}} fcfa</span>
+                                                                </li>
+                                                                <li>
+                                                                    Budget Maximum : <span class="badge bg-info">{{house_list.maximum_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Vente" %}
+                                                                <li>
+                                                                    Prix : <span class="badge bg-info">{{house_list.sale_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                                <li>
+                                                                    Prix : <span class="badge bg-info">{{house_list.rent_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Recherche de Location d'un logement/Terrain" %}
+                                                                <li>
+                                                                    Budget : <span class="badge bg-info">{{house_list.rent_price}} fcfa</span>
+                                                                </li>
+                                                            {% endif %}
+
+                                                        {% endif %}
+
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <li>
+                                                    Espace de stockage : <span class="badge bg-info">{{house_list.closette}}</span>
+                                                </li>
+                                                <li>
+                                                    Terasse : <span class="badge bg-info">{{house_list.terace}}</span>
+                                                </li>
+                                                <li>
+                                                    Garage : <span class="badge bg-info">{{house_list.garage}}</span>
+                                                </li>
+                                                <li>
+                                                    Informations supplementaires : <span class="badge bg-info">{{house_list.aditionnal_info}}</span>
+                                                </li>
+                                            </ul></br>
+                                        </li>
+                                    {% endfor %}
+
+                                    {% for room_list in rooms %}
+                                        <li>
+                                            Room : <span class="badge bg-info">#{{room_list.id}}</span></br>
+                                            <a type="button" class="btn btn-danger" href="{% url 'delete_room' property.id room_list.id %}" style="font-size: 10px; margin-left:40%;">
+                                                <i class="ai-trash"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-warning" href="{% url 'edit_room' property.id room_list.id %}" style="font-size: 10px">
+                                                <i class="ai-edit"></i>
+                                            </a>
+                                            <a type="button" class="btn btn-success" href="{% url 'clone_room' property.id room_list.id %}" style="font-size: 10px">
+                                                <i class="ai-plus"></i>
+                                            </a>
+                                            <ul>
+                                                <li>
+                                                    Adresse : <span class="badge bg-info">{{room_list.adress}}</span>
+                                                </li>
+                                                <li>
+                                                    Superficie : <span class="badge bg-info">{{room_list.area}} m2</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain externe : <span class="badge bg-info">{{room_list.shared_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain interne : <span class="badge bg-info">{{room_list.private_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Cuisine partagée : <span class="badge bg-info">{{room_list.shared_kitchen}}</span>
+                                                </li>
+                                                <li>
+                                                    Espace de stockage partagé : <span class="badge bg-info">{{room_list.shared_closette}}</span>
+                                                </li>
+                                                {% for service_type in service_types %}
+                                                    {% if service_type.id == property.service_type_id %}
+
+                                                        <!--we check if the house is related to the property-->
+                                                        {% if property.id == room_list.property_id %}
+
+                                                            {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                                <li>
+                                                                    Prix : <span class="badge bg-info">{{room_list.rent_price}} fcfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Recherche de Location d'un logement/Terrain" %}
+                                                                <li>
+                                                                    Budget minimum : <span class="badge bg-info">{{room_list.minimum_rent_price}} fcfa</span>
+                                                                </li>
+                                                                <li>
+                                                                    Budget maxinimum : <span class="badge bg-info">{{room_list.maximum_rent_price}} fcfa</span>
+                                                                </li>
+                                                            {% endif %}
+
+                                                        {% endif %}
+
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <li>
+                                                    Informations supplementaires : <span class="badge bg-info">{{room_list.aditionnal_info}}</span>
+                                                </li>
+                                            </ul></br>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="list-group-item bg-light">
+                                <b>Phase 3</b>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+              </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                         <div class="card-header text-white" style="background-color: #d4ac0d; border-radius:10px;">
+                             <center><h2>Phase 2</h2></center>
+                         </div>
+                         <div class="card-body">
+                            {% for property_type in property_types %}
+
+                                {% if property_type.id == property.property_type_id %}
+                                    <!--Apartment form-->
+                                    {% if property_type.name == "Apartement" or property_type.name == "Immeuble" %}
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Adresse</label>
+                                                    <input type="text" name="adress" class="form-control" placeholder="Exemple: Fass Delorme" required>
+                                                </div>
+                                            </div>
+                                        </div>   </br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Niveau d'étage</label>
+                                                    <input type="number" name="floor_level" class="form-control" placeholder="Exemple: 5 (5eme étage)" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Surface du bien en m²</label>
+                                                    <input type="number" name="area" class="form-control" placeholder="Exemple: 150" required>
+                                                </div>
+                                            </div>
+                                        </div> </br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nombre de salles de bain internes</label>
+                                                    <input type="number" name="number_private_bathroom" class="form-control" placeholder="Exemple: 1" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nombre de salles de bain externes</label>
+                                                    <input type="number" name="number_shared_bathroom" class="form-control" placeholder="Exemple: 1" required>
+                                                </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Nombre de salons</label>
+                                                    <input type="number" name="number_living_room" class="form-control" placeholder="Exemple: 1" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Nombre de chambres</label>
+                                                    <input type="number" name="number_bedroom" class="form-control" placeholder="Exemple: 3" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Nombre de cusines</label>
+                                                    <input type="number" name="number_kitchen" class="form-control" placeholder="Exemple: 1" required>
+                                                </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            {% for service_type in service_types %}
+                                                {% if service_type.id == property.service_type_id %}
+
+                                                    {% if service_type.name == "Devis" %}
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Achat" %}
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Budget minimum (en fcfa)</label>
+                                                                <input type="number" name="minimum_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Budget maximum (en fcfa)</label>
+                                                                <input type="number" name="maximum_price" class="form-control" placeholder="Exemple: 6000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+
+                                                    {% elif service_type.name == "Vente" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Prix de vente (en fcfa)</label>
+                                                                <input type="number" name="sale_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Prix de location (en fcfa)</label>
+                                                                <input type="number" name="rent_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Recherche de Location d'un logement/Terain" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Budget (en fcfa)</label>
+                                                                <input type="number" name="rent_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Terrasse</label>
+                                                     <select class="form-select form-control" name="terace" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Balcon</label>
+                                                     <select class="form-select form-control" name="balcony" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Espace de stockage</label>
+                                                     <select class="form-select form-control" name="closette" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" name="aditionnal_info" placeholder="Aviez-vous des informations supplémentaires à ajouter ?"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <!--Studio form-->
+                                    {% elif property_type.name == "Studio" %}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Adresse</label>
+                                                    <input type="text" name="adress" class="form-control" placeholder="Exemple: Fass Delorme" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Niveau d'étage</label>
+                                                    <input type="number" name="floor_level" class="form-control" placeholder="Exemple: 5 (5eme étage)" required>
+                                                </div>
+                                            </div>
+                                        </div> </br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Surface du bien en m²</label>
+                                                    <input type="number" name="area" class="form-control" placeholder="Exemple: 150" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Terrasse</label>
+                                                     <select class="form-select form-control" name="terace" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Espace de stockage</label>
+                                                     <select class="form-select form-control" name="closette" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Balcon</label>
+                                                     <select class="form-select form-control" name="balcony" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            {% for service_type in service_types %}
+                                                {% if service_type.id == property.service_type_id %}
+
+                                                    {% if service_type.name == "Devis" %}
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Achat" %}
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Budget minimum (en fcfa)</label>
+                                                                <input type="number" name="minimum_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Budget maximum (en fcfa)</label>
+                                                                <input type="number" name="maximum_price" class="form-control" placeholder="Exemple: 6000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+
+                                                    {% elif service_type.name == "Vente" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Prix de vente (en fcfa)</label>
+                                                                <input type="number" name="sale_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Prix de location (en fcfa)</label>
+                                                                <input type="number" name="rent_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Recherche de Location d'un logement/Terain" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Budget (en fcfa)</label>
+                                                                <input type="number" name="rent_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" name="aditionnal_info" placeholder="Aviez-vous des informations supplémentaires à ajouter ?"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <!--Maison rez-de-chaussée form-->
+                                    {% elif property_type.name == "Maison rez-de-chaussée" %}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Adresse</label>
+                                                    <input type="text" name="adress" class="form-control" placeholder="Exemple: Fass Delorme" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Surface du bien en m²</label>
+                                                    <input type="number" name="area" class="form-control" placeholder="Exemple: 150" required>
+                                                </div>
+                                            </div>
+                                        </div>   </br>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Nombre de salons</label>
+                                                    <input type="number" name="number_living_room" class="form-control" placeholder="Exemple: 1" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Nombre de chambres</label>
+                                                    <input type="number" name="number_bedroom" class="form-control" placeholder="Exemple: 3" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Nombre de cusines</label>
+                                                    <input type="number" name="number_kitchen" class="form-control" placeholder="Exemple: 1" required>
+                                                </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nombre de salles de bain externes</label>
+                                                    <input type="number" name="number_shared_bathroom" class="form-control" placeholder="Exemple: 1" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nombre de salles de bain internes</label>
+                                                    <input type="number" name="number_private_bathroom" class="form-control" placeholder="Exemple: 1" required>
+                                                </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            {% for service_type in service_types %}
+                                                {% if service_type.id == property.service_type_id %}
+
+                                                    {% if service_type.name == "Devis" %}
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+
+                                                    {% elif service_type.name == "Achat" %}
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Budget minimum (en fcfa)</label>
+                                                                <input type="number" name="minimum_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Budget maximum (en fcfa)</label>
+                                                                <input type="number" name="maximum_price" class="form-control" placeholder="Exemple: 6000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+
+                                                    {% elif service_type.name == "Vente" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Prix de vente (en fcfa)</label>
+                                                                <input type="number" name="sale_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="rent_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Prix de location (en fcfa)</label>
+                                                                <input type="number" name="rent_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Recherche de Location d'un logement/Terain" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Budget (en fcfa)</label>
+                                                                <input type="number" name="rent_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="sale_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Terrasse</label>
+                                                     <select class="form-select form-control" name="terace" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Garage</label>
+                                                     <select class="form-select form-control" name="garage" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Espace de stockage</label>
+                                                     <select class="form-select form-control" name="closette" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" name="aditionnal_info" placeholder="Aviez-vous des informations supplémentaires à ajouter ?"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    <!--Chambre simple ou avec toilette form-->
+                                    {% elif property_type.name == "Chambre simple ou avec toilette" %}
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Adresse</label>
+                                                    <input type="text" name="adress" class="form-control" placeholder="Exemple: Fass Delorme" required>
+                                                </div>
+                                            </div>
+                                        </div>   </br>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Surface du bien en m²</label>
+                                                    <input type="number" name="area" class="form-control" placeholder="Exemple: 150" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Salle de bain interne</label>
+                                                     <select class="form-select form-control" name="private_bathroom" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                        </div>   </br>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Salle de bain externe</label>
+                                                     <select class="form-select form-control" name="shared_bathroom" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Accès cuisine</label>
+                                                     <select class="form-select form-control" name="shared_kitchen" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                 <div class="form-check">
+                                                     <label class="form-check-label">Accès espace de stockage</label>
+                                                     <select class="form-select form-control" name="shared_closette" required="">
+                                                         <option selected disabled value="">Sélectionner</option>
+                                                         <option value="Yes">Oui</option>
+                                                         <option value="No">Non</option>
+                                                     </select>
+                                                 </div>
+                                            </div>
+                                        </div></br>
+                                        <div class="row">
+                                            {% for service_type in service_types %}
+                                                {% if service_type.id == property.service_type_id %}
+                                                    {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label>Prix de location (en fcfa)</label>
+                                                                <input type="number" name="rent_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="minimum_price" value="0">
+                                                        <input type="hidden" name="maximum_price" value="0">
+
+                                                    {% elif service_type.name == "Recherche de Location d'un logement/Terrain" %}
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Budget minimum (en fcfa)</label>
+                                                                <input type="number" name="minimum_price" class="form-control" placeholder="Exemple: 5000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label>Budget maximum (en fcfa)</label>
+                                                                <input type="number" name="maximum_price" class="form-control" placeholder="Exemple: 6000000" required>
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="rent_price" value="0">
+
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div></br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" name="aditionnal_info" placeholder="Aviez-vous des informations supplémentaires à ajouter ?"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                {% endif %}
+
+                             {% endfor %}</br>
+                             <div class="row">
+                                 <div class="col-sm-12 btn-block">
+                                     <button type="submit" class="btn btn-secondary" style="width:100%; background-color: #d4ac0d;">Valider</button>
+                                 </div>
+                             </div>
+                        </div></br>
+                         <a role="button" class="btn btn-success float-right" href="{% url 'property_management_part2' property.id %}" style="margin-left:55%">
+                            Aller à la phase 3 pour ajouter des images
+                         </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div></br></br></br></br></br></br></br></br></br>
+{% endblock %}

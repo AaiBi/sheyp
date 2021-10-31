@@ -1,0 +1,162 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Modification {% endblock %}
+
+{% load static %}
+
+{% block real_estate_active %} active {% endblock %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Page title-->
+    <section class="position-relative bg-dark pt-7 pb-5 pb-md-7 bg-size-cover bg-attachment-fixed"
+         style="background-image: url({% static 'real_estate/images/cubes-bg.jpg' %});" xmlns="http://www.w3.org/1999/html">
+        <div class="shape shape-bottom shape-curve bg-body">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 185.4">
+                <path fill="currentColor" d="M3000,0v185.4H0V0c496.4,115.6,996.4,173.4,1500,173.4S2503.6,115.6,3000,0z"></path>
+            </svg>
+        </div>
+        <div class="container position-relative zindex-5 text-center pt-md-6 pt-lg-7 py-5 my-lg-3">
+            <h1 class="text-light mb-0">
+                Construction
+            </h1>
+        </div>
+    </section>
+    </br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="py-1 my-2 breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'construction_part2' construction_project.id %}">Construction part 2</a>
+                        </li>
+                        <li class="breadcrumb-item"></li>
+                    </ol>
+                </nav>
+                <p></p>
+
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                        {{ error }}
+                    </div>
+                {% else %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+
+                <form class="w3-content" method="POST">
+                    {% csrf_token %}
+                    <center class="card">
+                        <!-- -->
+                        <div class="mySlides">
+
+                            <div class="card-header bg-warning text-white">
+                                <h2>Modification des Informations du Project de Construction #{{construction_project.id}}</h2>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Sélectionner la région</label>
+                                            <select class="form-select form-control" name="region">
+                                                <option selected value="{{construction_project.region}}">{{construction_project.region}}</option>
+                                                <option value="Dakar">Dakar</option>
+                                                <option value="Diourbel">Diourbel</option>
+                                                <option value="Saint-Louis">Saint-Louis</option>
+                                                <option value="Thiès">Thiès</option>
+                                                <option value="Kaolack">Kaolack</option>
+                                                <option value="Tambacounda">Tambacounda</option>
+                                                <option value="Louga">Louga</option>
+                                                <option value="Fatick">Fatick</option>
+                                                <option value="Kolda">Kolda</option>
+                                                <option value="Matam">Matam</option>
+                                                <option value="Kaffrine">Kaffrine</option>
+                                                <option value="Kédougou">Kédougou</option>
+                                                <option value="Sédhiou">Sédhiou</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                    <div class="col-md-6">
+                                         <div class="form-group">
+                                             <label>L'adresse du terrain</label>
+                                             <input type="text" name="adress" class="form-control" value="{{construction_project.adress}}">
+                                         </div>
+                                     </div>
+                                    <p></p>
+                                    <div class="col-sm-6">
+                                        <label></label>
+                                        <select class="form-select form-control" name="construction_type_id">
+                                            {% for construction_type in construction_types %}
+                                                {% if construction_type.id == construction_project.construction_type_id %}
+                                                    <option selected value="{{construction_type.id}}">{{construction_type.name}}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% for construction_type in construction_types %}
+                                                 <option value="{{construction_type.id}}">{{construction_type.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                         <div class="form-group">
+                                            <label>Superficie en m²</label>
+                                            <input type="number" name="area" class="form-control" value="{{construction_project.area}}">
+                                            <div class="form-text">10.000m² = 1hectare</div>
+                                         </div>
+                                    </div>
+                                    <p></p>
+                                    <div class="col-md-6">
+                                         <div class="form-group">
+                                            <label>Surface utilisable du bien en m²</label>
+                                            <input type="number" name="area_usable" class="form-control" value="{{construction_project.area_usable}}">
+                                            <div class="form-text">10.000m² = 1hectare</div>
+                                         </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                         <div class="form-group">
+                                            <label>Nombre d'étage </label>
+                                            <input type="number" name="number_floor" class="form-control" value="{{construction_project.number_floor}}">
+                                         </div>
+                                    </div>
+                                    <p></p>
+                                    <div class="col-md-12">
+                                         <div class="form-group">
+                                            <textarea class="form-control" name="aditionnal_info">{{construction_project.aditionnal_info}}</textarea>
+                                         </div>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning">Modifier</button>
+                    </center></br>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </br></br></br></br></br></br>
+{% endblock %}
+
+{% block footer %}
+
+
+{% endblock %}
+
+{% block js %}
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="{% static 'base_app/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'base_app/vendor/shufflejs/dist/shuffle.min.js' %}"></script>
+{% endblock %}

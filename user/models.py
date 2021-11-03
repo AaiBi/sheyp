@@ -42,7 +42,7 @@ class Land_Projet_Tracker_Offer(models.Model):
     amount = models.DecimalField(max_digits=19, decimal_places=2)
     additional_info = models.TextField(blank=True, default="0")
     accepted = models.CharField(max_length=5, default="No") # can be Yes or No
-    land_region = models.CharField(max_length=200, default="")
+    land_region = models.CharField(max_length=200, default="0")
     land_adress = models.CharField(max_length=200, default="0")
     land_area = models.IntegerField(default="0")
     land_price = models.CharField(max_length=100, default=0)

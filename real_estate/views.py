@@ -128,7 +128,7 @@ def land_operation_part1(request, land_project_pk):
                 new_tracker = Land_Projet_Tracker(land_id=form.id, land_project_id=land_project_pk)
                 new_tracker.save()
 
-                messages.success(request, 'Phase 2 terminée !')
+                messages.success(request, 'Nouveau terrain ajouté avec succès !')
                 return redirect('land_operation_part1', land_project_pk=land_project_pk)
         except ValueError:
             return render(request, 'real_estate/land/land_operation_part1.html',
@@ -318,7 +318,7 @@ def land_operation_part2(request, land_project_pk):
 
     if 'complete_land_operation' in request.POST:
         if request.method == 'POST':
-            messages.success(request, 'Votre demande a été envoyer avec succes, nous vous contacterons tres bientot !')
+            messages.success(request, 'Votre demande a été envoyer avec succès, nous vous contacterons très bientôt  !')
             return redirect('project_detail', land_project_pk=land_project_pk)
 
     if request.method == 'GET':

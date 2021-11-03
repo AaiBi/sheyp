@@ -1,6 +1,8 @@
 {% extends 'base_app/base.html' %}
 
-{% block title %} Opération Immobilière Partie 1 {% endblock %}
+{% load humanize %}
+
+{% block title %} Opération Immobilière Partie 2 {% endblock %}
 
 {% block profile_active %} active {% endblock %}
 
@@ -104,22 +106,22 @@
 
                                                             {% if service_type.name == "Achat" %}
                                                                 <li>
-                                                                    Budget Minimum : <span class="badge bg-info">{{apartment_list.minimum_price}} fcfa</span>
+                                                                    Budget Minimum : <span class="badge bg-info">{{apartment_list.minimum_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                                 <li>
-                                                                    Budget Maximum : <span class="badge bg-info">{{apartment_list.maximum_price}} fcfa</span>
+                                                                    Budget Maximum : <span class="badge bg-info">{{apartment_list.maximum_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                             {% elif service_type.name == "Vente" %}
                                                                 <li>
-                                                                    Prix : <span class="badge bg-info">{{apartment_list.sale_price}} fcfa</span>
+                                                                    Prix : <span class="badge bg-info">{{apartment_list.sale_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                             {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
                                                                 <li>
-                                                                    Prix : <span class="badge bg-info">{{apartment_list.rent_price}} fcfa</span>
+                                                                    Prix : <span class="badge bg-info">{{apartment_list.rent_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                             {% elif service_type.name == "Recherche de Location d'un logement/Terrain" %}
                                                                 <li>
-                                                                    Budget : <span class="badge bg-info">{{apartment_list.rent_price}} fcfa</span>
+                                                                    Budget : <span class="badge bg-info">{{apartment_list.rent_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                             {% endif %}
 
@@ -128,28 +130,37 @@
                                                     {% endif %}
                                                 {% endfor %}
                                                 <li>
-                                                    Salle de bain externe : <span class="badge bg-info">{{apartment_list.number_shared_bathroom}}</span>
+                                                    Chambre à coucher avec salle de bain : <span class="badge bg-info">{{apartment_list.number_bedroom_with_private_bathroom}}</span>
                                                 </li>
                                                 <li>
-                                                    Salle de bain interne : <span class="badge bg-info">{{apartment_list.number_private_bathroom}}</span>
+                                                    Chambre à coucher simple : <span class="badge bg-info">{{apartment_list.number_bedroom_without_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain partagée : <span class="badge bg-info">{{apartment_list.number_shared_bathroom}}</span>
                                                 </li>
                                                 <li>
                                                     Salon : <span class="badge bg-info">{{apartment_list.number_living_room}}</span>
                                                 </li>
                                                 <li>
-                                                    Chambre à coucher : <span class="badge bg-info">{{apartment_list.number_bedroom}}</span>
-                                                </li>
-                                                <li>
                                                     Cuisine : <span class="badge bg-info">{{apartment_list.number_kitchen}}</span>
                                                 </li>
                                                 <li>
-                                                    Espace de stockage : <span class="badge bg-info">{{apartment_list.closette}}</span>
+                                                    Terrasse :
+                                                    <span class="badge bg-info">
+                                                        {{apartment_list.terace}}
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    Balcon : <span class="badge bg-info">{{apartment_list.balcony}}</span>
+                                                    Balcon :
+                                                    <span class="badge bg-info">
+                                                        {{apartment_list.balcony}}
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    Terrasse : <span class="badge bg-info">{{apartment_list.terace}}</span>
+                                                    Espace de stockage :
+                                                    <span class="badge bg-info">
+                                                        {{apartment_list.closette}}
+                                                    </span>
                                                 </li>
                                                 <li>
                                                     Informations supplementaires : <span class="badge bg-info">{{apartment_list.aditionnal_info}}</span>

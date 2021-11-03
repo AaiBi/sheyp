@@ -1,4 +1,6 @@
-              {% extends 'base_app/base.html' %}
+{% extends 'base_app/base.html' %}
+
+{% load humanize %}
 
 {% block title %} Mon Profile {% endblock %}
 
@@ -183,13 +185,15 @@
                                 <h2 class="accordion-header" id="faq-heading-1">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{lands_list.id}}" aria-expanded="true" aria-controls="faq-content-{{lands_list.id}}">
                                         Terrain Numéro<span style="color: #d4ac0d;">#{{lands_list.id}}</span>
-                                        <a type="button" href="{% url 'land_modification' land_project.id lands_list.id %}" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Modification !" style="margin-left: 40%">
-                                            <i class="ai-edit"></i>
-                                        </a>
-                                        {% if land_project.accepted == False %}
-                                            <a type="button" href="{% url 'land_deletion' land_project.id lands_list.id %}" class="btn btn-danger" role="button" data-toggle="tooltip" data-placement="top" title="Suppression !" style="margin-left: 5%">
-                                                <i class="ai-trash"></i>
-                                            </a>
+                                        {% if land_project.statut == "In progress" %}
+                                            {% if land_project.accepted == False %}
+                                                <a type="button" href="{% url 'land_modification' land_project.id lands_list.id %}" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Modification !" style="margin-left: 40%">
+                                                    <i class="ai-edit"></i>
+                                                </a>
+                                                <a type="button" href="{% url 'land_deletion' land_project.id lands_list.id %}" class="btn btn-danger" role="button" data-toggle="tooltip" data-placement="top" title="Suppression !" style="margin-left: 5%">
+                                                    <i class="ai-trash"></i>
+                                                </a>
+                                            {% endif %}
                                         {% endif %}
                                     </button>
                                 </h2>
@@ -204,29 +208,39 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <ul>
-                                                    <li>Prix : {{lands_list.price}} fcfa</li>
-                                                    <li>Prix minimum : {{lands_list.minimum_price}} fcfa</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <ul>
                                                     <li>Plan de situation : {{lands_list.land_plan_situation}}</li>
+                                                    <li>Surface : {{lands_list.area}} m²</li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <ul>
-                                                    <li>Surface : {{lands_list.area}} m²</li>
-                                                    <li>Prix : {{lands_list.price}} fcfa</li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <ul>
-                                                    <li>Prix minimum : {{lands_list.minimum_price}} fcfa</li>
-                                                    <li>Prix maximum : {{lands_list.maximum_price}} fcfa</li>
+                                                    {% for service_type in service_types %}
+                                                        {% if service_type.id == land_project.service_type_id %}
+
+                                                            {% if service_type.name == "Achat" %}
+                                                                <li>
+                                                                    Budget minimum : <span class="badge bg-info">{{lands_list.minimum_price|floatformat:2|intcomma}} cfa</span>
+                                                                </li>
+                                                                <li>
+                                                                    Bidget maximum : <span class="badge bg-info">{{lands_list.maximum_price|floatformat:2|intcomma}} cfa</span>
+                                                                </li>
+                                                            {% elif service_type.name == "Recherche de Location d'un logement/Terrain" %}
+                                                                <li>
+                                                                    Budget minimum : <span class="badge bg-info">{{lands_list.minimum_price|floatformat:2|intcomma}} cfa</span>
+                                                                </li>
+                                                                <li>
+                                                                    Bidget maximum : <span class="badge bg-info">{{lands_list.maximum_price|floatformat:2|intcomma}} cfa</span>
+                                                                </li>
+                                                            {% else %}
+                                                                <li>
+                                                                    Prix : <span class="badge bg-info">{{lands_list.price|floatformat:2|intcomma}} cfa</span>
+                                                                </li>
+                                                            {% endif %}
+
+                                                        {% endif %}
+                                                    {% endfor %}
                                                 </ul>
                                             </div>
                                         </div>

@@ -1,4 +1,6 @@
-              {% extends 'base_app/base.html' %}
+{% extends 'base_app/base.html' %}
+
+{% load humanize %}
 
 {% block title %} Sheyp Tracker {% endblock %}
 
@@ -141,33 +143,33 @@
                                             {% for offer in land_project_tracker_offers %}
                                                 {% if tracker.id == offer.land_project_tacker_id %}
                                                     <tr>
-                                                            <td>#{{offer.id}}</td>
-                                                            <td>{{offer.full_name}}</td>
-                                                            <td>{{offer.amount}} fcfa</td>
-                                                            <td>
-                                                                {% load i18n %}
-                                                                {% language 'fr' %}
-                                                                    {{offer.created|date:'d F Y'}}
-                                                                {% endlanguage %}
-                                                            </td>
-                                                            <td>
-                                                                {% if offer.accepted == "No" %}
-                                                                    <button type="submit" class="btn btn-outline-success" data-bs-toggle="tooltip" title="Offre non acceptée">
-                                                                        <i class="ai-thumbs-up" style="font-size: 20px"></i>
-                                                                    </button>
-                                                                {% elif offer.accepted == "Yes" %}
-                                                                    <a type="button" class="btn btn-outline-warning" data-bs-toggle="tooltip" title="Voir les détails du payment!" style="margin-left:0%" href="{% url 'land_tracker_offer_payment' land_project.id tracker.id offer.id %}">
-                                                                        <i class="ai-dollar-sign" style="font-size: 20px"></i>
-                                                                    </a>
-                                                                    <button type="submit" class="btn btn-success" data-bs-toggle="tooltip" title="Cette offre a été acceptée">
-                                                                        <i class="ai-thumbs-up" style="font-size: 20px"></i>
-                                                                    </button>
-                                                                {% endif %}
-                                                                <a type="button" class="btn btn-outline-info" data-bs-toggle="tooltip" title="Voir les détails !" style="margin-left:0%" href="{% url 'land_tracker_offer_detail' land_project.id tracker.id offer.id %}">
-                                                                    <i class="ai-info" style="font-size: 20px"></i>
+                                                        <td>#{{offer.id}}</td>
+                                                        <td>{{offer.full_name}}</td>
+                                                        <td>{{offer.amount|floatformat:2|intcomma}} fcfa</td>
+                                                        <td>
+                                                            {% load i18n %}
+                                                            {% language 'fr' %}
+                                                                {{offer.created|date:'d F Y'}}
+                                                            {% endlanguage %}
+                                                        </td>
+                                                        <td>
+                                                            {% if offer.accepted == "No" %}
+                                                                <button type="submit" class="btn btn-outline-success" data-bs-toggle="tooltip" title="Offre non acceptée">
+                                                                    <i class="ai-thumbs-up" style="font-size: 20px"></i>
+                                                                </button>
+                                                            {% elif offer.accepted == "Yes" %}
+                                                                <a type="button" class="btn btn-outline-warning" data-bs-toggle="tooltip" title="Voir les détails du payment!" style="margin-left:0%" href="{% url 'land_tracker_offer_payment' land_project.id tracker.id offer.id %}">
+                                                                    <i class="ai-dollar-sign" style="font-size: 20px"></i>
                                                                 </a>
-                                                            </td>
-                                                        </tr>
+                                                                <button type="submit" class="btn btn-success" data-bs-toggle="tooltip" title="Cette offre a été acceptée">
+                                                                    <i class="ai-thumbs-up" style="font-size: 20px"></i>
+                                                                </button>
+                                                            {% endif %}
+                                                            <a type="button" class="btn btn-outline-info" data-bs-toggle="tooltip" title="Voir les détails !" style="margin-left:0%" href="{% url 'land_tracker_offer_detail' land_project.id tracker.id offer.id %}">
+                                                                <i class="ai-info" style="font-size: 20px"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                                 {% endif %}
                                             {% endfor %}
 

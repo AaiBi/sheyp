@@ -1,4 +1,6 @@
-              {% extends 'base_app/base.html' %}
+{% extends 'base_app/base.html' %}
+
+{% load humanize %}
 
 {% block title %} Sheyp Tracker Offer {% endblock %}
 
@@ -191,7 +193,7 @@
                                             <div class="col-sm-6">
                                                 <ul>
                                                     <li> Prix:
-                                                        {{land_project_tracker_offer.amount}} fcfa
+                                                        {{land_project_tracker_offer.amount|floatformat:2|intcomma}} fcfa
                                                     </li>
                                                 </ul>
                                             </div>
@@ -377,12 +379,12 @@
                                         {% endif %}
                                     </div>
 
-                                {% elif service_type.name == "Vente" %}
+                                {% elif service_type.name == "Vente" or "Mise en Location d'un bien Immobilier/Terrain" %}
                                     <div class="col-sm-12">
                                         <div class="row">
                                             <h5><b>Informations sur le Client</b></h5>
                                             {% if land_project_tracker_offer.user_id == 0 %}
-                                                 <div class="col-sm-12">
+                                                 <div class="col-sm-6">
                                                     <ul>
                                                         <li>Nom : {{land_project_tracker_offer.full_name}}</li>
                                                     </ul>
@@ -406,43 +408,6 @@
                                         </div>
                                         <hr>
                                         <div class="row">
-                                            <h5><b>Informations sur le Terrain</b></h5>
-                                            <div class="col-sm-6">
-                                                <ul>
-                                                    <li>Region : {{land_project_tracker_offer.land_region}}</li>
-                                                    <li>Adresse : {{land_project_tracker_offer.land_adress}}</li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <ul>
-                                                    <li> Type de papier:
-                                                        {% for paper in land_papier_types %}
-                                                            {% if paper.id == land_project_tracker_offer.land_paper_type_id %}
-                                                                {{paper.name}}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </li>
-                                                    <li>Plan de situation :
-                                                        {% for plan in land_plan_situation %}
-                                                            {% if plan.id == land_project_tracker_offer.land_plan_situation_id %}
-                                                                {{plan.name}}
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <ul>
-                                                    <li>Superficie : {{land_project_tracker_offer.land_area}} m2</li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <ul>
-                                                    <li> Prix:
-                                                        {{land_project_tracker_offer.amount}} fcfa
-                                                    </li>
-                                                </ul>
-                                            </div>
                                             <div class="col-sm-12">
                                                 <center><b>Informations supplémentaires</b></center>
                                                 {{land_project_tracker_offer.additional_info}}
@@ -453,7 +418,7 @@
                                             <h5><b>Prix</b></h5>
                                              <div class="col-sm-12">
                                                 <ul>
-                                                    <li>Prix : {{land_project_tracker_offer.amount}}</li>
+                                                    <li>Prix : {{land_project_tracker_offer.amount|floatformat:2|intcomma}} cfa</li>
                                                 </ul>
                                              </div>
                                         </div>

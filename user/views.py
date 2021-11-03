@@ -126,7 +126,7 @@ def user_password_change(request):
 ######################################real estat projects#########################################
 @login_required
 def real_estate_projects(request):
-    land_projects = Land_Project.objects.filter(user=request.user)
+    land_projects = Land_Project.objects.filter(user=request.user).order_by('-created')
     real_estate_projects_type = Real_Estate_Projet_Type.objects.all()
     land_types = Land_Type.objects.all()
     service_types = Service_Type.objects.all()

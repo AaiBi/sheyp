@@ -1,5 +1,7 @@
 {% extends 'base_app/base.html' %}
 
+{% load humanize %}
+
 {% block title %} Terrains {% endblock %}
 
 {% block profile_active %} active {% endblock %}
@@ -78,7 +80,7 @@
                                             <a type="button" class="btn btn-warning float-right" href="{% url 'edit_land' land_project.id land.id %}">
                                                 <i class="ai-edit"></i>
                                             </a>
-                                            <a type="button" class="btn btn-success float-right" href="{% url 'clone_land' land_project.id land.id %}">
+                                            <a type="button" class="btn btn-success float-right" href="{% url 'clone_land' land_project.id land.id %}" data-bs-toggle="tooltip" title="Cloner ce terrain">
                                                 <i class="ai-plus"></i>
                                             </a>
                                             <ul>
@@ -111,14 +113,14 @@
                                                     {% if service_type.id == land_project.service_type_id %}
                                                         {% if service_type.name == "Achat" or "Recherche de Location d'un logement/Terrain" %}
                                                             <li>
-                                                                Budget minimum : <span class="badge bg-info">{{land.minimum_price}} cfa</span>
+                                                                Budget minimum : <span class="badge bg-info">{{land.minimum_price|floatformat:2|intcomma}} cfa</span>
                                                             </li>
                                                             <li>
-                                                                Bidget maximum : <span class="badge bg-info">{{land.maximum_price}} cfa</span>
+                                                                Bidget maximum : <span class="badge bg-info">{{land.maximum_price|floatformat:2|intcomma}} cfa</span>
                                                             </li>
                                                         {% else %}
                                                             <li>
-                                                                Prix : <span class="badge bg-info">{{land.price}} cfa</span>
+                                                                Prix : <span class="badge bg-info">{{land.price|floatformat:2|intcomma}} cfa</span>
                                                             </li>
                                                         {% endif %}
                                                     {% endif %}
@@ -156,150 +158,159 @@
                         {% endif %}
                     {% endif %}
 
-                    <form method="POST">
-                        {% csrf_token %}
-                         <div class="card-header text-white" style="background-color: #d4ac0d; border-radius:10px;">
-                             <center><h2>Phase 2</h2></center>
-                         </div>
-                         <div class="card-body">
-                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Sélectionner la région</label>
-                                        <select class="form-select form-control" name="region" required>
-                                            <option selected disabled value="">Région</option>
-                                            <option value="Dakar">Dakar</option>
-                                            <option value="Diourbel">Diourbel</option>
-                                            <option value="Saint-Louis">Saint-Louis</option>
-                                            <option value="Thiès">Thiès</option>
-                                            <option value="Kaolack">Kaolack</option>
-                                            <option value="Tambacounda">Tambacounda</option>
-                                            <option value="Louga">Louga</option>
-                                            <option value="Fatick">Fatick</option>
-                                            <option value="Kolda">Kolda</option>
-                                            <option value="Matam">Matam</option>
-                                            <option value="Kaffrine">Kaffrine</option>
-                                            <option value="Kédougou">Kédougou</option>
-                                            <option value="Sédhiou">Sédhiou</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>L'adresse du bien</label>
-                                        <input type="text" name="adress" class="form-control" placeholder="Exemple: Medina rue6 angle 12" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Surface du bien en m²</label>
-                                        <input type="number" name="area" class="form-control" placeholder="Exemple: 150" required>
-                                        <div id="emailHelp" class="form-text">10.000m² = 1hectare</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Plan de situation du terrain</label>
-                                        <select class="form-select form-control" name="land_plan_situation_id" required="">
-                                            <option selected disabled value="">---------------------------------------------</option>
-                                            {% for plan in land_plan_situation %}
-                                                <option value="{{plan.id}}">{{plan.name}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>Type de Papier</label>
-                                        <select class="form-select form-control" name="land_paper_type_id" required="">
-                                            <option selected disabled value="">--------------------------------------</option>
-                                            {% for land_papier_type in land_papier_types %}
-                                                <option value="{{land_papier_type.id}}">{{land_papier_type.name}}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
+                    <div class="card-header text-white" style="background-color: #d4ac0d; border-radius:10px;">
+                         <center><h2>Phase 2</h2></center>
+                     </div></br></br>
 
-                                {% for service_vente in service_types %}
-                                    {% if service_vente.id == land_project.service_type_id %}
-                                        {% if service_vente.name == "Vente" %}
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Prix de vente (en fcfa)</label>
-                                                    <input type="number" name="price" class="form-control" placeholder="Exemple: 5.000.000" required>
+                    {% if lands.count == 0 %}
+                        <form method="POST">
+                            {% csrf_token %}
+                             <div class="card-body">
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Sélectionner la région</label>
+                                            <select class="form-select form-control" name="region" required>
+                                                <option selected disabled value="">Région</option>
+                                                <option value="Dakar">Dakar</option>
+                                                <option value="Diourbel">Diourbel</option>
+                                                <option value="Saint-Louis">Saint-Louis</option>
+                                                <option value="Thiès">Thiès</option>
+                                                <option value="Kaolack">Kaolack</option>
+                                                <option value="Tambacounda">Tambacounda</option>
+                                                <option value="Louga">Louga</option>
+                                                <option value="Fatick">Fatick</option>
+                                                <option value="Kolda">Kolda</option>
+                                                <option value="Matam">Matam</option>
+                                                <option value="Kaffrine">Kaffrine</option>
+                                                <option value="Kédougou">Kédougou</option>
+                                                <option value="Sédhiou">Sédhiou</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>L'adresse du bien</label>
+                                            <input type="text" name="adress" class="form-control" placeholder="Exemple: Medina rue6 angle 12" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Surface du bien en m²</label>
+                                            <input type="number" name="area" class="form-control" placeholder="Exemple: 150" required>
+                                            <div id="emailHelp" class="form-text">10.000m² = 1hectare</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Plan de situation du terrain</label>
+                                            <select class="form-select form-control" name="land_plan_situation_id" required="">
+                                                <option selected disabled value="">---------------------------------------------</option>
+                                                {% for plan in land_plan_situation %}
+                                                    <option value="{{plan.id}}">{{plan.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Type de Papier</label>
+                                            <select class="form-select form-control" name="land_paper_type_id" required="">
+                                                <option selected disabled value="">--------------------------------------</option>
+                                                {% for land_papier_type in land_papier_types %}
+                                                    <option value="{{land_papier_type.id}}">{{land_papier_type.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    {% for service_vente in service_types %}
+                                        {% if service_vente.id == land_project.service_type_id %}
+                                            {% if service_vente.name == "Vente" %}
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Prix de vente (en fcfa)</label>
+                                                        <input type="number" name="price" class="form-control" placeholder="Exemple: 5.000.000" required>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <input type="hidden" name="minimum_price" value="0">
-                                            <input type="hidden" name="maximum_price" value="0">
-                                        {% elif service_vente.name == "Achat" %}
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Budget minimum (en fcfa)</label>
-                                                    <input type="number" name="minimum_price" class="form-control" placeholder="Exemple: 1.500.000" required>
+                                                <input type="hidden" name="minimum_price" value="0">
+                                                <input type="hidden" name="maximum_price" value="0">
+                                            {% elif service_vente.name == "Achat" %}
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Budget minimum (en fcfa)</label>
+                                                        <input type="number" name="minimum_price" class="form-control" placeholder="Exemple: 1.500.000" required>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Budget maximum (en fcfa)</label>
-                                                    <input type="number" name="maximum_price" class="form-control" placeholder="Exemple: 2.000.000" required>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Budget maximum (en fcfa)</label>
+                                                        <input type="number" name="maximum_price" class="form-control" placeholder="Exemple: 2.000.000" required>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <input type="hidden" name="price" value="0">
+
+                                            {% elif service_vente.name == "Recherche de Location d'un logement/Terrain" %}
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Budget minimum (en fcfa)</label>
+                                                        <input type="number" name="minimum_price" class="form-control" placeholder="Exemple: 1.500.000" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Budget maximum (en fcfa)</label>
+                                                        <input type="number" name="maximum_price" class="form-control" placeholder="Exemple: 2.000.000" required>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="price" value="0">
+
+                                            {% elif service_vente.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Prix de location (en fcfa)</label>
+                                                        <input type="number" name="price" class="form-control" placeholder="Exemple: 5.000.000" required>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="minimum_price" value="0">
+                                                <input type="hidden" name="maximum_price" value="0">
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <p></p>
+
+                                     {% for service_devis in service_types_devis %}
+                                        {% if service_devis.id == land_project.service_type_id %}
                                             <input type="hidden" name="price" value="0">
-
-                                        {% elif service_vente.name == "Recherche de Location d'un logement/Terrain" %}
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Budget minimum (en fcfa)</label>
-                                                    <input type="number" name="minimum_price" class="form-control" placeholder="Exemple: 1.500.000" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Budget maximum (en fcfa)</label>
-                                                    <input type="number" name="maximum_price" class="form-control" placeholder="Exemple: 2.000.000" required>
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="price" value="0">
-
-                                        {% elif service_vente.name == "Mise en Location d'un bien Immobilier/Terrain" %}
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Prix de location (en fcfa)</label>
-                                                    <input type="number" name="price" class="form-control" placeholder="Exemple: 5.000.000" required>
-                                                </div>
-                                            </div>
                                             <input type="hidden" name="minimum_price" value="0">
                                             <input type="hidden" name="maximum_price" value="0">
                                         {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                                <p></p>
-
-                                 {% for service_devis in service_types_devis %}
-                                    {% if service_devis.id == land_project.service_type_id %}
-                                        <input type="hidden" name="price" value="0">
-                                        <input type="hidden" name="minimum_price" value="0">
-                                        <input type="hidden" name="maximum_price" value="0">
-                                    {% endif %}
-                                {% endfor %}
-                                <p></p>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="additional_info" placeholder="Aviez-vous des informations supplémentaires à ajouter ?"></textarea>
+                                    {% endfor %}
+                                    <p></p>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="additional_info" placeholder="Aviez-vous des informations supplémentaires à ajouter ?"></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                             </br>
-                             <div class="row">
-                                 <div class="col-sm-12 btn-block">
-                                     <button type="submit" class="btn" style="width:100%; background-color: #d4ac0d;">Valider</button>
+                                 </br>
+                                 <div class="row">
+                                     <div class="col-sm-12 btn-block">
+                                         <button type="submit" class="btn" style="width:100%; background-color: #d4ac0d;">Valider</button>
+                                     </div>
                                  </div>
-                             </div>
-                        </div></br>
-                         <a role="button" class="btn btn-success float-right" href="{% url 'land_operation_part2' land_project_pk %}" style="margin-left: 55%">
+                            </div></br>
+                        </form>
+                    {% else %}
+                        <div class="alert bg-warning text-white" role="alert">
+                            Le boutton vert avec le signe + permet d'ajouter un autre terrain avec les mêmes informations
+                            que le premier. Vous aurez aussi la possibilité de modifier ces infos si vous le voulez.
+                        </div></br></br>
+
+                        <a role="button" class="btn btn-success float-right" href="{% url 'land_operation_part2' land_project_pk %}" style="margin-left: 55%">
                             Aller à la phase 3 pour ajouter des images
                          </a>
-                    </form>
+                    {% endif %}
                 </div>
             </div>
         </div>

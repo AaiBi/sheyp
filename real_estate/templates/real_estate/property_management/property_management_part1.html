@@ -1,5 +1,7 @@
 {% extends 'base_app/base.html' %}
 
+{% load humanize %}
+
 {% block title %} Opération Immobilière Partie 1 {% endblock %}
 
 {% block profile_active %} active {% endblock %}
@@ -107,22 +109,22 @@
 
                                                             {% if service_type.name == "Achat" %}
                                                                 <li>
-                                                                    Budget Minimum : <span class="badge bg-info">{{apartment_list.minimum_price}} fcfa</span>
+                                                                    Budget Minimum : <span class="badge bg-info">{{apartment_list.minimum_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                                 <li>
-                                                                    Budget Maximum : <span class="badge bg-info">{{apartment_list.maximum_price}} fcfa</span>
+                                                                    Budget Maximum : <span class="badge bg-info">{{apartment_list.maximum_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                             {% elif service_type.name == "Vente" %}
                                                                 <li>
-                                                                    Prix : <span class="badge bg-info">{{apartment_list.sale_price}} fcfa</span>
+                                                                    Prix : <span class="badge bg-info">{{apartment_list.sale_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                             {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
                                                                 <li>
-                                                                    Prix : <span class="badge bg-info">{{apartment_list.rent_price}} fcfa</span>
+                                                                    Prix : <span class="badge bg-info">{{apartment_list.rent_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                             {% elif service_type.name == "Recherche de Location d'un logement/Terrain" %}
                                                                 <li>
-                                                                    Budget : <span class="badge bg-info">{{apartment_list.rent_price}} fcfa</span>
+                                                                    Budget : <span class="badge bg-info">{{apartment_list.rent_price|floatformat:2|intcomma}} fcfa</span>
                                                                 </li>
                                                             {% endif %}
 
@@ -131,16 +133,16 @@
                                                     {% endif %}
                                                 {% endfor %}
                                                 <li>
-                                                    Salle de bain externe : <span class="badge bg-info">{{apartment_list.number_shared_bathroom}}</span>
+                                                    Chambre à coucher avec salle de bain : <span class="badge bg-info">{{apartment_list.number_bedroom_with_private_bathroom}}</span>
                                                 </li>
                                                 <li>
-                                                    Salle de bain interne : <span class="badge bg-info">{{apartment_list.number_private_bathroom}}</span>
+                                                    Chambre à coucher simple : <span class="badge bg-info">{{apartment_list.number_bedroom_without_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain partagée : <span class="badge bg-info">{{apartment_list.number_shared_bathroom}}</span>
                                                 </li>
                                                 <li>
                                                     Salon : <span class="badge bg-info">{{apartment_list.number_living_room}}</span>
-                                                </li>
-                                                <li>
-                                                    Chambre à coucher : <span class="badge bg-info">{{apartment_list.number_bedroom}}</span>
                                                 </li>
                                                 <li>
                                                     Cuisine : <span class="badge bg-info">{{apartment_list.number_kitchen}}</span>
@@ -440,14 +442,14 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Nombre de salles de bain internes</label>
-                                                    <input type="number" name="number_private_bathroom" class="form-control" placeholder="Exemple: 1" required>
+                                                    <label>Nombre de chambres avec salles de bain internes</label>
+                                                    <input type="number" name="number_bedroom_with_private_bathroom" class="form-control" placeholder="Exemple: 1" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Nombre de salles de bain externes</label>
-                                                    <input type="number" name="number_shared_bathroom" class="form-control" placeholder="Exemple: 1" required>
+                                                    <label>Nombre de chambres simples</label>
+                                                    <input type="number" name="number_bedroom_without_bathroom" class="form-control" placeholder="Exemple: 1" required>
                                                 </div>
                                             </div>
                                         </div></br>
@@ -460,8 +462,8 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Nombre de chambres</label>
-                                                    <input type="number" name="number_bedroom" class="form-control" placeholder="Exemple: 3" required>
+                                                    <label>Nombre de toilettes partagée</label>
+                                                    <input type="number" name="number_shared_bathroom" class="form-control" placeholder="Exemple: 3" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">

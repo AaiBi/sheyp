@@ -4,7 +4,9 @@ from user.models import Customer, Cart, Cart_Payment, Land_Projet_Tracker, Land_
     Land_Projet_Tracker_Offer_Image, Land_Projet_Tracker_Offer_Payment, Land_Projet_Tracker_Payment_Image, \
     Delivery_Payment, Construction_Delivery_Image, \
     Construction_Delivery, Construction_Tracker_Realisation_Image, Construction_Tracker_Realisation, \
-    Construction_Tracker_Sub_Step, Step_Payment, Construction_Tracker_Step, Construction_Expense, Construction_Projet_Tracker
+    Construction_Tracker_Sub_Step, Step_Payment, Construction_Tracker_Step, Construction_Expense, \
+    Construction_Projet_Tracker, Property_Projet_Tracker_Payment_Image, Property_Projet_Tracker_Offer_Payment, \
+    Property_Projet_Tracker_Offer_Image, Property_Projet_Tracker_Offer, Property_Projet_Tracker
 
 admin.site.register(Customer)
 
@@ -17,6 +19,12 @@ admin.site.register(Land_Projet_Tracker_Offer)
 admin.site.register(Land_Projet_Tracker_Offer_Image)
 admin.site.register(Land_Projet_Tracker_Offer_Payment)
 admin.site.register(Land_Projet_Tracker_Payment_Image)
+
+admin.site.register(Property_Projet_Tracker)
+admin.site.register(Property_Projet_Tracker_Offer)
+admin.site.register(Property_Projet_Tracker_Offer_Image)
+admin.site.register(Property_Projet_Tracker_Offer_Payment)
+admin.site.register(Property_Projet_Tracker_Payment_Image)
 
 admin.site.register(Construction_Projet_Tracker)
 admin.site.register(Construction_Expense)

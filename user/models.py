@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from construction.models import Construction_Project
-from real_estate.models import Land_Project, Lands
+from real_estate.models import Land_Project, Lands, Property
 from base_app.models import Provider
 
 
@@ -28,7 +28,7 @@ class Construction_Projet_Automatic_Counter_Image(models.Model):
 
 
 
-        ########################################Tracker###########################################################
+        ########################################Land Tracker###########################################################
 class Land_Projet_Tracker(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     land = models.ForeignKey(Lands, on_delete=models.CASCADE, default="")
@@ -170,3 +170,49 @@ class Cart_Payment_Image(models.Model):
     cart_payment = models.ForeignKey(Cart_Payment, on_delete=models.CASCADE, default="")
 
                                     ##End cart##
+
+
+########################################Property project Tracker###########################################################
+########################################Property project Tracker###########################################################
+########################################Property project Tracker###########################################################
+class Property_Projet_Tracker(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, default="")
+
+
+class Property_Projet_Tracker_Offer(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    full_name = models.CharField(max_length=500, default="")
+    phone_number = models.CharField(max_length=20, default="")
+    amount = models.DecimalField(max_digits=19, decimal_places=2)
+    additional_info = models.TextField(blank=True, default="0")
+    accepted = models.CharField(max_length=5, default="No") # can be Yes or No
+    property_region = models.CharField(max_length=200, default="0")
+    property_adress = models.CharField(max_length=200, default="0")
+    property_area = models.IntegerField(default="0")
+    property_price = models.CharField(max_length=100, default=0)
+    property_type_id = models.IntegerField(default="0")
+    user_id = models.IntegerField(default=0) #we use it if the customer have an account
+    property_project_tacker = models.ForeignKey(Property_Projet_Tracker, on_delete=models.CASCADE, default="")
+
+
+class Property_Projet_Tracker_Offer_Image(models.Model):
+    image = models.ImageField(upload_to='user/images/real_estate/property_project/tracker/offers/', blank=True)
+    property_project_tracker_offer = models.ForeignKey(Property_Projet_Tracker_Offer, on_delete=models.CASCADE,
+                                                         blank=True, default="")
+
+
+class Property_Projet_Tracker_Offer_Payment(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    additional_info = models.TextField(blank=True, default="")
+    property_project_tracker_offer = models.ForeignKey(Property_Projet_Tracker_Offer, on_delete=models.CASCADE)
+
+
+class Property_Projet_Tracker_Payment_Image(models.Model):
+    image = models.ImageField(
+        upload_to='user/images/real_estate/property_project/tracker/offers/payment/', blank=True)
+    property_project_tracker_payment = models.ForeignKey(Property_Projet_Tracker_Offer_Payment, on_delete=models.CASCADE,
+                                                         blank=True, default="")
+########################################End Property project Tracker#######################################################
+########################################End Property project Tracker#######################################################
+########################################End Property project Tracker#######################################################

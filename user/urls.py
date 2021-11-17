@@ -18,6 +18,15 @@ urlpatterns = [
     path('real_estate_project_modification_land/<int:land_project_pk>/<int:land_pk>', views.land_modification, name='land_modification'),
     path('real_estate_project_land_deletion/<int:land_project_pk>/<int:land_pk>', views.land_deletion, name='land_deletion'),
 
+    #properties projects
+    path('property_project_detail/<int:property_pk>/<int:property_type_detail_pk>', views.property_project_detail, name='property_project_detail'),
+    path('property_project_deletion/<int:property_pk>/<int:property_type_detail_pk>', views.property_project_deletion, name='property_project_deletion'),
+
+    #properties projects tracker
+    path('property_project_tracker/<int:property_pk>/<int:property_type_detail_pk>/<int:tracker_pk>', views.property_project_tracker, name='property_project_tracker'),
+    path('property_tracker_offer_detail/<int:property_pk>/<int:property_type_detail_pk>/<int:tracker_pk>/<int:offer_pk>', views.property_tracker_offer_detail, name='property_tracker_offer_detail'),
+    path('property_tracker_offer_payment/<int:property_pk>/<int:property_type_detail_pk>/<int:tracker_pk>/<int:offer_pk>', views.property_tracker_offer_payment, name='property_tracker_offer_payment'),
+
     #construction projects
     path('construction_projects/', views.construction_projects, name='construction_projects'),
     path('construction_project_detail/<int:construction_project_pk>', views.construction_project_detail, name='construction_project_detail'),

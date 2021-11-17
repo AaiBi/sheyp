@@ -86,19 +86,6 @@
             <div class="col-lg-8">
                 <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
                     <div class="py-2 p-md-3">
-                        <!-- Title + Filters-->
-                        <div class="d-sm-flex align-items-center justify-content-between pb-2">
-                            <h1 class="h3 mb-3 text-center text-sm-start">Liste de vos projets Immobilier</h1>
-                            <div class="d-flex align-items-center mb-3">
-                                <label class="form-label text-nowrap pe-1 me-2 mb-0">Sort orders</label>
-                                <select class="form-select form-select-sm">
-                                    <option>All</option>
-                                    <option>In progress</option>
-                                    <option>Delivered</option>
-                                    <option>Canceled</option>
-                                </select>
-                            </div>
-                        </div>
 
                         {% if error %}
                             <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
@@ -114,7 +101,7 @@
                             {% endif %}
                         {% endif %}
 
-                        <!-- Accordion with orders-->
+                        <!-- Accordion with land projects-->
                         <div class="accordion" id="orders-accordion">
                             <!-- Order-->
                             {% for projects in land_projects %}
@@ -163,6 +150,63 @@
                                         </div>
                                     </div>
                                 </div>
+                            {% endfor %}
+                        </div>
+                        <hr>
+                        <!-- Accordion with the rest of the real estate orders-->
+                        <div class="accordion" id="faq">
+                            {% for property in properties %}
+                                {% for property_type_detail in property_type_details %}
+                                    {% if property_type_detail.property_id == property.id %}
+                                        <div class="accordion-item shadow">
+                                            <h2 class="accordion-header" id="faq-heading-10">
+                                                <button class="accordion-button no-indicator d-flex flex-wrap align-items-center justify-content-between pe-4" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{property.ref}}" aria-expanded="true" aria-controls="faq-content-{{property.ref}}">
+                                                    <div class="fs-sm fw-medium text-nowrap my-1 me-2"><i class="ai-hash fs-base me-1"></i><span class="d-inline-block align-middle">{{property.ref}}</span></div>
+                                                    <div class="text-nowrap text-body fs-sm fw-normal my-1 me-2">
+                                                        <i class="ai-clock text-muted me-1"></i>
+                                                        {% load i18n %}
+                                                        {% language 'fr' %}
+                                                            {{property.created|date:'d F Y'}}
+                                                        {% endlanguage %}
+                                                    </div>
+                                                    {% if property.statut == "In progress" %}
+                                                        <div class="bg-faded-info text-info fs-xs fw-medium py-1 px-3 rounded-1 my-1 me-2">En cours..</div>
+                                                    {% elif property.statut == "Done" %}
+                                                        <div class="bg-faded-warning text-success fs-xs fw-medium py-1 px-3 rounded-1 my-1 me-2">Terminé</div>
+                                                    {% endif %}
+                                                    <div class="text-body fs-sm fw-medium my-1">
+                                                        {% for types in property_types %}
+                                                            {% if types.id == property.property_type_id %}
+                                                                {{types.name}}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div class="accordion-collapse collapse" id="faq-content-{{property.ref}}" aria-labelledby="faq-heading-{{property.ref}}" data-bs-parent="#faq">
+                                                <div class="accordion-body">
+                                                    <div class="align-items-center justify-content-between border-top">
+                                                        <div class="accordion-body bg-secondary">
+                                                            <!-- Item-->
+                                                            <div class="row">
+                                                                <div class="col-sm-12" align="center" style="margin-top:20px">
+                                                                    <a type="button" href="{% url 'property_project_detail' property.id property_type_detail.id %}" class="btn btn-outline-info" role="button" data-toggle="tooltip" data-placement="top" title="Informations supplémentaires !" style="margin-right: 20%">
+                                                                        <i class="ai-info" style="font-size: 40px"></i>
+                                                                    </a>
+                                                                    {% if property.accepted == False %}
+                                                                        <a type="button" href="{% url 'property_project_deletion' property.id property_type_detail.id %}" class="btn btn-outline-danger" role="button" data-toggle="tooltip" data-placement="top" title="Supprimer ce projet !">
+                                                                            <i class="ai-trash" style="font-size: 40px"></i>
+                                                                        </a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
                             {% endfor %}
                         </div>
                     </div>

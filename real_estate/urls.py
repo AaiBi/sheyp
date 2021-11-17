@@ -20,22 +20,9 @@ urlpatterns = [
     path('property_management_part2/<int:property_pk>', views.property_management_part2, name='property_management_part2'),
     path('property_management_deletion/<int:property_pk>', views.property_management_deletion, name='property_management_deletion'),
     path('property_management_ad_detail/<int:property_pk>/<int:object_pk>', views.property_management_ad_detail, name='property_management_ad_detail'),
-                                                #Apartment#
-    path('edit_apartment/<int:property_pk>/<int:apartment_pk>', views.edit_apartment, name='edit_apartment'),
-    path('delete_apartment/<int:property_pk>/<int:apartment_pk>', views.delete_apartment, name='delete_apartment'),
-    path('clone_apartment/<int:property_pk>/<int:apartment_pk>', views.clone_apartment, name='clone_apartment'),
-                                                #Studio#
-    path('edit_studio/<int:property_pk>/<int:studio_pk>', views.edit_studio, name='edit_studio'),
-    path('delete_studio/<int:property_pk>/<int:studio_pk>', views.delete_studio, name='delete_studio'),
-    path('clone_studio/<int:property_pk>/<int:studio_pk>', views.clone_studio, name='clone_studio'),
-                                                #House#
-    path('edit_house/<int:property_pk>/<int:house_pk>', views.edit_house, name='edit_house'),
-    path('delete_house/<int:property_pk>/<int:house_pk>', views.delete_house, name='delete_house'),
-    path('clone_house/<int:property_pk>/<int:house_pk>', views.clone_house, name='clone_house'),
-                                                #Room#
-    path('edit_room/<int:property_pk>/<int:room_pk>', views.edit_room, name='edit_room'),
-    path('delete_room/<int:property_pk>/<int:room_pk>', views.delete_room, name='delete_room'),
-    path('clone_room/<int:property_pk>/<int:room_pk>', views.clone_room, name='clone_room'),
+                                                #property type details#
+    path('edit_property_type_details/<int:property_pk>/<int:property_type_detail_pk>', views.edit_property_type_details, name='edit_property_type_details'),
+
                                                 #Land#
 
 ]

@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
 from real_estate.models import Lands, Land_Project
-from user.models import Customer, Land_Projet_Tracker_Offer
+from user.models import Customer, Land_Projet_Tracker_Offer, Property_Projet_Tracker_Offer
 
 
 class SignUpForm(forms.ModelForm):
@@ -111,4 +111,13 @@ class Land_Projet_Tracker_Offer_Form(forms.ModelForm):
         fields = [
             'full_name', 'phone_number', 'amount', 'additional_info', 'land_region', 'land_adress', 'land_area',
             'land_price', 'land_plan_situation_id', 'land_paper_type_id', 'user_id', 'accepted'
+        ]
+
+
+class Property_Projet_Tracker_Offer_Form(forms.ModelForm):
+    class Meta:
+        model = Property_Projet_Tracker_Offer
+        fields = [
+            'full_name', 'phone_number', 'amount', 'additional_info', 'property_region', 'property_adress', 'property_area',
+            'property_price', 'property_type_id', 'user_id', 'accepted'
         ]

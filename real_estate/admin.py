@@ -1,8 +1,7 @@
 from django.contrib import admin
 from real_estate.models import Land_Project, Lands, Land_Propostion, Land_Images1, Property_Type, Service_Type, \
-    Apartment, Room, Property, Land_Images2, Land_Type, Land_Plan_Situation, Land_Purchase_Order, \
-    Real_Estate_Projet_Type, Studio, Studio_Image, House, House_Image, Room_Image, \
-    Land_Paper_Type, Apartment_Image
+    Property_Type_Details, Property_Type_Details_Image, Property, Land_Images2, Land_Type, Land_Plan_Situation, Land_Purchase_Order, \
+    Real_Estate_Projet_Type, Land_Paper_Type
 
 admin.site.register(Real_Estate_Projet_Type)
 
@@ -19,13 +18,7 @@ admin.site.register(Land_Purchase_Order)
 #property purchase,sale or location part
 admin.site.register(Property_Type)
 admin.site.register(Service_Type)
-admin.site.register(Apartment)
-admin.site.register(Room)
+admin.site.register(Property_Type_Details)
+admin.site.register(Property_Type_Details_Image)
 admin.site.register(Property)
-admin.site.register(Studio)
-admin.site.register(Studio_Image)
-admin.site.register(House)
-admin.site.register(House_Image)
-admin.site.register(Room_Image)
 admin.site.register(Land_Paper_Type)
-admin.site.register(Apartment_Image)

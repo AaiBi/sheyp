@@ -11,14 +11,15 @@ from base_app.models import Provider
 from construction.forms import Construction_floor_Form
 from construction.models import Construction_Project, Construction_Type, Construction_floor, Architecture_Image
 from real_estate.models import Land_Project, Real_Estate_Projet_Type, Land_Type, Service_Type, Lands, Land_Images1, \
-    Land_Plan_Situation, Land_Paper_Type, Property
+    Land_Plan_Situation, Land_Paper_Type, Property, Property_Type_Details, Property_Type_Details_Image, Property_Type
 from user.forms import EditUserInfoForm, EditUserInfoForm1, EditUserPasswordForm, Land_Form, Land_Project_Form, \
-    Land_Projet_Tracker_Offer_Form
+    Land_Projet_Tracker_Offer_Form, Property_Projet_Tracker_Offer_Form
 from user.models import Customer, Cart, Land_Projet_Tracker, Land_Projet_Tracker_Offer, Land_Projet_Tracker_Offer_Image, \
     Land_Projet_Tracker_Offer_Payment, Land_Projet_Tracker_Payment_Image, Construction_Projet_Tracker, \
     Construction_Tracker_Step, Construction_Tracker_Sub_Step, Construction_Tracker_Realisation, \
-    Construction_Tracker_Realisation_Image, Construction_Expense, Step_Payment, Construction_Delivery, Delivery_Payment,\
-    Construction_Delivery_Image
+    Construction_Tracker_Realisation_Image, Construction_Expense, Step_Payment, Construction_Delivery, Delivery_Payment, \
+    Construction_Delivery_Image, Property_Projet_Tracker, Property_Projet_Tracker_Offer, \
+    Property_Projet_Tracker_Offer_Image, Property_Projet_Tracker_Offer_Payment, Property_Projet_Tracker_Payment_Image
 
 
 def login_user(request):
@@ -130,9 +131,15 @@ def real_estate_projects(request):
     real_estate_projects_type = Real_Estate_Projet_Type.objects.all()
     land_types = Land_Type.objects.all()
     service_types = Service_Type.objects.all()
+    properties = Property.objects.filter(user=request.user).order_by('-created')
+    property_type_details = Property_Type_Details.objects.all()
+    property_type_details_images = Property_Type_Details_Image.objects.all()
+    property_types = Property_Type.objects.all()
+
     return render(request, 'user/real_estate_projects/real_estate_projects.html', {
         'land_projects': land_projects, 'real_estate_projects_type': real_estate_projects_type, 'land_types':
-         land_types, 'service_types': service_types})
+         land_types, 'service_types': service_types, 'properties': properties, 'property_type_details': property_type_details,
+        'property_type_details_images': property_type_details_images, 'property_types': property_types})
 
 
 
@@ -275,6 +282,121 @@ def land_deletion(request, land_project_pk, land_pk):
         messages.success(request, 'Suppression effectuée !')
         return redirect('project_detail', land_project_pk=land_project_pk)
 
+
+
+###################################################PROPERTY PROJECT#############################################
+###################################################PROPERTY PROJECT#############################################
+###################################################PROPERTY PROJECT#############################################
+@login_required
+def property_project_detail(request, property_pk, property_type_detail_pk):
+    property_project = get_object_or_404(Property, pk=property_pk, user=request.user)
+    property_types = Property_Type.objects.all()
+    property_type_detail = get_object_or_404(Property_Type_Details, pk=property_type_detail_pk)
+    property_type_detail_images = Property_Type_Details_Image.objects.all()
+    service_types = Service_Type.objects.all()
+    property_project_trackers = Property_Projet_Tracker.objects.filter(property_id=property_pk)
+
+    return render(request, 'user/real_estate_projects/properties/property_project_detail.html',
+                  {'property_project': property_project, 'property_types': property_types, 'property_type_detail':
+                      property_type_detail, 'property_type_detail_images': property_type_detail_images, 'service_types':
+                   service_types, 'property_project_trackers': property_project_trackers})
+
+
+@login_required
+def property_project_deletion(request, property_pk, property_type_detail_pk):
+    property_project = get_object_or_404(Property, pk=property_pk, user=request.user)
+    property_types = Property_Type.objects.all()
+    property_type_detail = get_object_or_404(Property_Type_Details, pk=property_type_detail_pk)
+    property_type_detail_images = Property_Type_Details_Image.objects.all()
+    service_types = Service_Type.objects.all()
+
+    if request.method == 'GET':
+        return render(request, 'user/real_estate_projects/properties/property_project_deletion.html',
+                      {'property_project': property_project, 'property_types': property_types, 'property_type_detail':
+                      property_type_detail, 'property_type_detail_images': property_type_detail_images, 'service_types':
+                   service_types})
+    if request.method == 'POST':
+        property_project.delete()
+        messages.success(request, 'Suppression effectuée !')
+        return redirect('real_estate_projects')
+###################################################END PROPERTY PROJECT#############################################
+###################################################END PROPERTY PROJECT#############################################
+###################################################END PROPERTY PROJECT#############################################
+
+
+##############################################PROPERTY PROJECT TRACKER#############################################
+##############################################PROPERTY PROJECT TRACKER#############################################
+##############################################PROPERTY PROJECT TRACKER#############################################
+@login_required
+def property_project_tracker(request, property_pk, property_type_detail_pk, tracker_pk):
+    property_project = get_object_or_404(Property, pk=property_pk, user=request.user)
+    property_type_detail = get_object_or_404(Property_Type_Details, pk=property_type_detail_pk)
+    property_project_tracker = get_object_or_404(Property_Projet_Tracker, pk=tracker_pk)
+    property_project_tracker_offers = Property_Projet_Tracker_Offer.objects.filter(property_project_tacker_id=tracker_pk).order_by('-created')
+    if request.method == 'GET':
+        return render(request, 'user/real_estate_projects/property_tracker/property_project_tracker.html',
+                      {'property_project': property_project, 'property_type_detail': property_type_detail,
+                       ' property_project_tracker': property_project_tracker, 'property_project_tracker_offers':
+                       property_project_tracker_offers, 'tracker_pk': tracker_pk})
+
+
+@login_required
+def property_tracker_offer_detail(request, property_pk, property_type_detail_pk, tracker_pk, offer_pk):
+    property_project = get_object_or_404(Property, pk=property_pk, user=request.user)
+    property_type_detail = get_object_or_404(Property_Type_Details, pk=property_type_detail_pk)
+    property_project_tracker = get_object_or_404(Property_Projet_Tracker, pk=tracker_pk)
+    offer = get_object_or_404(Property_Projet_Tracker_Offer, pk=offer_pk)
+    offer_images = Property_Projet_Tracker_Offer_Image.objects.filter(property_project_tracker_offer_id=offer_pk)
+    service_types = Service_Type.objects.all()
+    property_types = Property_Type.objects.all()
+
+    if request.method == 'GET':
+        form = Property_Projet_Tracker_Offer_Form(instance=offer)
+        return render(request, 'user/real_estate_projects/property_tracker/property_tracker_offer_detail.html',
+                      {'property_project': property_project, 'property_project_tracker': property_project_tracker, 'form': form,
+                       'offer_images': offer_images, 'tracker_pk': tracker_pk, 'offer': offer, 'service_types': service_types,
+                       'property_type_detail': property_type_detail, 'property_types': property_types})
+    else:
+        try:
+            form = Property_Projet_Tracker_Offer_Form(request.POST, instance=offer)
+
+            if 'offer_accepted' in request.POST:
+                form = form.save(commit=False)
+                form.property_project_tacker = get_object_or_404(Property_Projet_Tracker,
+                                                id=request.POST.get('property_project_tacker_id'))
+                form.save()
+                messages.success(request, 'Cette offre a été acceptée avec succès !')
+                return redirect('property_project_tracker', property_pk=property_pk, property_type_detail_pk=property_type_detail_pk
+                                , tracker_pk=tracker_pk)
+
+        except ValueError:
+            return render(request, 'user/real_estate_projects/property_tracker/property_tracker_offer_detail.html',
+                          {'property_project': property_project, 'property_project_tracker':
+                          property_project_tracker, 'form': form, 'offer_images': offer_images, 'tracker_pk': tracker_pk,
+                           'property_type_detail': property_type_detail, 'offer': offer, 'service_types': service_types,
+                           'error': 'Une erreur est survenue !'})
+
+
+@login_required
+def property_tracker_offer_payment(request, property_pk, property_type_detail_pk, tracker_pk, offer_pk):
+    property_project = get_object_or_404(Property, pk=property_pk, user=request.user)
+    property_type_detail = get_object_or_404(Property_Type_Details, pk=property_type_detail_pk)
+    property_project_tracker = get_object_or_404(Property_Projet_Tracker, pk=tracker_pk)
+    offer = get_object_or_404(Property_Projet_Tracker_Offer, pk=offer_pk)
+    property_tracker_offer_payment = Property_Projet_Tracker_Offer_Payment.objects.filter(
+                                    property_project_tracker_offer_id=offer_pk)
+    property_tracker_offer_payment_images = Property_Projet_Tracker_Payment_Image.objects.all()
+    property_types = Property_Type.objects.all()
+    if request.method == 'GET':
+        return render(request, 'user/real_estate_projects/property_tracker/property_tracker_offer_payment.html',
+                      {'property_project': property_project, 'property_project_tracker':
+                          property_project_tracker, 'tracker_pk': tracker_pk, 'property_tracker_offer_payment':
+                          property_tracker_offer_payment, 'property_tracker_offer_payment_images':
+                          property_tracker_offer_payment_images, 'property_types': property_types,
+                           'property_type_detail': property_type_detail, 'offer': offer})
+###########################################END PROPERTY PROJECT TRACKER#############################################
+###########################################END PROPERTY PROJECT TRACKER#############################################
+###########################################END PROPERTY PROJECT TRACKER#############################################
 
 
 ##############################################LAND PROJECT TRACKER#############################################

@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -37,3 +38,16 @@ class Notation_System(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Success_Story(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    stars = models.IntegerField()
+    land_project_id = models.IntegerField(default=0)
+    property_project_id = models.IntegerField(default=0)
+    construction_project_id = models.IntegerField(default=0)
+    message = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.stars

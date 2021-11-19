@@ -1,5 +1,7 @@
 {% extends 'base_app/base.html' %}
 
+{% load humanize %}
+
 {% block title %} Sheyp {% endblock %}
 
 {% load static %}
@@ -16,162 +18,239 @@
     <!-- Product gallery + info-->
     <section class="sidebar-enabled sidebar-end border-bottom mb-5 mb-md-6">
         <div class="container">
-            {% for property_type in property_types %}
-                {% if property_type.id == property.property_type_id %}
-
-                    {% if property_type.name == "Maison rez-de-chaussée" %}
-
-                        {% for house in house %}
-                            {% if property.id == house.property_id %}
-                                <div class="row">
-                                    <div class="col-lg-8 content py-4">
-                                        <nav aria-label="breadcrumb">
-                                            <ol class="py-1 my-2 breadcrumb">
-                                                <li class="breadcrumb-item">
-                                                    <a href="{% url 'property_management' %}">Vente/Achat/Location/Devis Biens Immobilier</a>
-                                                </li>
-                                                <li class="breadcrumb-item active" aria-current="page">Détails sur le bien</li>
-                                            </ol>
-                                        </nav>
-                                        <h1 class="mb-3 pb-4">Maison rez-de-chaussée #{{house.id}}</h1>
-                                        <!-- Product gallery-->
-                                        <div class="product-gallery">
-                                            <div class="product-gallery-preview order-sm-2">
-                                                {% for img in house_images %}
-                                                    {% if img.house_id == house.id %}
-                                                        {% if forloop.counter == 1 %}
-                                                            <div class="product-gallery-preview-item active" id="first">
-                                                                <img src="{{img.image.url}}">
-                                                            </div>
-                                                        {% else %}
-                                                            <div class="product-gallery-preview-item" id="counter{{forloop.counter}}">
-                                                                <img src="{{img.image.url}}">
-                                                            </div>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </div>
-                                            <div class="product-gallery-thumblist order-sm-1">
-                                                {% for img in house_images %}
-                                                    {% if img.house_id == house.id %}
-                                                        {% if forloop.counter == 1 %}
-                                                            <a class="product-gallery-thumblist-item active" href="#first">
-                                                                <img src="{{img.image.url}}">
-                                                            </a>
-                                                        {% else %}
-                                                            <a class="product-gallery-thumblist-item" href="#counter{{forloop.counter}}">
-                                                                <img src="{{img.image.url}}">
-                                                            </a>
-                                                        {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </div>
-                                        </div>
+            <div class="row">
+                <div class="col-lg-8 content py-4">
+                    <nav aria-label="breadcrumb">
+                        <ol class="py-1 my-2 breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'property_management' %}">Vente/Achat/Location/Devis Biens Immobilier</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Détails sur le bien</li>
+                        </ol>
+                    </nav>
+                    <h1 class="mb-3 pb-4">Bien Immobilier #{{property.ref}}</h1>
+                    <!-- Product gallery-->
+                    <div class="product-gallery">
+                        <div class="product-gallery-preview order-sm-2">
+                            {% for img in property_type_details_images %}
+                                {% if forloop.counter == 1 %}
+                                    <div class="product-gallery-preview-item active" id="first">
+                                        <img src="{{img.image.url}}">
                                     </div>
-                                    <!-- Product info-->
-                                    <div class="col-lg-4 sidebar bg-secondary pt-5 ps-lg-4 pb-md-2">
-                                        <div class="ps-lg-4 pb-5">
-                                            <a class="d-inline-block text-decoration-none" href="#reviews" data-scroll></a>
-                                            <div class="star-rating-lg mt-n1 me-2 star-rating mt-n1">
-                                                <i class="sr-star ai-star-filled active"></i>
-                                                <i class="sr-star ai-star-filled active"></i>
-                                                <i class="sr-star ai-star-filled active"></i>
-                                                <i class="sr-star ai-star-filled active"></i>
-                                                <i class="sr-star ai-star"></i>
-                                            </div>
-                                            <div class="py-4">
-                                                <span class="h4 mb-0">
-                                                    {% for service_type in service_types %}
-                                                        {% if service_type.id == property.service_type_id %}
-
-                                                            {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
-                                                                prix: {{house.rent_price}} fcfa
-                                                            {% elif service_type.name == "Vente" %}
-                                                                prix: {{house.sale_price}} fcfa
-                                                            {% endif %}
-
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </span>
-                                            </div>
-                                            <ul>
-                                                <li>
-                                                    <b>Type de propriété:</b>
-                                                    <span style="color: #d4ac0d;">{{property_type.name}}</span>
-                                                </li>
-                                                <li>
-                                                    <b>Type de service:</b>
-                                                    {% for service_type in service_types %}
-                                                        {% if service_type.id == property.service_type_id %}
-                                                            {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
-                                                                <span style="color: #d4ac0d;">Mise en Location</span>
-                                                            {% else %}
-                                                                <span style="color: #d4ac0d;">{{service_type.name}}</span>
-                                                            {% endif %}
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                </li>
-                                            </ul>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <ul>
-                                                        <li>Region : <span style="color: #d4ac0d;">{{property.region}}</span> </li>
-                                                        <li>Adresse : <span style="color: #d4ac0d;">{{house.adress}}</span> </li>
-                                                        <li>Surface : <span style="color: #d4ac0d;">{{house.area}} m²</span> </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <ul>
-                                                        <li>Nombre de chambres : <span style="color: #d4ac0d;">{{house.number_bedroom}}</span> </li>
-                                                        <li>Nombre de salons : <span style="color: #d4ac0d;">{{house.number_living_room}}</span> </li>
-                                                        <li>Nombre de cuisine : <span style="color: #d4ac0d;">{{house.number_kitchen}}</span> </li>
-                                                        <li>Nombre de toilettes privées : <span style="color: #d4ac0d;">{{house.number_private_bathroom}}</span> </li>
-                                                        <li>Nombre de toilettes partagées: <span style="color: #d4ac0d;">{{house.number_shared_bathroom}}</span> </li>
-                                                        <li>Nombre de cuisine : <span style="color: #d4ac0d;">{{house.number_kitchen}}</span> </li>
-                                                        <li>Espace de stockage : <span style="color: #d4ac0d;">{{house.closette}}</span> </li>
-                                                        <li>Garage: <span style="color: #d4ac0d;">{{house.garage}}</span> </li>
-                                                        <li>Terrasse : <span style="color: #d4ac0d;">{{house.terace}}</span> </li>
-                                                        <hr>
-                                                        <li>Informations supplémentaires:</br>
-                                                            <span style="color: #d4ac0d;">{{house.aditionnal_info}}</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <form class="w3-content" method="POST">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="land_id" value="0">
-                                                <input type="hidden" name="property_id" value="{{property.id}}">
-                                                <button type="submit" class="btn btn-success" style="width: 100%">
-                                                    Ajouter à mon panier
-                                                </button>
-                                            </form>
-                                        </div>
+                                {% else %}
+                                    <div class="product-gallery-preview-item" id="counter{{forloop.counter}}">
+                                        <img src="{{img.image.url}}">
                                     </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="product-gallery-thumblist order-sm-1">
+                            {% for img in property_type_details_images %}
+                                {% if forloop.counter == 1 %}
+                                    <a class="product-gallery-thumblist-item active" href="#first">
+                                        <img src="{{img.image.url}}">
+                                    </a>
+                                {% else %}
+                                    <a class="product-gallery-thumblist-item" href="#counter{{forloop.counter}}">
+                                        <img src="{{img.image.url}}">
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <!-- Product info-->
+                <div class="col-lg-4 sidebar bg-secondary pt-5 ps-lg-4 pb-md-2">
+                    <div class="ps-lg-4 pb-5">
+                        <a class="d-inline-block text-decoration-none" href="#reviews" data-scroll></a>
+                        <div class="star-rating-lg mt-n1 me-2 star-rating mt-n1">
+                            <i class="sr-star ai-star-filled active"></i>
+                            <i class="sr-star ai-star-filled active"></i>
+                            <i class="sr-star ai-star-filled active"></i>
+                            <i class="sr-star ai-star-filled active"></i>
+                            <i class="sr-star ai-star-filled active"></i>
+                        </div>
+                        <div class="py-4">
+                            <span class="h4 mb-0">
+                                {% for service_type in service_types %}
+                                    {% if service_type.id == property.service_type_id %}
 
-                    {% endif %}
+                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                            prix: {{property_type_detail.rent_price|floatformat:2|intcomma}} fcfa/mois
+                                        {% elif service_type.name == "Vente" %}
+                                            prix: {{property_type_detail.sale_price|floatformat:2|intcomma}} fcfa
+                                        {% endif %}
 
-                    {% if property_type.name == "Studio" %}
-                    {% endif %}
-
-                    {% if property_type.name == "Immeuble" %}
-                    {% endif %}
-
-                    {% if property_type.name == "Apartement" %}
-                    {% endif %}
-
-                    {% if property_type.name == "Chambre simple ou avec toilette" %}
-                    {% endif %}
-
-                {% endif %}
-            {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                        <ul>
+                            <li>
+                                <b>Type de propriété:</b>
+                                {% for property_type in property_types %}
+                                    {% if property_type.id == property.property_type_id %}
+                                        <span style="color: #d4ac0d;">{{property_type.name}}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                            <li>
+                                <b>Type de service:</b>
+                                {% for service_type in service_types %}
+                                    {% if service_type.id == property.service_type_id %}
+                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                            <span style="color: #d4ac0d;">Mise en Location</span>
+                                        {% else %}
+                                            <span style="color: #d4ac0d;">{{service_type.name}}</span>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul>
+                                    <li>Region : <span style="color: #d4ac0d;">{{property.region}}</span> </li>
+                                    <li>Adresse : <span style="color: #d4ac0d;">{{property_type_detail.adress}}</span> </li>
+                                    <li>Surface : <span style="color: #d4ac0d;">{{property_type_detail.area}} m²</span> </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <ul>
+                                    {% for property_type in property_types %}
+                                        {% if property_type.id == property.property_type_id %}
+                                            {% if property_type.name == "Maison rez-de-chaussée" %}
+                                                <li>
+                                                    Chambre avec salle de bain : <span class="badge bg-info">{{property_type_detail.number_bedroom_with_private_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Chambre simple : <span class="badge bg-info">{{property_type_detail.number_bedroom_without_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain partagée : <span class="badge bg-info">{{property_type_detail.number_shared_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salon : <span class="badge bg-info">{{property_type_detail.number_living_room}}</span>
+                                                </li>
+                                                <li>
+                                                    Cuisine : <span class="badge bg-info">{{property_type_detail.number_kitchen}}</span>
+                                                </li>
+                                                <li>
+                                                    Terrasse :
+                                                    <span class="badge bg-info">
+                                                        {{property_type_detail.terace}}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Espace de stockage :
+                                                    <span class="badge bg-info">
+                                                        {{property_type_detail.closette}}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Garage :
+                                                    <span class="badge bg-info">
+                                                        {{property_type_detail.garage}}
+                                                    </span>
+                                                </li>
+                                            {% elif property_type.name == "Apartement" %}
+                                                <li>
+                                                    Étage : <span class="badge bg-info">{{property_type_detail.floor_level}} er/ème étage</span>
+                                                </li>
+                                                <li>
+                                                    Balcon :
+                                                    <span class="badge bg-info">
+                                                        {{property_type_detail.balcony}}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Chambre avec salle de bain : <span class="badge bg-info">{{property_type_detail.number_bedroom_with_private_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Chambre simple : <span class="badge bg-info">{{property_type_detail.number_bedroom_without_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salle de bain partagée : <span class="badge bg-info">{{property_type_detail.number_shared_bathroom}}</span>
+                                                </li>
+                                                <li>
+                                                    Salon : <span class="badge bg-info">{{property_type_detail.number_living_room}}</span>
+                                                </li>
+                                                <li>
+                                                    Cuisine : <span class="badge bg-info">{{property_type_detail.number_kitchen}}</span>
+                                                </li>
+                                                <li>
+                                                    Terrasse :
+                                                    <span class="badge bg-info">
+                                                        {{property_type_detail.terace}}
+                                                    </span>
+                                                </li>
+                                                <li>
+                                                    Espace de stockage :
+                                                    <span class="badge bg-info">
+                                                        {{property_type_detail.closette}}
+                                                    </span>
+                                                </li>
+                                                {% elif property_type.name == "Studio" %}
+                                                    <li>
+                                                        Étage : <span class="badge bg-info">{{property_type_detail.floor_level}} er/ème étage</span>
+                                                    </li>
+                                                    <li>
+                                                        Balcon :
+                                                        <span class="badge bg-info">
+                                                            {{property_type_detail.balcony}}
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        Espace de stockage :
+                                                        <span class="badge bg-info">
+                                                            {{property_type_detail.closette}}
+                                                        </span>
+                                                    </li>
+                                                {% elif property_type.name == "Chambre simple ou avec toilette" %}
+                                                    <li>
+                                                        Étage : <span class="badge bg-info">{{property_type_detail.floor_level}} er/ème étage</span>
+                                                    </li>
+                                                    <li>
+                                                        Balcon :
+                                                        <span class="badge bg-info">
+                                                            {{property_type_detail.balcony}}
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        Espace de stockage :
+                                                        <span class="badge bg-info">
+                                                            {{property_type_detail.closette}}
+                                                        </span>
+                                                    </li>
+                                                {% elif property_type.name == "Immeuble" %}
+                                                    <li>
+                                                        Nombre d'appartements : <span class="badge bg-info">{{property_type_detail.number_apartment}}</span>
+                                                    </li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    <hr>
+                                    <li>Informations supplémentaires:</br>
+                                        <span style="color: #d4ac0d;">{{property_type_detail.aditionnal_info}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <form class="w3-content" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="land_id" value="0">
+                            <input type="hidden" name="property_id" value="{{property.id}}">
+                            <button type="submit" class="btn btn-success" style="width: 100%">
+                                Ajouter à mon panier
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

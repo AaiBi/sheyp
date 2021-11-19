@@ -512,7 +512,6 @@ def edit_property_type_details(request, property_pk, property_type_detail_pk):
                            'property': property, 'service_types': service_types,
                            'error': 'Mauvaises données saisies !'})
 
-#         # Property management studios#
 
 
 @login_required
@@ -619,7 +618,7 @@ def land_ad_detail(request, land_project_pk, land_pk):
 @login_required
 def property_management_ad_detail(request, property_pk, property_type_detail_pk):
     property = get_object_or_404(Property, pk=property_pk)
-    property_type_details = Property_Type_Details.objects.filter(id=property_type_detail_pk)
+    property_type_detail = get_object_or_404(Property_Type_Details, pk=property_type_detail_pk)
     property_type_details_images = Property_Type_Details_Image.objects.filter(property_type_detail_id=property_type_detail_pk)
     service_types = Service_Type.objects.all()
     cart_count = Cart.objects.filter(user=request.user)
@@ -628,25 +627,25 @@ def property_management_ad_detail(request, property_pk, property_type_detail_pk)
     if request.method == 'GET':
         form = Cart_Form()
         return render(request, 'real_estate/property_management/property_management_ad_detail.html',
-                      {'property': property, 'property_type_details': property_type_details,
+                      {'property': property, 'property_type_detail': property_type_detail,
                        'property_type_details_images': property_type_details_images, 'form': form, 'cart_count': cart_count,
                        'service_types':
                            service_types, 'property_types': property_types})
     else:
         try:
             form = Cart_Form(request.POST)
-            if get_object_or_404(Cart, land_id=request.POST.get('land_id')):
-                messages.error(request, 'Erreur ! Ce terrain existe déjà dans votre panier !')
-                return redirect('land_project')
+            if Cart.objects.filter(property_id=request.POST.get('property_id')):
+                messages.error(request, 'Erreur ! Ce bien immobilier existe déjà dans votre panier !')
+                return redirect('property_management')
             else:
                 form = form.save(commit=False)
                 form.user = request.user
                 form.save()
                 messages.success(request, 'Ajout au panier éffectué !')
-                return redirect('land_project')
+                return redirect('property_management')
         except ValueError:
             return render(request, 'real_estate/property_management/property_management_ad_detail.html',
-                          {'property': property, 'property_type_details': property_type_details,
+                          {'property': property, 'property_type_detail': property_type_detail,
                        'property_type_details_images': property_type_details_images, 'form': form, 'cart_count': cart_count,
                        'service_types': service_types, 'property_types': property_types,
                            'error': 'Mauvaises données saisies !'})

@@ -617,10 +617,10 @@ def land_ad_detail(request, land_project_pk, land_pk):
 
 
 @login_required
-def property_management_ad_detail(request, property_pk, object_pk):
+def property_management_ad_detail(request, property_pk, property_type_detail_pk):
     property = get_object_or_404(Property, pk=property_pk)
-    property_type_details = Property_Type_Details.objects.filter(id=object_pk)
-    property_type_details_images = Property_Type_Details_Image.objects.filter(property_type_detail_id=object_pk)
+    property_type_details = Property_Type_Details.objects.filter(id=property_type_detail_pk)
+    property_type_details_images = Property_Type_Details_Image.objects.filter(property_type_detail_id=property_type_detail_pk)
     service_types = Service_Type.objects.all()
     cart_count = Cart.objects.filter(user=request.user)
     property_types = Property_Type.objects.all()

@@ -1,5 +1,7 @@
 {% extends 'base_app/base.html' %}
 
+{% load humanize %}
+
 {% block title %} Opération Immobilière {% endblock %}
 
 {% load static %}
@@ -123,243 +125,100 @@
     </section>
 
     <!-- Properties available-->
-    <section class="container pt-5 mt-5 mt-md-0 pt-md-6 pt-lg-7">
-        <h2 class="text-center mb-5">Propriétés Immobilières disponibles</h2></br></br>
+    </br></br></br></br>
+    <div class="card card-header bg-secondary">
+        <h2 class="text-center mb-5">Propriétés Immobilières disponibles</h2>
+    </div>
 
+    <section class="container pt-5 mt-5 mt-md-0 pt-md-6 pt-lg-7">
         <div class="row pb-1">
             <!-- Item-->
-            {% if properties %}
+            {% for property in properties %}
+                {% for property_type_detail in property_type_details %}
+                    {% if property.id == property_type_detail.property_id %}
 
-                {% for property in properties %}
+                        {% for service_type in service_types %}
+                            {% if service_type.name == "Vente" or service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
 
-                    <!--we only show the land with servie type = vente or mise en location-->
-                    {% for service_type in service_types %}
-                        {% if property.service_type_id == service_type.id %}
-                            {% if service_type.name == "Vente" or "Mise en Location d'un bien Immobilier/Terrain" %}
-
-                                {% for property_type in property_types %}
-                                    {% if property.property_type_id == property_type.id %}
-
-                                        <!--property type == Maison rez-de-chaussée-->
-                                        {% if property_type.name == "Maison rez-de-chaussée" %}
-                                            {% for house in houses %}
-                                                {% if house.property_id == property.id %}
-                                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-grid-gutter">
-                                                        <a href="{% url 'property_management_ad_detail' property.id house.id %}">
-                                                            <div class="card card-product card-hover">
-                                                                <a class="card-img-top" href="{% url 'property_management_ad_detail' property.id house.id %}">
-                                                                    <img src="{% static 'real_estate/images/land_image.png' %}">
-                                                                </a>
-                                                                <div class="card-body">
-                                                                    {% for type in property_types %}
-                                                                        {% if property.property_type_id == type.id %}
-                                                                            <span class="meta-link fs-xs mb-1">{{type.name}}</span>
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                    <h3 class="fs-md fw-medium mb-2">
-                                                                        <a class="meta-link">{{property.region}} -
-                                                                            {{house.area}} m2
-                                                                        </a>
-                                                                    </h3>
-                                                                    <span class="text-heading fw-semibold">
-                                                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
-                                                                            prix: {{house.rent_price}} fcfa
-                                                                        {% elif service_type.name == "Vente" %}
-                                                                            prix: {{house.sale_price}} fcfa
-                                                                        {% endif %}
-                                                                    </span></br></br>
-                                                                    <span class="meta-link fs-xs mb-1">
-                                                                        {% load i18n %}
-                                                                        {% language 'fr' %}
-                                                                            {{property.created|date:'d F Y'}}
-                                                                        {% endlanguage %}
-                                                                    </span>
-                                                                </div>
-                                                                <div class="card-footer">
-                                                                    <div class="star-rating mt-n1">
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star"></i>
-                                                                    </div>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <span class="btn-wishlist">
-                                                                            <i class="ai-heart"></i>
-                                                                        </span>
-                                                                        <span class="btn-divider"></span>
-                                                                        <form class="w3-content" method="POST">
-                                                                            {% csrf_token %}
-                                                                            <input type="hidden" name="land_id" value="0">
-                                                                            <input type="hidden" name="property_id" value="{{property.id}}">
-                                                                            <button type="submit" class="btn btn-addtocart" name="add_cart" value="add_cart" style="width: 100%">
-                                                                                <span class="btn-tooltip">Ajouter à mon panier</span>
-                                                                                <i class="ai-shopping-cart"></i>
-                                                                            </button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                {% if property.service_type_id == service_type.id %}
+                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-grid-gutter">
+                                        <a href="{% url 'property_management_ad_detail' property.id property_type_detail.id %}">
+                                            <div class="card card-product card-hover">
+                                                <span class="badge badge-lg badge-floating badge-floating-end bg-info">
+                                                    {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                        {{property_type_detail.rent_price|floatformat:2|intcomma}} fcfa/mois
+                                                    {% elif service_type.name == "Vente" %}
+                                                        {{property_type_detail.sale_price|floatformat:2|intcomma}} fcfa
+                                                    {%endif%}
+                                                </span>
+                                                <p></p>
+                                                <span class="badge badge-lg badge-floating  bg-warning">
+                                                    {% for service_type in service_types %}
+                                                        {% if property.service_type_id == service_type.id %}
+                                                            {% if service_type.name == "Vente" %}
+                                                                {{service_type.name}}
+                                                            {% elif service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                                Location
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </span>
+                                                <a class="card-img-top" href="{% url 'property_management_ad_detail' property.id property_type_detail.id %}">
+                                                    <img src="{% static 'real_estate/images/land_image.png' %}">
+                                                </a>
+                                                <div class="card-body">
+                                                    {% for type in property_types %}
+                                                        {% if property.property_type_id == type.id %}
+                                                            <span class="meta-link fs-xs mb-1">{{type.name}}</span>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <h3 class="fs-md fw-medium mb-2 fw-semibold">
+                                                        <a class="meta-link">{{property.region}} -
+                                                            {{property_type_detail.area}} m2
                                                         </a>
+                                                    </h3>
+                                                    <span class="meta-link fs-xs mb-1">
+                                                        {% load i18n %}
+                                                        {% language 'fr' %}
+                                                            {{property.created|date:'d F Y'}}
+                                                        {% endlanguage %}
+                                                    </span>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="star-rating mt-n1">
+                                                        <i class="sr-star ai-star-filled active"></i>
+                                                        <i class="sr-star ai-star-filled active"></i>
+                                                        <i class="sr-star ai-star-filled active"></i>
+                                                        <i class="sr-star ai-star-filled active"></i>
+                                                        <i class="sr-star ai-star"></i>
                                                     </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-
-                                        <!--property type == Apartement-->
-                                        {% if property_type.name == "Apartement" %}
-                                            {% for apartment in apartments %}
-                                                {% if apartment.property_id == property.id %}
-                                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-grid-gutter">
-                                                        <a href="{% url 'property_management_ad_detail' property.id apartment.id %}">
-                                                            <div class="card card-product card-hover">
-                                                                <a class="card-img-top" href="{% url 'property_management_ad_detail' property.id apartment.id %}">
-                                                                    <img src="{% static 'real_estate/images/land_image.png' %}">
-                                                                </a>
-                                                                <div class="card-body">
-                                                                    {% for type in property_types %}
-                                                                        {% if property.property_type_id == type.id %}
-                                                                            <span class="meta-link fs-xs mb-1">{{type.name}}</span>
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                    <h3 class="fs-md fw-medium mb-2">
-                                                                        <a class="meta-link">{{property.region}} -
-                                                                            {{apartment.area}} m2
-                                                                        </a>
-                                                                    </h3>
-                                                                    <span class="text-heading fw-semibold">
-                                                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
-                                                                            prix: {{apartment.rent_price}} fcfa
-                                                                        {% elif service_type.name == "Vente" %}
-                                                                            prix: {{apartment.sale_price}} fcfa
-                                                                        {% endif %}
-                                                                    </span></br></br>
-                                                                    <span class="meta-link fs-xs mb-1">
-                                                                        {% load i18n %}
-                                                                        {% language 'fr' %}
-                                                                            {{property.created|date:'d F Y'}}
-                                                                        {% endlanguage %}
-                                                                    </span>
-                                                                </div>
-                                                                <div class="card-footer">
-                                                                    <div class="star-rating mt-n1">
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star"></i>
-                                                                    </div>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <span class="btn-wishlist">
-                                                                            <i class="ai-heart"></i>
-                                                                        </span>
-                                                                        <span class="btn-divider"></span>
-                                                                        <form class="w3-content" method="POST">
-                                                                            {% csrf_token %}
-                                                                            <input type="hidden" name="land_id" value="0">
-                                                                            <input type="hidden" name="property_id" value="{{property.id}}">
-                                                                            <button type="submit" class="btn btn-addtocart" name="add_cart" value="add_cart" style="width: 100%">
-                                                                                <span class="btn-tooltip">Ajouter à mon panier</span>
-                                                                                <i class="ai-shopping-cart"></i>
-                                                                            </button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </a>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="btn-wishlist">
+                                                            <i class="ai-heart"></i>
+                                                        </span>
+                                                        <span class="btn-divider"></span>
+                                                        <form class="w3-content" method="POST">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="land_id" value="0">
+                                                            <input type="hidden" name="property_id" value="{{property.id}}">
+                                                            <button type="submit" class="btn btn-addtocart" name="add_cart" value="add_cart" style="width: 100%">
+                                                                <span class="btn-tooltip">Ajouter à mon panier</span>
+                                                                <i class="ai-shopping-cart"></i>
+                                                            </button>
+                                                        </form>
                                                     </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-
-                                        <!--property type == Studio-->
-                                        {% if property_type.name == "Studio" %}
-                                            {% for studio in studios %}
-                                                {% if studio.property_id == property.id %}
-                                                    <div class="col-lg-3 col-md-4 col-sm-6 mb-grid-gutter">
-                                                        <a href="{% url 'property_management_ad_detail' property.id studio.id %}">
-                                                            <div class="card card-product card-hover">
-                                                                <a class="card-img-top" href="{% url 'property_management_ad_detail' property.id studio.id %}">
-                                                                    <img src="{% static 'real_estate/images/land_image.png' %}">
-                                                                </a>
-                                                                <div class="card-body">
-                                                                    {% for type in property_types %}
-                                                                        {% if property.property_type_id == type.id %}
-                                                                            <span class="meta-link fs-xs mb-1">{{type.name}}</span>
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                    <h3 class="fs-md fw-medium mb-2">
-                                                                        <a class="meta-link">{{property.region}} -
-                                                                            {{studio.area}} m2
-                                                                        </a>
-                                                                    </h3>
-                                                                    <span class="text-heading fw-semibold">
-                                                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
-                                                                            prix: {{studio.rent_price}} fcfa
-                                                                        {% elif service_type.name == "Vente" %}
-                                                                            prix: {{studio.sale_price}} fcfa
-                                                                        {% endif %}
-                                                                    </span></br></br>
-                                                                    <span class="meta-link fs-xs mb-1">
-                                                                        {% load i18n %}
-                                                                        {% language 'fr' %}
-                                                                            {{property.created|date:'d F Y'}}
-                                                                        {% endlanguage %}
-                                                                    </span>
-                                                                </div>
-                                                                <div class="card-footer">
-                                                                    <div class="star-rating mt-n1">
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star-filled active"></i>
-                                                                        <i class="sr-star ai-star"></i>
-                                                                    </div>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <span class="btn-wishlist">
-                                                                            <i class="ai-heart"></i>
-                                                                        </span>
-                                                                        <span class="btn-divider"></span>
-                                                                        <form class="w3-content" method="POST">
-                                                                            {% csrf_token %}
-                                                                            <input type="hidden" name="land_id" value="0">
-                                                                            <input type="hidden" name="property_id" value="{{property.id}}">
-                                                                            <button type="submit" class="btn btn-addtocart" name="add_cart" value="add_cart" style="width: 100%">
-                                                                                <span class="btn-tooltip">Ajouter à mon panier</span>
-                                                                                <i class="ai-shopping-cart"></i>
-                                                                            </button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-
-                                        <!--property type == Immeuble-->
-                                        {% if property_type.name == "Immeuble" %}
-                                        {% endif %}
-
-                                        <!--property type == Chambre simple ou avec toilette-->
-                                        {% if property_type.name == "Chambre simple ou avec toilette" %}
-                                        {% endif %}
-
-                                    {% endif %}
-                                {% endfor %}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {% endif %}
 
                             {% endif %}
-                        {% endif %}
-                    {% endfor %}
+                        {% endfor %}
 
-                {%endfor%}
-
-            {% else %}
-                <div class="alert alert-info fade show" role="alert">
-                    Aucune propriété immobilière n'est disponible pour l'instant !
-                </div>
-            {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
         </div>
     </section>
 {% endblock %}

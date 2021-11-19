@@ -19,7 +19,7 @@ urlpatterns = [
     path('property_management_part1/<int:property_pk>', views.property_management_part1, name='property_management_part1'),
     path('property_management_part2/<int:property_pk>', views.property_management_part2, name='property_management_part2'),
     path('property_management_deletion/<int:property_pk>', views.property_management_deletion, name='property_management_deletion'),
-    path('property_management_ad_detail/<int:property_pk>/<int:object_pk>', views.property_management_ad_detail, name='property_management_ad_detail'),
+    path('property_management_ad_detail/<int:property_pk>/<int:property_type_detail_pk>', views.property_management_ad_detail, name='property_management_ad_detail'),
                                                 #property type details#
     path('edit_property_type_details/<int:property_pk>/<int:property_type_detail_pk>', views.edit_property_type_details, name='edit_property_type_details'),
 

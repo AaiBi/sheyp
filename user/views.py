@@ -483,13 +483,17 @@ def cart(request):
     images = Land_Images1.objects.all()
     land_types = Land_Type.objects.filter()
     cart = Cart.objects.all()
-
+    property_types = Property_Type.objects.all()
     land_plan_situation = Land_Plan_Situation.objects.all()
     land_papier_types = Land_Paper_Type.objects.all()
+    property_type_details_images = Property_Type_Details_Image.objects.all()
+    property_type_details = Property_Type_Details.objects.all()
 
-    return render(request, 'user/real_estate_projects/cart/cart.html', {'lands': lands, 'land_projects':
+    return render(request, 'user/cart/cart.html', {'lands': lands, 'land_projects':
             land_projects, 'land_types': land_types, 'images': images, 'cart': cart, 'properties': properties,
-             'land_plan_situation': land_plan_situation, 'land_papier_types': land_papier_types,
+             'land_plan_situation': land_plan_situation, 'land_papier_types': land_papier_types, 'property_types':
+                                                       property_types, 'property_type_details_images': property_type_details_images,
+                                                   'property_type_details': property_type_details,
                                                                    'service_types':
                                                                        service_types})
 
@@ -502,12 +506,12 @@ def cart_payment(request, land_pk):
     service_types = Service_Type.objects.all()
     images = Land_Images1.objects.all()
     land_types = Land_Type.objects.filter()
-    cart = Cart.objects.all()
+    cart = Cart.objects.all().order_by('-created')
 
     land_plan_situation = Land_Plan_Situation.objects.all()
     land_papier_types = Land_Paper_Type.objects.all()
 
-    return render(request, 'user/real_estate_projects/cart/cart_payment.html', {'land': land, 'land_projects':
+    return render(request, 'user/cart/cart_payment.html', {'land': land, 'land_projects':
             land_projects, 'land_types': land_types, 'images': images, 'cart': cart, 'properties': properties,
              'land_plan_situation': land_plan_situation, 'land_papier_types': land_papier_types,
                                                                    'service_types':
@@ -519,7 +523,7 @@ def cart_payment(request, land_pk):
 #############################################Construction projects###############################################
 @login_required
 def construction_projects(request):
-    construction_projects = Construction_Project.objects.filter(user=request.user)
+    construction_projects = Construction_Project.objects.filter(user=request.user).order_by('-created')
     construction_type = Construction_Type.objects.all()
     return render(request, 'user/construction_projects/construction_projects.html', {
         'construction_projects': construction_projects, 'construction_type': construction_type})

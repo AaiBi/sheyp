@@ -593,7 +593,7 @@ def land_ad_detail(request, land_project_pk, land_pk):
     else:
         try:
             form = Cart_Form(request.POST)
-            if get_object_or_404(Cart, land_id=request.POST.get('land_id')):
+            if Cart.objects.filter(land_id=request.POST.get('land_id')):
                 messages.error(request, 'Erreur ! Ce terrain existe déjà dans votre panier !')
                 return redirect('land_project')
             else:

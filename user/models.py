@@ -118,7 +118,7 @@ class Construction_Tracker_Sub_Step(models.Model):
 class Construction_Tracker_Realisation(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     additonnal_info = models.TextField()
-    realisation_percentage = models.DecimalField(max_digits=19, decimal_places=2, default=0)
+    realisation_percentage = models.IntegerField(default=0)
     construction_tracker_sub_step = models.ForeignKey(Construction_Tracker_Sub_Step, on_delete=models.CASCADE)
     construction_project_tracker = models.ForeignKey(Construction_Projet_Tracker, on_delete=models.CASCADE, default="")
 
@@ -154,6 +154,7 @@ class Construction_Delivery_Image(models.Model):
 class Cart(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     statut = models.CharField(max_length=5, default="No")  # the statut can be 'done = Yes', or 'not done=No'
+    payment_request = models.BooleanField(default=0) #can be 1=payment request sent, 0=payment request not sent
     land_id = models.IntegerField()
     property_id = models.IntegerField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, default="")

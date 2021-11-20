@@ -57,22 +57,18 @@
                         <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'cart' %}">
                             <i class="ai-plus fs-lg opacity-60 me-2"></i>
                             Mon Panier
-                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
                         </a>
                         <a class="d-flex align-items-center nav-link-style px-4 py-3 active"href="{% url 'construction_projects' %}">
                             <i class="ai-plus fs-lg opacity-60 me-2"></i>
                             Mes Projets de Construction
-                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
                         </a>
                         <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'real_estate_projects' %}">
                             <i class="ai-plus fs-lg opacity-60 me-2"></i>
                             Mes Projets Immobiliers
-                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
                         </a>
                         <a class="d-flex align-items-center nav-link-style px-4 py-3" href="#">
                             <i class="ai-plus fs-lg opacity-60 me-2"></i>
                             Mes Projets d'Investissements
-                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
                         </a>
                         <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Paramètres du compte</h3>
                         <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'profile' %}">
@@ -197,41 +193,16 @@
                     <!-- Realisation Step -->
                     <section class="bg-secondary">
                         <div class="container mt-4 mb-2 mt-md-2 mb-md-0">
+
+
+
                             <h4 class="text-center mb-4 pb-2">Etapes de Réalisations</h4>
                             <center>
                                 Projet réalisé à
-                                {% if construction_tracker_realisations_count >= 5 %} <!--5 is the number sub steps realised-->
-
-                                    {% if construction_tracker_realisations_count >= 8 %}
-
-                                        {% if construction_tracker_realisations_count >= 19 %}
-
-                                            {% if construction_tracker_realisations_count >= 30 %}
-
-                                                {% if construction_tracker_realisations_count >= 34 %}
-
-                                                    {% if construction_tracker_realisations_count >= 34 %}
-                                                        100%
-                                                    {% else %}
-                                                        97%
-                                                    {% endif %}
-
-                                                {% else %}
-                                                    67%
-                                                {% endif %}
-
-                                            {% else %}
-                                                42%
-                                            {% endif %}
-
-                                        {% else %}
-                                            25%
-                                        {% endif %}
-
-                                    {% else %}
-                                        10%
-                                    {% endif %}
-
+                                {% if construction_tracker_realisation_last %}
+                                    {{construction_tracker_realisation_last.realisation_percentage}}%
+                                {% else %}
+                                    0%
                                 {% endif %}
                             </center>
                             <div class="progress mb-3" style="height: 20px;">

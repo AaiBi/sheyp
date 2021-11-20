@@ -1,0 +1,457 @@
+{% extends 'base_app/base.html' %}
+
+{% load humanize %}
+
+{% block title %} Mon Panier {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Slanted background-->
+    <div class="position-relative bg-gradient" style="height: 480px;">
+        <div class="shape shape-bottom shape-slant bg-secondary d-none d-lg-block">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 260">
+                <polygon fill="currentColor" points="0,257 0,260 3000,260 3000,0"></polygon>
+            </svg>
+        </div>
+    </div>
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2" src="https://www.shareicon.net/data/512x512/2016/01/13/702410_users_512x512.png" width="110">
+                        <h6 class="mb-0 pt-1">{{user.first_name}} {{user.last_name}}</h6><span class="text-muted fs-sm">@{{user.username}}</span>
+                    </div>
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Account menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Tableau de bord</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'cart' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mon Panier
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'construction_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets de Construction
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'real_estate_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets Immobiliers
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="#">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets d'Investissements
+                            <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                        </a>
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Paramètres du compte</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'profile' %}">
+                            Mon Profile
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'user_password_change' %}">
+                            Modification du mot de passe
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="#">
+                            Méthodes de payement
+                        </a>
+                        <div class="d-flex align-items-center border-top"><a class="d-block w-100 nav-link-style px-4 py-3" href="account-notifications.html">Notifications</a>
+                            <div class="ms-auto px-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="notifications-switch" data-master-checkbox-for="#notification-settings" checked>
+                                    <label class="form-check-label" for="notifications-switch"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'logout_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="width:100%">Déconnexion</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+<!--                    <nav aria-label="breadcrumb">-->
+<!--                        <ol class="py-1 my-2 breadcrumb">-->
+<!--                            <li class="breadcrumb-item"><a href="{% url 'profile' %}">Profile</a></li>-->
+<!--                            <li class="breadcrumb-item"><a href="{% url 'real_estate_projects' %}">Mes Projets Immobilier</a></li>-->
+<!--                            <li class="breadcrumb-item"></li>-->
+<!--                        </ol>-->
+<!--                    </nav>-->
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <div class="py-2 p-md-3">
+                        <!-- Title + Filters-->
+                        <div class="d-sm-flex align-items-center justify-content-between pb-2">
+                            <h1 class="h3 mb-3 text-center text-sm-start">Vos commandes</h1>
+                        </div>
+                        <!-- Accordion with orders-->
+                        <div class="accordion" id="orders-accordion">
+                            <!-- Order-->
+                            {% if cart %}
+
+                                {% for order in cart %}
+
+                                     <!--we show the land projects-->
+                                    {% for land in lands %}
+                                        {% if land.id == order.land_id  %}
+                                            <div class="accordion-item shadow">
+                                                <h2 class="accordion-header" id="faq-heading-1">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{land.id}}" aria-expanded="true" aria-controls="faq-content-{{land.id}}">
+                                                        Terrain Numéro<span style="color: #d4ac0d;">#{{land.id}}</span>
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse" id="faq-content-{{land.id}}" aria-labelledby="faq-heading-{{land.id}}" data-bs-parent="#faq">
+                                                    <div class="accordion-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <ul>
+                                                                    {% for land_project in land_projects %}
+                                                                        {% if land_project.id == land.land_project_id  %}
+                                                                            <li>
+                                                                                <b>Type de terrain:</b>
+                                                                                {% for land_type in land_types %}
+                                                                                    {% if land_type.id == land_project.land_type_id %}
+                                                                                        <span style="color: #d4ac0d;">{{land_type.name}}</span>
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </li>
+                                                                            <li>
+                                                                                <b>Type de service:</b>
+                                                                                {% for service_type in service_types %}
+                                                                                    {% if service_type.id == land_project.service_type_id %}
+                                                                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                                                            <span style="color: #d4ac0d;">Mise en Location</span>
+                                                                                        {% else %}
+                                                                                            <span style="color: #d4ac0d;">{{service_type.name}}</span>
+                                                                                        {% endif %}
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            </li>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <ul>
+                                                                    <li>Region : {{land.region}}</li>
+                                                                    <li>Adresse : {{land.adress}}</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <ul>
+                                                                    <li>Prix : {{land.price}} fcfa</li>
+                                                                    <li>Plan de situation :
+                                                                        {% for plan in land_plan_situation %}
+                                                                            {% if land.land_plan_situation_id == plan.id %}
+                                                                                <span style="color: #d4ac0d;">{{plan.name}}</span>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <ul>
+                                                                    <li>Surface : {{land.area}} m²</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <center><b>Informations supplémentaires</b></center>
+                                                                {{land.additional_info}}
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <a type="button" class="btn btn-info d-block w-100 mb-grid-gutter disabled" href="{% url 'cart_payment' land.id %}">
+                                                                    <i class="ai-money fs-lg me-2"></i>Faire le payement
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Project gallery-->
+                                                        <section class="pt-4 mt-lg-2 pb-lg-0">
+                                                            <div class="gallery row">
+                                                                {% for img in images %}
+                                                                    {% if img.land_id == lands_list.id %}
+                                                                        <div class="col-md-4 col-sm-6 mb-grid-gutter">
+                                                                            <a class="gallery-item rounded-3" href="{{img.image.url}}">
+                                                                                <img src="{{img.image.url}}" alt="Gallery thumbnail">
+                                                                            </a>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                     <!--we show the property management projects-->
+                                    {% for property in properties %}
+                                        {% if property.id == order.property_id  %}
+
+                                            {% for property_type_detail in property_type_details %}
+                                                {% if property_type_detail.property_id == property.id %}
+                                                    <div class="accordion-item shadow">
+                                                        <h2 class="accordion-header" id="faq-heading-2">
+                                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{property.id}}" aria-expanded="true" aria-controls="faq-content-{{property.id}}">
+                                                                Bien Immobilier <span style="color: #d4ac0d;">#{{property.ref}}</span>
+                                                            </button>
+                                                        </h2>
+                                                        <div class="accordion-collapse collapse" id="faq-content-{{property.id}}" aria-labelledby="faq-heading-{{property.id}}" data-bs-parent="#faq">
+                                                            <div class="accordion-body">
+                                                                <div class="py-4">
+                            <span class="h4 mb-0">
+                                {% for service_type in service_types %}
+                                    {% if service_type.id == property.service_type_id %}
+
+                                        {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                            prix: {{property_type_detail.rent_price|floatformat:2|intcomma}} fcfa/mois
+                                        {% elif service_type.name == "Vente" %}
+                                            prix: {{property_type_detail.sale_price|floatformat:2|intcomma}} fcfa
+                                        {% endif %}
+
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                                                                <ul>
+                                                                    <li>
+                                                                        <b>Type de propriété:</b>
+                                                                        {% for property_type in property_types %}
+                                                                            {% if property_type.id == property.property_type_id %}
+                                                                                <span style="color: #d4ac0d;">{{property_type.name}}</span>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </li>
+                                                                    <li>
+                                                                        <b>Type de service:</b>
+                                                                        {% for service_type in service_types %}
+                                                                            {% if service_type.id == property.service_type_id %}
+                                                                                {% if service_type.name == "Mise en Location d'un bien Immobilier/Terrain" %}
+                                                                                    <span style="color: #d4ac0d;">Mise en Location</span>
+                                                                                {% else %}
+                                                                                    <span style="color: #d4ac0d;">{{service_type.name}}</span>
+                                                                                {% endif %}
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </li>
+                                                                </ul>
+                                                                <hr>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <ul>
+                                                                            <li>Region : <span style="color: #d4ac0d;">{{property.region}}</span> </li>
+                                                                            <li>Adresse : <span style="color: #d4ac0d;">{{property_type_detail.adress}}</span> </li>
+                                                                            <li>Surface : <span style="color: #d4ac0d;">{{property_type_detail.area}} m²</span> </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <ul>
+                                                                            {% for property_type in property_types %}
+                                                                                {% if property_type.id == property.property_type_id %}
+                                                                                    {% if property_type.name == "Maison rez-de-chaussée" %}
+                                                                                        <li>
+                                                                                            Chambre avec salle de bain : <span class="badge bg-info">{{property_type_detail.number_bedroom_with_private_bathroom}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Chambre simple : <span class="badge bg-info">{{property_type_detail.number_bedroom_without_bathroom}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Salle de bain partagée : <span class="badge bg-info">{{property_type_detail.number_shared_bathroom}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Salon : <span class="badge bg-info">{{property_type_detail.number_living_room}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Cuisine : <span class="badge bg-info">{{property_type_detail.number_kitchen}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Terrasse :
+                                                                                            <span class="badge bg-info">
+                                                                                                {{property_type_detail.terace}}
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Espace de stockage :
+                                                                                            <span class="badge bg-info">
+                                                                                                {{property_type_detail.closette}}
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Garage :
+                                                                                            <span class="badge bg-info">
+                                                                                                {{property_type_detail.garage}}
+                                                                                            </span>
+                                                                                        </li>
+                                                                                    {% elif property_type.name == "Apartement" %}
+                                                                                        <li>
+                                                                                            Étage : <span class="badge bg-info">{{property_type_detail.floor_level}} er/ème étage</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Balcon :
+                                                                                            <span class="badge bg-info">
+                                                                                                {{property_type_detail.balcony}}
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Chambre avec salle de bain : <span class="badge bg-info">{{property_type_detail.number_bedroom_with_private_bathroom}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Chambre simple : <span class="badge bg-info">{{property_type_detail.number_bedroom_without_bathroom}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Salle de bain partagée : <span class="badge bg-info">{{property_type_detail.number_shared_bathroom}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Salon : <span class="badge bg-info">{{property_type_detail.number_living_room}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Cuisine : <span class="badge bg-info">{{property_type_detail.number_kitchen}}</span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Terrasse :
+                                                                                            <span class="badge bg-info">
+                                                                                                {{property_type_detail.terace}}
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            Espace de stockage :
+                                                                                            <span class="badge bg-info">
+                                                                                                {{property_type_detail.closette}}
+                                                                                            </span>
+                                                                                        </li>
+                                                                                        {% elif property_type.name == "Studio" %}
+                                                                                            <li>
+                                                                                                Étage : <span class="badge bg-info">{{property_type_detail.floor_level}} er/ème étage</span>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                Balcon :
+                                                                                                <span class="badge bg-info">
+                                                                                                    {{property_type_detail.balcony}}
+                                                                                                </span>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                Espace de stockage :
+                                                                                                <span class="badge bg-info">
+                                                                                                    {{property_type_detail.closette}}
+                                                                                                </span>
+                                                                                            </li>
+                                                                                        {% elif property_type.name == "Chambre simple ou avec toilette" %}
+                                                                                            <li>
+                                                                                                Étage : <span class="badge bg-info">{{property_type_detail.floor_level}} er/ème étage</span>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                Balcon :
+                                                                                                <span class="badge bg-info">
+                                                                                                    {{property_type_detail.balcony}}
+                                                                                                </span>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                Espace de stockage :
+                                                                                                <span class="badge bg-info">
+                                                                                                    {{property_type_detail.closette}}
+                                                                                                </span>
+                                                                                            </li>
+                                                                                        {% elif property_type.name == "Immeuble" %}
+                                                                                            <li>
+                                                                                                Nombre d'appartements : <span class="badge bg-info">{{property_type_detail.number_apartment}}</span>
+                                                                                            </li>
+                                                                                        {% endif %}
+                                                                                    {% endif %}
+                                                                                {% endfor %}
+                                                                            <hr>
+                                                                            <li>Informations supplémentaires:</br>
+                                                                                <span style="color: #d4ac0d;">{{property_type_detail.aditionnal_info}}</span>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <a type="button" class="btn btn-info d-block w-100 mb-grid-gutter disabled" href="{% url 'cart_payment' property.id %}">
+                                                                            <i class="ai-money fs-lg me-2"></i>Faire le payement
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Project gallery-->
+                                                                <section class="pt-4 mt-lg-2 pb-lg-0">
+                                                                    <div class="gallery row">
+                                                                        {% for img in property_type_details_images %}
+                                                                            {% if img.property_type_detail_id == property_type_detail.id %}
+                                                                                <div class="col-md-4 col-sm-6 mb-grid-gutter">
+                                                                                    <a class="gallery-item rounded-3" href="{{img.image.url}}">
+                                                                                        <img src="{{img.image.url}}" alt="Gallery thumbnail">
+                                                                                    </a>
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                    </div>
+                                                                </section>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% endif %}
+                                    {% endfor %}
+
+                                {% endfor %}
+
+                            {% else %}
+                                <div class="alert alert-danger alert-dismissible"  role="alert">
+                                    Vous n'aviez pas encore fait de commandes !
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

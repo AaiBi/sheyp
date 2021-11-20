@@ -59,12 +59,12 @@
                             Mon Panier
                             <span class="text-muted fs-sm fw-normal ms-auto">0</span>
                         </a>
-                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'construction_projects' %}">
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'construction_projects' %}">
                             <i class="ai-plus fs-lg opacity-60 me-2"></i>
                             Mes Projets de Construction
                             <span class="text-muted fs-sm fw-normal ms-auto">0</span>
                         </a>
-                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'real_estate_projects' %}">
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'real_estate_projects' %}">
                             <i class="ai-plus fs-lg opacity-60 me-2"></i>
                             Mes Projets Immobiliers
                             <span class="text-muted fs-sm fw-normal ms-auto">0</span>
@@ -211,10 +211,10 @@
                                     <h2 class="accordion-header" id="faq-heading-1">
                                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-{{construction_floor.id}}" aria-expanded="true" aria-controls="faq-content-{{construction_floor.id}}">
                                             Niveau d'étage <span style="color: #d4ac0d;">#{{construction_floor.floor_level}}</span>
-                                            <a type="button" href="{% url 'edit_construction_floor' construction_project.id construction_floor.id %}" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Modification !" style="margin-left: 40%">
-                                                <i class="ai-edit"></i>
-                                            </a>
                                             {% if construction_project.accepted == False %}
+                                                <a type="button" href="{% url 'edit_construction_floor' construction_project.id construction_floor.id %}" class="btn btn-warning" role="button" data-toggle="tooltip" data-placement="top" title="Modification !" style="margin-left: 40%">
+                                                    <i class="ai-edit"></i>
+                                                </a>
                                                 <a type="button" href="{% url 'delete_construction_floor' construction_project.id construction_floor.id %}" class="btn btn-danger" role="button" data-toggle="tooltip" data-placement="top" title="Suppression !" style="margin-left: 5%">
                                                     <i class="ai-trash"></i>
                                                 </a>

@@ -17,7 +17,6 @@ def index(request):
     else:
         try:
             notation_system_form = Notation_System_Form(request.POST)
-            print(request.POST.get('stars'))
             if int(request.POST.get('stars')) < 6:
                 if notation_system_form.is_valid():
                     notation_system_form = notation_system_form.save(commit=False)

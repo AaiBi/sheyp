@@ -140,17 +140,17 @@
                             <div class="navbar-tool me-2">
                                 <a class="navbar-tool-icon-box" href="{% url 'cart' %}">
                                     <i class="ai-shopping-cart" style="color: #d4ac0d;"></i>
-                                    {% if cart_count %}
-                                        {% for cart in cart_count %}
-                                            {% if cart.user_id == user.id %}
-                                                <span class="navbar-tool-badge">{{cart.count}}</span>
-                                            {% else %}
-                                                <span class="navbar-tool-badge">0</span>
-                                            {%endif%}
-                                        {%endfor%}
-                                    {% else %}
-                                            <span class="navbar-tool-badge">0</span>
-                                    {%endif%}
+<!--                                    {% if cart_count %}-->
+<!--                                        {% for cart in cart_count %}-->
+<!--                                            {% if cart.user_id == user.id %}-->
+<!--                                                <span class="navbar-tool-badge">{{cart.count}}</span>-->
+<!--                                            {% else %}-->
+<!--                                                <span class="navbar-tool-badge">0</span>-->
+<!--                                            {%endif%}-->
+<!--                                        {%endfor%}-->
+<!--                                    {% else %}-->
+<!--                                            <span class="navbar-tool-badge">0</span>-->
+<!--                                    {%endif%}-->
                                 </a>
                             </div>
                         {% else %}

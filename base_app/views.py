@@ -1,13 +1,8 @@
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
-from django.conf import settings
 from django.contrib import messages
-from django.urls import reverse
-
 from base_app.forms import Notation_System_Form
 from base_app.models import contact_message, Notation_System
-from user.models import Cart
-
 
 def index(request):
     reviews = Notation_System.objects.all()

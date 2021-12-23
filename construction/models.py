@@ -10,6 +10,13 @@ class Construction_Type(models.Model):
         return self.name
 
 
+class Construction_Service(models.Model):
+    name = models.CharField(max_length=400)
+
+    def __str__(self):
+        return self.name
+
+
 class Construction_Project(models.Model):
     region = models.CharField(max_length=200, default="")
     adress = models.CharField(max_length=200, default="0")
@@ -21,6 +28,7 @@ class Construction_Project(models.Model):
     done = models.BooleanField(default=0)
     aditionnal_info = models.TextField(blank=True)
     number_floor = models.IntegerField(blank=True)
+    construction_project_service_id = models.IntegerField(default="0")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     construction_type = models.ForeignKey(Construction_Type, on_delete=models.CASCADE, default="")
 

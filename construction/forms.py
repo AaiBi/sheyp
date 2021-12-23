@@ -6,7 +6,7 @@ class Construction_Project_Form(forms.ModelForm):
     class Meta:
         model = Construction_Project
         fields = [
-            'region', 'adress', 'area', 'area_usable', 'aditionnal_info', 'number_floor'
+            'region', 'adress', 'area', 'area_usable', 'aditionnal_info', 'number_floor', 'construction_project_service_id'
         ]
 
 

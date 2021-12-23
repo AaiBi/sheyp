@@ -40,9 +40,12 @@
                     <p class="pb-2">Nous donnons vies à vos projets les plus fous</p>
                     <form method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-primary" name="construction_project_submit" value="construction_project_submit">
-                            <i class="fas fa-plus"></i>Construire ma maison
-                        </button>
+                        <a type="button" class="btn btn-outline-primary" href="{% url 'start_new_project' %}">
+                            <i class="fas fa-plus"></i>Commencer mon projet
+                        </a>
+<!--                        <button type="submit" class="btn btn-outline-primary" name="construction_project_submit" value="construction_project_submit">-->
+<!--                            <i class="fas fa-plus"></i>Construire ma maison-->
+<!--                        </button>-->
                     </form>
                 </div>
                 <div class="col-lg-7">

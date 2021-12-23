@@ -38,6 +38,9 @@ urlpatterns = [
     path('construction_project_tracker/<int:construction_project_pk>/<int:tracker_pk>/', views.construction_project_tracker, name='construction_project_tracker'),
     path('construction_project_realisation_gallery/<int:construction_project_pk>/<int:tracker_pk>/', views.construction_project_realisation_gallery, name='construction_project_realisation_gallery'),
 
+    #architecture project tracker
+    path('projet_architecture_tracker/<int:construction_project_pk>/<int:tracker_pk>/', views.projet_architecture_tracker, name='projet_architecture_tracker'),
+
     #construction projects automatic counter
     path('construction_project_automatic_counter/<int:construction_project_pk>/<int:tracker_pk>/', views.construction_project_automatic_counter, name='construction_project_automatic_counter'),
     path('construction_project_deliveries/<int:construction_project_pk>/<int:tracker_pk>/', views.construction_project_deliveries, name='construction_project_deliveries'),

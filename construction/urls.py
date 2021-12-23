@@ -4,7 +4,8 @@ from construction import views
 
 urlpatterns = [
     path('', views.construction, name='construction'),
-    path('construction_part1', views.construction_part1, name='construction_part1'),
+    path('construction_part1/<int:construction_service_pk>', views.construction_part1, name='construction_part1'),
+    path('start_new_project', views.start_new_project, name='start_new_project'),
     path('construction_part2/<int:construction_project_pk>', views.construction_part2, name='construction_part2'),
     path('edit_construction_project/<int:construction_project_pk>', views.edit_construction_project, name='edit_construction_project'),
     path('delete_construction_project/<int:construction_project_pk>', views.delete_construction_project, name='delete_construction_project'),

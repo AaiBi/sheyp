@@ -113,7 +113,13 @@
                     <!-- Title -->
                     <div class="align-items-center justify-content-between">
                         <h1 class="h3 mb-3 text-center text-sm-start" align="center">
-                            Projet de Construction <span style="color: #d4ac0d;">#{{construction_project.id}}</span>
+                            Projet de/d'
+                            {% for construction_project_service in construction_project_services %}
+                                {% if construction_project_service.id == construction_project.construction_project_service_id %}
+                                    {{construction_project_service.name}}
+                                {% endif %}
+                            {% endfor %}
+                            <span style="color: #d4ac0d;">#{{construction_project.id}}</span>
                             <span style="float:right">
                                 {% if construction_project.statut == "In progress" %}
                                     <i class="badge bg-success">
@@ -143,19 +149,39 @@
                         {% endif %}
                     {% endif %}
 
-                    <a class="card" href="{% url 'construction_project_tracker' construction_project.id tracker.id %}" data-bs-toggle="tooltip" title="Cliquer pour plus de détails">
-                        <div class="card-body bg-secondary" align="center">
-                            <p class="card-text">
-                                <h3 class="fw-medium">
-                                    Sheyp Tracker
-                                </h3>
-                                <h5 class="shake text-dark" style="">
-                                    Suivez les avancées de votre projet grâce à notre Tracker !
-                                    <i class="ai-bell" style="color:red"></i>
-                                </h5>
-                            </p>
-                        </div>
-                    </a>
+                    {% for construction_project_service in construction_project_services %}
+                        {% if construction_project_service.id == construction_project.construction_project_service_id %}
+                            {% if construction_project_service.name == "Architecture - Plan" %}
+                                <a class="card" href="{% url 'projet_architecture_tracker' construction_project.id tracker.id %}" data-bs-toggle="tooltip" title="Cliquer pour plus de détails">
+                                    <div class="card-body bg-secondary" align="center">
+                                        <p class="card-text">
+                                            <h3 class="fw-medium">
+                                                Sheyp Tracker
+                                            </h3>
+                                            <h5 class="shake text-dark" style="">
+                                                Suivez les avancées de votre projet grâce à notre Tracker !
+                                                <i class="ai-bell" style="color:red"></i>
+                                            </h5>
+                                        </p>
+                                    </div>
+                                </a>
+                            {% else %}
+                                <a class="card" href="{% url 'construction_project_tracker' construction_project.id tracker.id %}" data-bs-toggle="tooltip" title="Cliquer pour plus de détails">
+                                    <div class="card-body bg-secondary" align="center">
+                                        <p class="card-text">
+                                            <h3 class="fw-medium">
+                                                Sheyp Tracker
+                                            </h3>
+                                            <h5 class="shake text-dark" style="">
+                                                Suivez les avancées de votre projet grâce à notre Tracker !
+                                                <i class="ai-bell" style="color:red"></i>
+                                            </h5>
+                                        </p>
+                                    </div>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
                     </br>
 
                     <div class="row" style="font-size: 20px">

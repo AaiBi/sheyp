@@ -58,6 +58,13 @@
                     <div class="d-lg-block collapse pb-2" id="account-menu">
                         <ul class="list-group">
                             <li class="list-group-item bg-light">
+                                {% for construction_project_service in construction_project_services %}
+                                    {% if construction_project_service.id == construction_service.id %}
+                                        Type de service : <span class="badge bg-info">{{construction_project_service.name}}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                            <li class="list-group-item bg-light">
                                 <b>Phase 1</b>
                                 <ul>
                                     {% for land_type in land_types %}
@@ -99,6 +106,7 @@
                     <form method="POST">
                         {% csrf_token %}
                         <div class="row">
+                            <p></p>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Sélectionner la région</label>
@@ -163,11 +171,12 @@
                                  </div>
                              </div>
                             <p></p>
+                            <input type="hidden" name="construction_project_service_id" value="{{construction_service.id}}">
                             <div class="row">
-                             <div class="col-sm-12 btn-block">
-                                 <button type="submit" class="btn btn-success" name="new_land" value="new_land" style="width:100%">Valider</button>
-                             </div>
-                         </div>
+                                <div class="col-sm-12 btn-block">
+                                    <button type="submit" class="btn btn-success" name="new_land" value="new_land" style="width:100%">Valider</button>
+                                </div>
+                            </div>
                         </div>
                     </form>
 

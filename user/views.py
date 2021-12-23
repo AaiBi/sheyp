@@ -9,7 +9,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from base_app.models import Provider
 from construction.forms import Construction_floor_Form
-from construction.models import Construction_Project, Construction_Type, Construction_floor, Architecture_Image
+from construction.models import Construction_Project, Construction_Type, Construction_floor, Architecture_Image, \
+    Construction_Service
 from real_estate.models import Land_Project, Real_Estate_Projet_Type, Land_Type, Service_Type, Lands, Land_Images1, \
     Land_Plan_Situation, Land_Paper_Type, Property, Property_Type_Details, Property_Type_Details_Image, Property_Type
 from user.forms import EditUserInfoForm, EditUserInfoForm1, EditUserPasswordForm, Land_Form, Land_Project_Form, \
@@ -19,7 +20,8 @@ from user.models import Customer, Cart, Land_Projet_Tracker, Land_Projet_Tracker
     Construction_Tracker_Step, Construction_Tracker_Sub_Step, Construction_Tracker_Realisation, \
     Construction_Tracker_Realisation_Image, Construction_Expense, Step_Payment, Construction_Delivery, Delivery_Payment, \
     Construction_Delivery_Image, Property_Projet_Tracker, Property_Projet_Tracker_Offer, \
-    Property_Projet_Tracker_Offer_Image, Property_Projet_Tracker_Offer_Payment, Property_Projet_Tracker_Payment_Image
+    Property_Projet_Tracker_Offer_Image, Property_Projet_Tracker_Offer_Payment, Property_Projet_Tracker_Payment_Image, \
+    Architecture_Project_Tracker, Architecture_Project_Tracker_Image
 
 
 def login_user(request):
@@ -531,6 +533,7 @@ def construction_projects(request):
 
 @login_required
 def construction_project_detail(request, construction_project_pk):
+    construction_project_services = Construction_Service.objects.all()
     construction_project = get_object_or_404(Construction_Project, pk=construction_project_pk, user=request.user)
     construction_types = Construction_Type.objects.all()
     construction_floors = Construction_floor.objects.all()
@@ -539,7 +542,8 @@ def construction_project_detail(request, construction_project_pk):
 
     return render(request, 'user/construction_projects/construction_project_detail.html',
                   {'construction_project': construction_project, 'construction_types': construction_types,
-                   'construction_floors': construction_floors, 'images': images, 'tracker': tracker})
+                   'construction_floors': construction_floors, 'images': images, 'tracker': tracker,
+                   'construction_project_services': construction_project_services})
 
 
 @login_required
@@ -610,6 +614,28 @@ def construction_project_deletion(request, construction_project_pk):
 #########################################End Construction projects###############################################
 #########################################End Construction projects###############################################
 #########################################End Construction projects###############################################
+
+
+##########################################Architecture project Tracker###########################################
+##########################################Architecture project Tracker###########################################
+##########################################Architecture project Tracker###########################################
+@login_required
+def projet_architecture_tracker(request, construction_project_pk, tracker_pk):
+    construction_project_services = Construction_Service.objects.all()
+    construction_project = get_object_or_404(Construction_Project, pk=construction_project_pk, user=request.user)
+    architecture_project_tracker = Architecture_Project_Tracker.objects.filter(construction_project_id=construction_project_pk)
+    images = Architecture_Project_Tracker_Image.objects.all()
+
+    if request.method == 'GET':
+        return render(request, 'user/construction_projects/tracker/architecture/projet_architecture_tracker.html',
+                      {'construction_project': construction_project, 'construction_project_services': construction_project_services,
+                       'architecture_project_tracker': architecture_project_tracker, 'images': images
+                       })
+
+####################################End Architecture project Tracker#############################################
+####################################End Architecture project Tracker#############################################
+####################################End Architecture project Tracker#############################################
+
 
 
 ##########################################Construction project Tracker###########################################

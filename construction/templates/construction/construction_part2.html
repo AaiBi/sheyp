@@ -171,58 +171,58 @@
 
                                  {% if construction_floors.count != number_floors %}
                                      <div class="alert bg-info" role="alert">
-                                 <h5 class="text-white" align="center">
-                                     {% if construction_floors.count == 0 %}
-                                        Etage 0 - Rez-de-chaussée
-                                        <input type="hidden" name="floor_level" value="0">
-                                     {% elif construction_floors.count == 1 %}
-                                        Etage 1 - Premier etage
-                                        <input type="hidden" name="floor_level" value="1">
-                                     {% elif construction_floors.count == 2 %}
-                                        Etage 2 - Deuxième étage
-                                        <input type="hidden" name="floor_level" value="2">
-                                     {% elif construction_floors.count == 3 %}
-                                        Etage 3 - Troisième étage
-                                        <input type="hidden" name="floor_level" value="3">
-                                     {% elif construction_floors.count == 4 %}
-                                        Etage 4 - Quatrième étage
-                                        <input type="hidden" name="floor_level" value="4">
-                                     {% elif construction_floors.count == 5 %}
-                                        Etage 5 - Cinquième étage
-                                        <input type="hidden" name="floor_level" value="5">
-                                     {% elif construction_floors.count == 6 %}
-                                        Etage 6 - Sixième étage
-                                        <input type="hidden" name="floor_level" value="6">
-                                     {% elif construction_floors.count == 7 %}
-                                        Etage 7 - Septième étage
-                                        <input type="hidden" name="floor_level" value="7">
-                                     {% elif construction_floors.count == 8 %}
-                                        Etage 8 - Huitième étage
-                                        <input type="hidden" name="floor_level" value="8">
-                                     {% elif construction_floors.count == 9 %}
-                                        Etage 9 - Neuvième étage
-                                        <input type="hidden" name="floor_level" value="9">
-                                     {% elif construction_floors.count == 10 %}
-                                        Etage 10 - Dixième étage
-                                        <input type="hidden" name="floor_level" value="10">
-                                     {% elif construction_floors.count == 11 %}
-                                        Etage 11 - Onzième étage
-                                        <input type="hidden" name="floor_level" value="11">
-                                     {% elif construction_floors.count == 12 %}
-                                        Etage 12 - Douzième étage
-                                        <input type="hidden" name="floor_level" value="12">
-                                     {% elif construction_floors.count == 13 %}
-                                        Etage 13 - Treizième étage
-                                        <input type="hidden" name="floor_level" value="13">
-                                     {% elif construction_floors.count == 14 %}
-                                        Etage 14 - Quatorzième étage
-                                        <input type="hidden" name="floor_level" value="14">
-                                     {% elif construction_floors.count == 15 %}
-                                        Etage 15 - Quinzième étage
-                                        <input type="hidden" name="floor_level" value="15">
-                                     {% endif %}
-                                 </h5>
-                             </div>
+                                         <h5 class="text-white" align="center">
+                                             {% if construction_floors.count == 0 %}
+                                                Etage 0 - Rez-de-chaussée
+                                                <input type="hidden" name="floor_level" value="0">
+                                             {% elif construction_floors.count == 1 %}
+                                                Etage 1 - Premier etage
+                                                <input type="hidden" name="floor_level" value="1">
+                                             {% elif construction_floors.count == 2 %}
+                                                Etage 2 - Deuxième étage
+                                                <input type="hidden" name="floor_level" value="2">
+                                             {% elif construction_floors.count == 3 %}
+                                                Etage 3 - Troisième étage
+                                                <input type="hidden" name="floor_level" value="3">
+                                             {% elif construction_floors.count == 4 %}
+                                                Etage 4 - Quatrième étage
+                                                <input type="hidden" name="floor_level" value="4">
+                                             {% elif construction_floors.count == 5 %}
+                                                Etage 5 - Cinquième étage
+                                                <input type="hidden" name="floor_level" value="5">
+                                             {% elif construction_floors.count == 6 %}
+                                                Etage 6 - Sixième étage
+                                                <input type="hidden" name="floor_level" value="6">
+                                             {% elif construction_floors.count == 7 %}
+                                                Etage 7 - Septième étage
+                                                <input type="hidden" name="floor_level" value="7">
+                                             {% elif construction_floors.count == 8 %}
+                                                Etage 8 - Huitième étage
+                                                <input type="hidden" name="floor_level" value="8">
+                                             {% elif construction_floors.count == 9 %}
+                                                Etage 9 - Neuvième étage
+                                                <input type="hidden" name="floor_level" value="9">
+                                             {% elif construction_floors.count == 10 %}
+                                                Etage 10 - Dixième étage
+                                                <input type="hidden" name="floor_level" value="10">
+                                             {% elif construction_floors.count == 11 %}
+                                                Etage 11 - Onzième étage
+                                                <input type="hidden" name="floor_level" value="11">
+                                             {% elif construction_floors.count == 12 %}
+                                                Etage 12 - Douzième étage
+                                                <input type="hidden" name="floor_level" value="12">
+                                             {% elif construction_floors.count == 13 %}
+                                                Etage 13 - Treizième étage
+                                                <input type="hidden" name="floor_level" value="13">
+                                             {% elif construction_floors.count == 14 %}
+                                                Etage 14 - Quatorzième étage
+                                                <input type="hidden" name="floor_level" value="14">
+                                             {% elif construction_floors.count == 15 %}
+                                                Etage 15 - Quinzième étage
+                                                <input type="hidden" name="floor_level" value="15">
+                                             {% endif %}
+                                         </h5>
+                                     </div>
 
                                      <div class="col-md-12">
                                          <div class="form-group">
@@ -338,14 +338,28 @@
                                      <p></p>
                                  {% else %}
                                     <div class="alert bg-info" role="alert">
-                                         <h5 class="text-white" align="center">
-                                             Tous les niveaux ont été renseignés, vous pouvez passer à la phase 3
-                                         </h5>
+                                        <h5 class="text-white" align="center">
+                                             Tous les niveaux ont été renseignés, vous pouvez passer à la phase 3 ou cliquer sur terminer
+                                        </h5>
                                      </div>
                                     <span class="pt-7"></span>
-                                    <a role="button" class="btn btn-success" href="{% url 'construction_part3' construction_project.id %}" style="margin-left: 50%; width: 50%" >
-                                        Aller à la phase 3
-                                     </a>
+                                    {% for construction_project_service in construction_project_services %}
+                                        {% if construction_project_service.id == construction_project.construction_project_service_id %}
+                                            {% if construction_project_service.name == "Architecture - Plan" %}
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-success" name="complete_construction_project_info" value="complete_construction_project_info">
+                                                        Terminer
+                                                    </button>
+                                                </form>
+                                            {% else %}
+                                                <a role="button" class="btn btn-success" href="{% url 'construction_part3' construction_project.id %}" style="margin-left: 50%; width: 50%" >
+                                                    Aller à la phase 3
+                                                 </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+
                                  {% endif %}
                              </div>
                         </div>

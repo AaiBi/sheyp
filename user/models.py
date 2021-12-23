@@ -150,6 +150,26 @@ class Construction_Delivery_Image(models.Model):
 ########################################End Construction Tracker#######################################################
 ########################################End Construction Tracker#######################################################
 ########################################End Construction Tracker#######################################################
+
+
+
+########################################Architectur Tracker###########################################################
+########################################Architectur Tracker###########################################################
+########################################Architectur Tracker###########################################################
+class Architecture_Project_Tracker(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    additonnal_info = models.TextField()
+    construction_project = models.ForeignKey(Construction_Project, on_delete=models.CASCADE)
+
+
+class Architecture_Project_Tracker_Image(models.Model):
+    image = models.ImageField(upload_to='user/images/construction/tracker/architecture/', blank=True)
+    architecture_project_tracker = models.ForeignKey(Architecture_Project_Tracker, on_delete=models.CASCADE)
+########################################End Architectur Tracker#######################################################
+########################################End Architectur Tracker#######################################################
+########################################End Architectur Tracker#######################################################
+
+
                                     ##Cart part##
 class Cart(models.Model):
     created = models.DateTimeField(auto_now_add=True)

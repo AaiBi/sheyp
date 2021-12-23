@@ -43,11 +43,15 @@
                     <div class="d-lg-block collapse pb-2" id="account-menu">
                         <ul class="list-group">
                             <li class="list-group-item bg-light">
+                                {% for construction_project_service in construction_project_services %}
+                                    {% if construction_project_service.id == construction_project.construction_project_service_id %}
+                                        Type de service : <span class="badge bg-info">{{construction_project_service.name}}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                            <li class="list-group-item bg-light">
                                 <h3>Phase 1</h3>
                                 <ul>
-                                    <span class="badge bg-info">
-                                        <h5>Project de Construction #{{construction_project.id}}</h5>
-                                    </span></br>
                                     <a type="button" class="btn btn-danger float-right" href="{% url 'delete_construction_project' construction_project.id %}" style="margin-left: 60%">
                                         <i class="ai-trash"></i>
                                     </a>

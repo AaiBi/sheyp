@@ -53,10 +53,16 @@ urlpatterns = [
     path('land_project_tracker/<int:land_project_pk>', views.land_project_tracker, name='land_project_tracker'),
     path('land_tracker_offer_detail/<int:land_project_pk>/<int:land_project_tracker_pk>/<int:offer_pk>', views.land_tracker_offer_detail, name='land_tracker_offer_detail'),
     path('land_tracker_offer_payment/<int:land_project_pk>/<int:land_project_tracker_pk>/<int:offer_pk>', views.land_tracker_offer_payment, name='land_tracker_offer_payment'),
-                                        #land tracker end#
-    # path('real_estate_project_detail/<int:property_pk>', views.real_estate_project_detail, name='real_estate_project_detail'),
-    # path('project_update/<int:property_pk>', views.property_modification, name='property_modification'),
-    # path('project_update_apartment/<int:apartment_pk>', views.apartment_info_modification, name='apartment_info_modification'),
-    # path('delete_apartment/<int:apartment_pk>/<int:property_pk>', views.delete_apartment, name='delete_apartment'),
-    # path('new_apartment/<int:property_pk>', views.new_apartment, name='new_apartment'),
+
+
+          #########################################ADMIN PAGE##########################################################
+    ###Real estate###
+    path('real_estate_admin/', views.real_estate_admin, name='real_estate_admin'),
+    path('real_estate_project_list/', views.real_estate_project_list, name='real_estate_project_list'),
+                                                ###land####
+    path('land_project_detail/<int:land_project_pk>', views.land_project_detail, name='land_project_detail'),
+
+    ###Investment###
+    ###Construction###
+        #########################################END ADMIN PAGE##########################################################
 ]

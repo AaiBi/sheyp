@@ -1,0 +1,189 @@
+{% extends 'base_app/base.html' %}
+
+{% load humanize %}
+
+{% block title %} Page D'administration {% endblock %}
+
+{% block profile_active %} active {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+    <!-- Page content-->
+    <!-- Slanted background-->
+    <div class="position-relative bg-gradient" style="height: 480px;">
+        <div class="shape shape-bottom shape-slant bg-secondary d-none d-lg-block">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3000 260">
+                <polygon fill="currentColor" points="0,257 0,260 3000,260 3000,0"></polygon>
+            </svg>
+        </div>
+    </div>
+    <!-- Page content-->
+    <div class="container position-relative zindex-5 pb-4 mb-md-3" style="margin-top: -350px;">
+        <div class="row">
+            <!-- Sidebar-->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="bg-light rounded-3 shadow-lg">
+                    <div class="px-4 py-4 mb-1 text-center"><img class="d-block rounded-circle mx-auto my-2" src="https://www.shareicon.net/data/512x512/2016/01/13/702410_users_512x512.png" width="110">
+                        <h6 class="mb-0 pt-1">{{user.first_name}} {{user.last_name}}</h6><span class="text-muted fs-sm">@{{user.username}}</span>
+                    </div>
+                    <div class="d-lg-none px-4 pb-4 text-center">
+                        <a class="btn btn-primary px-5 mb-2" href="#account-menu" data-bs-toggle="collapse">
+                            <i class="ai-menu me-2"></i>
+                            Account menu
+                        </a>
+                    </div>
+                    <div class="d-lg-block collapse pb-2" id="account-menu">
+                        {% if user.email == "diallo_malal@hotmail.com" or user.email == "adama.demba.ndiaye@gmail.com" or user.email == "iboumocellou@yahoo.fr" %}
+                            <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Page d'administration</h3>
+                            <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'real_estate_admin' %}">
+                                <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                                Immobilier
+                                <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                            </a>
+                            <a class="d-flex align-items-center nav-link-style px-4 py-3" href="">
+                                <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                                Construction
+                                <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                            </a>
+                            <a class="d-flex align-items-center nav-link-style px-4 py-3" href="">
+                                <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                                Investissements
+                                <span class="text-muted fs-sm fw-normal ms-auto">0</span>
+                            </a>
+                        {% endif %}
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Tableau de bord</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'cart' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mon Panier
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'construction_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets de Construction
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'real_estate_projects' %}">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets Immobiliers
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="#">
+                            <i class="ai-plus fs-lg opacity-60 me-2"></i>
+                            Mes Projets d'Investissements
+                        </a>
+                        <h3 class="d-block text-white fs-sm fw-semibold mb-0 px-4 py-3" style="background-color: #d4ac0d;">Paramètres du compte</h3>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 active" href="{% url 'profile' %}">
+                            Mon Profile
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3" href="{% url 'user_password_change' %}">
+                            Modification du mot de passe
+                        </a>
+                        <a class="d-flex align-items-center nav-link-style px-4 py-3 border-top" href="#">
+                            Méthodes de payement
+                        </a>
+                        <div class="d-flex align-items-center border-top"><a class="d-block w-100 nav-link-style px-4 py-3" href="account-notifications.html">Notifications</a>
+                            <div class="ms-auto px-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="notifications-switch" data-master-checkbox-for="#notification-settings" checked>
+                                    <label class="form-check-label" for="notifications-switch"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="{% url 'logout_user' %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" style="width:100%">Déconnexion</button>
+                        </form>
+                    </div>
+                </div>
+              </div>
+            <!-- Content-->
+            <div class="col-lg-8">
+                <div class="d-flex flex-column h-100 bg-light rounded-3 shadow-lg p-4">
+
+                    {% if error %}
+                        <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                            {{ error }}
+                        </div>
+                    {% else %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                                    {{message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+
+                    <!-- Content-->
+                    <!-- Title + Delete link-->
+                    <div class="d-sm-flex align-items-center justify-content-between pb-4 text-center text-sm-start">
+                        <h1 class="h3 mb-2 text-nowrap">Liste des projets Immobilier</h1>
+                    </div>
+
+                    <!-- Land project-->
+                    <div class="bg-secondary rounded-3 p-4 mb-4">
+                        <div class="d-block">
+                            <center>
+                                <h4 class="mb-2 text-nowrap">Project de terrains</h4>
+                            </center>
+                        </div>
+                    </div>
+
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <th>Type</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th><center>Actions</center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for land_project in land_projects %}
+                                {% for land in lands %}
+                                    {% if land.land_project_id == land_project.id %}
+                                        <tr>
+                                            <td>#{{land_project.id}}</td>
+                                            <td>
+                                                {% for land_type in land_types %}
+                                                    {% if land_type.id == land_project.land_type_id %}
+                                                        {{land_type.name}}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for service_type in service_types %}
+                                                    {% if service_type.id == land_project.service_type_id %}
+                                                        {{service_type.name}}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% load i18n %}
+                                                {% language 'fr' %}
+                                                    {{land_project.created|date:'d F Y'}}
+                                                {% endlanguage %}
+                                            </td>
+                                            <td>
+                                                <a type="button" class="btn btn-outline-info" data-bs-toggle="tooltip" title="Voir les détails !" style="margin-left:0%" href="{% url 'land_project_detail' land_project.id %}">
+                                                    <i class="ai-info" style="font-size: 20px"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </hr>
+
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

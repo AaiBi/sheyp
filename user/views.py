@@ -812,3 +812,74 @@ def construction_delivery_details(request, construction_project_pk, tracker_pk, 
 ################################End Construction project Automatic counter#######################################
 ################################End Construction project Automatic counter#######################################
 ################################End Construction project Automatic counter#######################################
+
+
+
+
+
+
+
+
+##########################################REAL ESTATE ADMIN PAGE##############################################
+##########################################REAL ESTATE ADMIN PAGE##############################################
+##########################################REAL ESTATE ADMIN PAGE##############################################
+@login_required
+def real_estate_admin(request):
+    #providers = Provider.objects.all()
+    if request.method == 'GET':
+        return render(request, 'user/admin/real_estate/real_estate_admin'
+                               '.html',
+                      {
+
+                      })
+
+
+@login_required
+def real_estate_project_list(request):
+    land_projects = Land_Project.objects.all().order_by('-created')
+    lands = Lands.objects.all()
+    land_types = Land_Type.objects.all()
+    service_types = Service_Type.objects.all()
+    if request.method == 'GET':
+        return render(request, 'user/admin/real_estate/real_estate_project_list'
+                               '.html',
+                      {
+                        'land_projects': land_projects, 'lands': lands, 'land_types': land_types, 'service_types':
+                          service_types
+                      })
+
+
+@login_required
+def land_project_detail(request, land_project_pk):
+    land_project = get_object_or_404(Land_Project, pk=land_project_pk)
+    lands = Lands.objects.filter(land_project_id=land_project_pk)
+    land_types = Land_Type.objects.all()
+    service_types = Service_Type.objects.all()
+    real_estate_projects_type = Real_Estate_Projet_Type.objects.all()
+    land_plan_situations = Land_Plan_Situation.objects.all()
+    images = Land_Images1.objects.all()
+    if request.method == 'GET':
+        form = Land_Project_Form(instance=land_project)
+        return render(request, 'user/admin/real_estate/land_project/land_project_detail.html',
+                      {'land_project': land_project, 'lands': lands, 'land_types': land_types, 'service_types': service_types,
+                       'real_estate_projects_type': real_estate_projects_type, 'land_plan_situations':
+                           land_plan_situations, 'images': images, 'form': form
+                       })
+    else:
+        try:
+            form = Land_Project_Form(request.POST, instance=land_project)
+            if form.is_valid():
+                #Saving the land infos for the consruction project#
+                form = form.save(commit=False)
+                form.save()
+                messages.success(request, 'Projet accepter avec succès !')
+                #return redirect('construction_project_detail', construction_project_pk=construction_project_pk)
+
+        except ValueError:
+            return render(request, 'user/admin/real_estate/land_project/land_project_detail.html',
+                          {'land_project': land_project, 'lands': lands, 'land_types': land_types, 'service_types': service_types,
+                       'real_estate_projects_type': real_estate_projects_type, 'land_plan_situations':
+                           land_plan_situations, 'images': images, 'form': form, 'error': 'Mauvaises données saisies !'})
+##########################################END REAL ESTATE ADMIN PAGE###########################################
+##########################################END REAL ESTATE ADMIN PAGE###########################################
+##########################################END REAL ESTATE ADMIN PAGE###########################################

@@ -40,7 +40,7 @@
                     <p class="pb-2">Nous donnons vies à vos projets les plus fous</p>
                     <form method="POST">
                         {% csrf_token %}
-                        <a type="button" class="btn btn-outline-primary" href="{% url 'start_new_project' %}">
+                        <a type="button" class="btn btn-outline-primary" href="{% url 'construction_part1' %}">
                             <i class="fas fa-plus"></i>Commencer mon projet
                         </a>
 <!--                        <button type="submit" class="btn btn-outline-primary" name="construction_project_submit" value="construction_project_submit">-->
@@ -122,6 +122,199 @@
         </div>
     </section>
 
+    <!-- Offers carousel-->
+    <section class="container py-5 my-4 my-sm-0 py-sm-6 py-md-7">
+        <h2 class="text-center mb-4">Nos offres</h2>
+        <div class="tns-carousel-wrapper">
+            <div class="tns-carousel-progress ms-auto mb-3">
+                <div class="text-sm text-muted text-center mb-2">
+                    <span class="tns-current-slide me-1"></span>of
+                    <span class="tns-total-slides ms-1"></span>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar"></div>
+                </div>
+            </div>
+            <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 3, &quot;nav&quot;: false, &quot;gutter&quot;: 23, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;540&quot;:{&quot;items&quot;:2},&quot;900&quot;:{&quot;items&quot;:3}}}">
+                <div class="pb-2">
+                    <div class="card border-0 shadow mx-1">
+                        <span class="badge badge-lg badge-floating badge-floating-end bg-danger">
+                            13 millions CFA
+                        </span>
+                        <span class="badge badge-lg badge-floating bg-success">
+                            Écolo-responsable
+                        </span>
+                        <div class="card-img-top">
+                            <img src="{% static 'construction/images/offers/rdc_f3.jpg' %}" alt="Maison rez-de-chaussée type F3">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="h5 pt-1 mb-3 text-center">Maison rez-de-chaussée type F3</h3>
+                            <p class="fs-sm text-muted mb-2 text-center">
+                                Nous vous proposons la construction d'une maison rez-de-chaussée tout finit de <b>150 m2
+                                </b> à seulement <b>13 millions de fcfa</b>.
+                            </p>
+                            <p class="fs-sm mb-2"><b>
+                                1 Chambre avec salle de bain</br>
+                                1 chambre sans salle de bain</br>
+                                Salon</br>
+                                Cuisine</br>
+                                Espace familial</br>
+                                1 Toilette visiteur</br>
+                                Séjour familial</br>
+                                Cour intérieur
+                            </b></p>
+                            <p>
+                                <ul class="list-unstyled text-dark">
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Architecture tradi-moderne</span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Construction économique </span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Matériaux écologiques </span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Consommation énergétique basse</span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Système d'assainissement autonome</span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Système de drainage des eaux de pluie</span>
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-2">
+                    <div class="card border-0 shadow mx-1">
+                        <span class="badge badge-lg badge-floating badge-floating-end bg-danger">
+                            13 millions CFA
+                        </span>
+                        <span class="badge badge-lg badge-floating bg-success">
+                            Écolo-responsable
+                        </span>
+                        <div class="card-img-top">
+                            <img src="{% static 'construction/images/offers/rdc_f4.jpg' %}" alt="Maison rez-de-chaussée type F3">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="h5 pt-1 mb-3 text-center">Maison rez-de-chaussée type F4</h3>
+                            <p class="fs-sm text-muted mb-2 text-center">
+                                Nous vous proposons la construction d'une maison rez-de-chaussée tout finit de <b>150 m2
+                                </b> à seulement <b>13 millions de fcfa</b>.
+                            </p>
+                            <p class="fs-sm mb-2"><b>
+                                2 chambres sans salle de bain</br>
+                                1 Chambre avec salle de bain</br>
+                                Salon</br>
+                                Cuisine</br>
+                                Espace familial</br>
+                                1 Toilette visiteur</br>
+                                Séjour familial</br>
+                            </b></p>
+                            <p>
+                                <ul class="list-unstyled text-dark">
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Architecture tradi-moderne</span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Construction économique </span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Matériaux écologiques </span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Consommation énergétique basse</span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Système d'assainissement autonome</span>
+                                    </li>
+                                    <li class="d-flex mb-2 pb-1 text-success">
+                                        <i class="ai-check-circle fs-xl mt-1 me-3"></i>
+                                        <span>Système de drainage des eaux de pluie</span>
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architectures -->
+    <section class="container py-5 my-4 my-sm-0 py-sm-6 py-md-7">
+        <h2 class="text-center mb-4">Nos architectures</h2>
+        <p class=" text-muted mb-2 text-center">
+            Pour vos projets de construction, vous pourrez choisir gratuitement une des architectures tradi-moderne
+            qu'on propose.
+        </p>
+        <div class="tns-carousel-wrapper">
+            <div class="tns-carousel-progress ms-auto mb-3">
+                <div class="text-sm text-muted text-center mb-2">
+                    <span class="tns-current-slide me-1"></span>of
+                    <span class="tns-total-slides ms-1"></span>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar"></div>
+                </div>
+            </div>
+            <div class="tns-carousel-inner" data-carousel-options="{&quot;items&quot;: 3, &quot;nav&quot;: false, &quot;gutter&quot;: 23, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;540&quot;:{&quot;items&quot;:2},&quot;900&quot;:{&quot;items&quot;:3}}}">
+                <div class="pb-2">
+                    <div class="card border-0 shadow card-hover mx-1">
+                        <div class="card-body">
+                            <div class="row">
+                                <h5 class="text-center mb-4">Maison rez-de-chaussée F3</h5>
+                                <div class="col-sm-6">
+                                     <a class="gallery-item rounded-3" href="/static/construction/images/offers/maquette_construction1.jpg">
+                                        <img src="/static/construction/images/offers/maquette_construction1.jpg" alt="Maquette 1" style="height: 125px">
+                                     </a>
+                                </div>
+                                <div class="col-sm-6">
+                                     <a class="gallery-item rounded-3" href="/static/construction/images/offers/maquette_construction3.jpg">
+                                        <img src="/static/construction/images/offers/maquette_construction3.jpg" alt="Maquette 3" style="height: 125px">
+                                     </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-2">
+                    <div class="card border-0 shadow card-hover mx-1">
+                        <div class="card-body">
+                            <div class="row">
+                                <h5 class="text-center mb-4">Maison rez-de-chaussée F4</h5>
+                                <div class="col-sm-6">
+                                     <a class="gallery-item rounded-3" href="/static/construction/images/offers/maquette_construction1.jpg">
+                                        <img src="/static/construction/images/offers/maquette_construction1.jpg" alt="Maquette 1" style="height: 125px">
+                                     </a>
+                                </div>
+                                <div class="col-sm-6">
+                                     <a class="gallery-item rounded-3" href="/static/construction/images/offers/maquette_construction3.jpg">
+                                        <img src="/static/construction/images/offers/maquette_construction2.jpg" alt="Maquette 3" style="height: 125px">
+                                     </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Services-->
     <section class="container py-5 py-md-6 py-lg-7">
         <div class="row align-items-center mt-3 mt-md-0">
@@ -182,7 +375,7 @@
                               <img class="d-inline-block mb-4 mt-2" src="{% static 'construction/images/inspection_house.png' %}" width="100">
                               <h3 class="h5 mb-2">Inspection de bâtiment</h3>
                               <p class="mb-0">
-                                  Vous prévoyez de faire un achat immobilier ? protégez-vous en obtenant l'avis technique d'un expert
+                                  Vous prévoyez de faire un achat immobilier ? Protégez-vous en obtenant l'avis technique d'un expert
                                     d'acheter le bien. Une inspection préventive permettra d'évaluer l'état de la structure mais aussi de
                                     déterminer les imperfections les plus susceptibles de nuire à votre sécurité et confort.
                               </p>
@@ -197,9 +390,9 @@
 
     <!-- Icon + text-->
     <section class="container pt-5 pb-4 mt-3 mt-md-0 mb-md-3 pb-md-5 pt-md-7">
-        <h2 class="text-center mb-5">Comment se deroulera votre projet de construction avec nous ?</h2>
+        <h2 class="text-center mb-5">Comment se déroulera votre projet de construction avec nous ?</h2>
         <h4 class="text-center">
-            La construction chez Sheyp suit la procédure suivante qui est divisée en deux principale partie :
+            La construction chez Sheyp suit la procédure suivante qui est divisée en deux principales parties :
         </h4>
         <div class="accordion" id="faq">
             <ul>

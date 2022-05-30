@@ -36,9 +36,11 @@
         {% endif %}
 
         <div class="container position-relative zindex-5 text-center pt-md-6 pt-lg-7 py-5 my-lg-3">
-            <h1 class="text-light mb-0">
-                Construction
-            </h1>
+            <h1 class="text-light mb-0">Construction</h1>
+            <h5 class="text-light">
+                Économisez jusqu'à <span class="text-success">30%</span> en optant pour une construction écologique
+                avec des briques en terre cuite.
+            </h5>
         </div>
     </section>
     </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
@@ -58,13 +60,6 @@
                     <div class="d-lg-block collapse pb-2" id="account-menu">
                         <ul class="list-group">
                             <li class="list-group-item bg-light">
-                                {% for construction_project_service in construction_project_services %}
-                                    {% if construction_project_service.id == construction_service.id %}
-                                        Type de service : <span class="badge bg-info">{{construction_project_service.name}}</span>
-                                    {% endif %}
-                                {% endfor %}
-                            </li>
-                            <li class="list-group-item bg-light">
                                 <b>Phase 1</b>
                                 <ul>
                                     {% for land_type in land_types %}
@@ -83,12 +78,6 @@
                                     {% endfor %}
                                 </ul>
                             </li>
-                            <li class="list-group-item bg-secondary">
-                                <b>Phase 2</b>
-                            </li>
-                            <li class="list-group-item bg-light text-white">
-                                <b>Phase 3</b>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -100,81 +89,35 @@
                     <div class="card-header text-white" style="background-color: #d4ac0d; border-radius:10px;">
                         <center><h2>Phase 1</h2></center>
                         <h6 class="text-white">Si vous n'aviez pas encore de terrain, nous pouvons vous aider à
-                            en trouver en remplissant le formulaire d'achat de terrain</h6>
+                            en trouver.</h6>
                     </div></br>
 
                     <form method="POST">
                         {% csrf_token %}
                         <div class="row">
                             <p></p>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Sélectionner la région</label>
-                                    <select class="form-select form-control" name="region" required>
-                                        <option selected disabled value="">Région</option>
-                                        <option value="Dakar">Dakar</option>
-                                        <option value="Diourbel">Diourbel</option>
-                                        <option value="Saint-Louis">Saint-Louis</option>
-                                        <option value="Thiès">Thiès</option>
-                                        <option value="Kaolack">Kaolack</option>
-                                        <option value="Tambacounda">Tambacounda</option>
-                                        <option value="Louga">Louga</option>
-                                        <option value="Fatick">Fatick</option>
-                                        <option value="Kolda">Kolda</option>
-                                        <option value="Matam">Matam</option>
-                                        <option value="Kaffrine">Kaffrine</option>
-                                        <option value="Kédougou">Kédougou</option>
-                                        <option value="Sédhiou">Sédhiou</option>
-                                    </select>
-                                </div>
-                             </div>
-                            <div class="col-md-6">
-                                 <div class="form-group">
-                                     <label>L'adresse du terrain</label>
-                                     <input type="text" name="adress" class="form-control" placeholder="Exemple: Medina rue6 angle 12" required>
-                                 </div>
-                             </div>
-                            <p></p>
-                            <div class="col-sm-6">
-                                <label></label>
-                                <select class="form-select form-control" name="construction_type_id" required="">
-                                    <option selected disabled value="">Type de Construction</option>
-                                    {% for construction_type in construction_types %}
-                                         <option value="{{construction_type.id}}">{{construction_type.name}}</option>
-                                    {% endfor %}
-                                </select>
+                            <div class="col-md-6 form-group">
+                                <input type="text" name="client_first_name" class="form-control" placeholder="Entrez votre prénom" required>
                             </div>
-                            <div class="col-md-6">
-                                 <div class="form-group">
-                                    <label>Surface du bien en m²</label>
-                                    <input type="number" name="area" class="form-control" placeholder="Exemple: 150" required>
-                                    <div id="emailHelp" class="form-text">10.000m² = 1hectare</div>
-                                 </div>
-                             </div>
+                            <div class="col-md-6 form-group">
+                                <input type="text" name="client_last_name" class="form-control" placeholder="Entrez votre nom de famille" required>
+                            </div>
                             <p></p>
-                            <div class="col-md-6">
-                                 <div class="form-group">
-                                    <label>Surface utilisable en m²</label>
-                                    <input type="number" name="area_usable" class="form-control" placeholder="Exemple: 100" required>
-                                 </div>
-                             </div>
-                            <div class="col-md-6">
-                                 <div class="form-group">
-                                    <label>Nombre d'étages</label>
-                                    <input type="number" name="number_floor" class="form-control" placeholder="Exemple: 4" required>
-                                 </div>
-                             </div>
+                            <div class="col-md-6 form-group">
+                                <input type="email" name="client_email" class="form-control" placeholder="Entrez votre email" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="tel" name="client_phone_number" class="form-control" placeholder="Entrez votre numéro de téléphone" required>
+                                <div class="form-text">Ne pas oubliez l'indicatif</div>
+                            </div>
                             <p></p>
-                            <div class="col-md-12">
-                                 <div class="form-group">
-                                    <textarea class="form-control" name="aditionnal_info" placeholder="Aviez-vous des informations supplémentaires à ajouter ?" ></textarea>
-                                 </div>
-                             </div>
                             <p></p>
-                            <input type="hidden" name="construction_project_service_id" value="{{construction_service.id}}">
+                            <p></p>
                             <div class="row">
                                 <div class="col-sm-12 btn-block">
-                                    <button type="submit" class="btn btn-success" name="new_land" value="new_land" style="width:100%">Valider</button>
+                                    <button type="submit" class="btn btn-success" style="width:100%">
+                                        Continuer vers la phase 2
+                                    </button>
                                 </div>
                             </div>
                         </div>

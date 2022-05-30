@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'base_app',
     'construction',
     'user',
-    'investment'
+    'investment',
+    'administration'
 ]
 
 MIDDLEWARE = [

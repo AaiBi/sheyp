@@ -1,0 +1,66 @@
+{% extends 'admin_base.html' %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+
+    <!-- **************** MAIN CONTENT START **************** -->
+
+	{% if error %}
+		</br>
+		<div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+			{{ error }}
+		</div>
+	{% else %}
+		{% if messages %}
+			{% for message in messages %}
+				<div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+					{{message}}
+				</div>
+			{% endfor %}
+		{% endif %}
+	{% endif %}
+
+    <!-- =======================
+	Page content START -->
+	<section class="pt-2">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Right sidebar START -->
+				<div class="col-xl-3">
+					<!-- Responsive offcanvas body START -->
+					<nav class="navbar navbar-expand-xl bg-dark mx-0 card">
+                        <div class="card-body rounded-3 list-group list-group-dark list-group-borderless">
+                            <a class="list-group-item hover" href="">
+                                Aperçu du profil
+                            </a>
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="list-group-item text-danger bg-danger-soft-hover">
+                                    Déconnexion
+                                </button>
+                            </form>
+                        </div>
+					</nav>
+					<!-- Responsive offcanvas body END -->
+				</div>
+				<!-- Right sidebar END -->
+
+				<!-- Main content START -->
+				<div class="col-xl-9 bg-dark card">
+
+				</div>
+				<!-- Main content END -->
+			</div><!-- Row END -->
+		</div>
+	</section>
+	<!-- =======================
+	Page content END --></br></br></br></br></br></br></br></br></br></br></br>
+
+    <!-- **************** MAIN CONTENT END **************** -->
+
+{% endblock %}

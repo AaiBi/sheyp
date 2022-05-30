@@ -24,6 +24,10 @@
             <h1 class="text-light mb-0">
                 Construction
             </h1>
+            <h5 class="text-light">
+                Économisez jusqu'à <span class="text-success">30%</span> en optant pour une construction écologique
+                avec des briques en terre cuite.
+            </h5>
         </div>
     </section>
     </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
@@ -43,11 +47,31 @@
                     <div class="d-lg-block collapse pb-2" id="account-menu">
                         <ul class="list-group">
                             <li class="list-group-item bg-light">
-                                <h3>Phase 1</h3>
+                                <b>Phase 1</b>
                                 <ul>
-                                    <span class="badge bg-info">
-                                        <h5>Project de Construction #{{construction_project.id}}</h5>
-                                    </span></br>
+                                    <li>
+                                        Prénom : <span class="badge bg-info">{{construction_project.client_first_name|capfirst}}</span>
+                                    </li>
+                                    <li>
+                                        Nom : <span class="badge bg-info">{{construction_project.client_last_name|capfirst}}</span>
+                                    </li>
+                                    <li>
+                                        Email : <span class="badge bg-info">{{construction_project.client_email}}</span>
+                                    </li>
+                                    <li>
+                                        Téléphone : <span class="badge bg-info">{{construction_project.client_phone_number}}</span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item bg-light">
+                                <b>Phase 2</b>
+                                <ul>
+                                    <li>
+                                        Type de construction :
+                                        <span class="badge bg-info">
+                                            {{construction_project.construction_type.name}}
+                                        </span>
+                                    </li>
                                     <li>
                                         Région : <span class="badge bg-info">{{construction_project.region}}</span>
                                     </li>
@@ -64,23 +88,23 @@
                                         Nombre d'étage : <span class="badge bg-info">{{construction_project.number_floor}}</span>
                                     </li>
                                     <li>
-                                        Informations supplémentaires : <span class="badge bg-info">{{construction_project.aditionnal_info}}</span>
+                                        Informations supplémentaires : </br>
+                                        <span class="badge bg-info">{{construction_project.aditionnal_info}}</span>
                                     </li>
-                                    {% for construction_type in construction_types %}
-                                        {% if construction_type.id == construction_project.construction_type_id %}
-                                            <li>
-                                                Type de construction : <span class="badge bg-info">{{construction_type.name}}</span>
-                                            </li>
-                                        {% endif %}
-                                    {% endfor %}
                                 </ul>
                             </li>
                             <li class="list-group-item bg-secondary">
-                                <b>Phase 2</b>
-                                <ul>
-                                    {% for construction_floor in construction_floors %}
+                                <b>Phase 3</b>
+                                {% for construction_floor in construction_floors %}
+                                    <ul>
                                         <li>
-                                            Étage : <span class="badge bg-info">#{{construction_floor.floor_level}}</span></br>
+                                            {% if construction_floor.floor_level == 0 %}
+                                                Rez-de-chaussée
+                                            {% else %}
+                                                Étage : <span class="badge bg-info">
+                                                            #{{construction_floor.floor_level}}
+                                                        </span></br>
+                                            {% endif %}
                                             <ul>
                                                 <li>
                                                     Nombre de chambre avec salle de bain :
@@ -102,28 +126,55 @@
                                                 </li>
                                                 {% if construction_floor.floor_level == 0 %}
                                                     <li>
-                                                        Garage : <span class="badge bg-info">{{construction_floor.garage}}</span>
+                                                        Garage :
+                                                        <span class="badge bg-info">
+                                                            {% if construction_floor.garage == 'Yes' %}
+                                                                Oui
+                                                            {% else %}
+                                                                Non
+                                                            {% endif %}
+                                                        </span>
                                                     </li>
                                                 {%endif%}
                                                 <li>
-                                                    Balcon : <span class="badge bg-info">{{construction_floor.balcony}}</span>
+                                                    Balcon :
+                                                    <span class="badge bg-info">
+                                                        {% if construction_floor.balcony == 'Yes' %}
+                                                            Oui
+                                                        {% else %}
+                                                            Non
+                                                        {% endif %}
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    Terrasse : <span class="badge bg-info">{{construction_floor.terace}}</span>
+                                                    Terrasse :
+                                                    <span class="badge bg-info">
+                                                        {% if construction_floor.terace == 'Yes' %}
+                                                            Oui
+                                                        {% else %}
+                                                            Non
+                                                        {% endif %}
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    Espace de stockage : <span class="badge bg-info">{{construction_floor.closette}}</span>
+                                                    Espace de stockage :
+                                                    <span class="badge bg-info">
+                                                        {% if construction_floor.closette == 'Yes' %}
+                                                            Oui
+                                                        {% else %}
+                                                            Non
+                                                        {% endif %}
+                                                    </span>
                                                 </li>
                                                 <li>
-                                                    Informations supplémentaires : <span class="badge bg-info">{{construction_floor.aditionnal_info}}</span>
+                                                    Informations supplémentaires : </br>
+                                                    <span class="badge bg-info">{{construction_floor.aditionnal_info}}
+                                                    </span>
                                                 </li>
                                             </ul></br>
                                         </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            <li class="list-group-item bg-light text-white">
-                                <b>Phase 3</b>
+                                    </ul>
+                                {% endfor %}
                             </li>
                         </ul>
                     </div>
@@ -147,50 +198,199 @@
                         {% endif %}
                     {% endif %}
 
-                    <form method="POST" enctype="multipart/form-data">
+                    <form method="POST">
                         {% csrf_token %}
                          <div class="card-header text-white" style="background-color: #d4ac0d; border-radius:10px;">
                              <center><h2>Phase 3</h2></center>
-                             <center><h5>Ajout d'images</h5></center>
-                         </div></br>
+                             <center>Informations sur chacun des étages</center>
+                         </div>
+                         <div class="card-body">
 
-                        <div class="alert bg-info" role="alert">
-                             <h5 class="text-white">
-                                 Si vous aviez déjà une architecture, veuillez les prendre en photo et les ajouter ici !
-                             </h5>
-                        </div>
-                        </br>
-
-                         <div class="card card-body">
                              <div class="row">
-                                <div class="form-group col-sm-12">
-                                    <input type="file" class="form-control-file" name="image" required>
-                                </div>
-                            </div></br>
+                                 {% if total_floors != number_construction_floor %}
+                                     <div class="alert bg-info" role="alert">
+                                         <h5 class="text-white" align="center">
+                                             {% if number_construction_floor == 0 %}
+                                                Rez-de-chaussée
+                                                <input type="hidden" name="floor_level" value="0">
+                                             {% elif number_construction_floor == 1 %}
+                                                Étage 1 - Premier etage
+                                                <input type="hidden" name="floor_level" value="1">
+                                             {% elif number_construction_floor == 2 %}
+                                                Étage 2 - Deuxième étage
+                                                <input type="hidden" name="floor_level" value="2">
+                                             {% elif number_construction_floor == 3 %}
+                                                Étage 3 - Troisième étage
+                                                <input type="hidden" name="floor_level" value="3">
+                                             {% elif number_construction_floor == 4 %}
+                                                Étage 4 - Quatrième étage
+                                                <input type="hidden" name="floor_level" value="4">
+                                             {% elif number_construction_floor == 5 %}
+                                                Étage 5 - Cinquième étage
+                                                <input type="hidden" name="floor_level" value="5">
+                                             {% elif number_construction_floor == 6 %}
+                                                Étage 6 - Sixième étage
+                                                <input type="hidden" name="floor_level" value="6">
+                                             {% elif number_construction_floor == 7 %}
+                                                Étage 7 - Septième étage
+                                                <input type="hidden" name="floor_level" value="7">
+                                             {% elif number_construction_floor == 8 %}
+                                                Étage 8 - Huitième étage
+                                                <input type="hidden" name="floor_level" value="8">
+                                             {% elif number_construction_floor == 9 %}
+                                                Étage 9 - Neuvième étage
+                                                <input type="hidden" name="floor_level" value="9">
+                                             {% elif number_construction_floor == 10 %}
+                                                Étage 10 - Dixième étage
+                                                <input type="hidden" name="floor_level" value="10">
+                                             {% elif number_construction_floor == 11 %}
+                                                Étage 11 - Onzième étage
+                                                <input type="hidden" name="floor_level" value="11">
+                                             {% elif number_construction_floor == 12 %}
+                                                Étage 12 - Douzième étage
+                                                <input type="hidden" name="floor_level" value="12">
+                                             {% elif number_construction_floor == 13 %}
+                                                Étage 13 - Treizième étage
+                                                <input type="hidden" name="floor_level" value="13">
+                                             {% elif number_construction_floor == 14 %}
+                                                Étage 14 - Quatorzième étage
+                                                <input type="hidden" name="floor_level" value="14">
+                                             {% elif number_construction_floor == 15 %}
+                                                Étage 15 - Quinzième étage
+                                                <input type="hidden" name="floor_level" value="15">
+                                             {% endif %}
+                                         </h5>
+                                     </div>
 
-                             <button type="submit" class="btn btn-success" style="width: 100%">Envoyer</button>
-                        </div>
-                    </form></br>
+                                     <div class="col-md-12">
+                                         <div class="form-group">
+                                             <label>Nombre de chambres avec toilette interne</label>
+                                             <input type="number" name="number_bedroom_with_bathroom" class="form-control" placeholder="Exemple: 2" required>
+                                         </div>
+                                     </div>
+                                     <p></p>
+                                     <div class="col-md-6">
+                                         <div class="form-group">
+                                             <label>Nombre de chambres simples</label>
+                                             <input type="number" name="number_bedroom_without_bathroom" class="form-control" placeholder="Exemple: 2" required>
+                                         </div>
+                                     </div>
+                                     <div class="col-md-6">
+                                         <div class="form-group">
+                                             <label>Nombre de toilettes externes</label>
+                                             <input type="number" name="number_shared_bathroom" class="form-control" placeholder="Exemple: 2" required>
+                                         </div>
+                                     </div>
+                                     <p></p>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                             <label>Nombre de salons</label>
+                                             <input type="number" name="number_living_room" class="form-control" placeholder="Exemple: 2" required>
+                                         </div>
+                                     </div>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                             <label>Nombre de cuisines</label>
+                                             <input type="number" name="number_kitchen" class="form-control" placeholder="Exemple: 2" required>
+                                         </div>
+                                     </div>
+                                     <div class="col-md-4">
+                                         <div class="form-group">
+                                             <label>Espace de stockage</label>
+                                             <select class="form-select form-control" name="closette" required>
+                                                 <option selected disabled value="">Sélectionner</option>
+                                                <option value="Yes">Oui</option>
+                                                <option value="No">Non</option>
+                                            </select>
+                                         </div>
+                                     </div>
+                                     <p></p>
+                                     {% if number_construction_floor == 0 %}
+                                        <div class="col-md-4">
+                                             <div class="form-group">
+                                                <label>Garage</label>
+                                                <select class="form-select form-control" name="garage" required>
+                                                    <option selected disabled value="">Sélectionner</option>
+                                                    <option value="Yes">Oui</option>
+                                                    <option value="No">Non</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                        <div class="col-md-4">
+                                             <div class="form-group">
+                                                <label>Terrasse</label>
+                                                <select class="form-select form-control" name="terace" required>
+                                                    <option selected disabled value="">Sélectionner</option>
+                                                    <option value="Yes">Oui</option>
+                                                    <option value="No">Non</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Balcon</label>
+                                                <select class="form-select form-control" name="balcony" required>
+                                                    <option selected disabled value="">Sélectionner</option>
+                                                    <option value="Yes">Oui</option>
+                                                    <option value="No">Non</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                     {% else %}
+                                        <input type="hidden" name="garage" value="No">
+                                         <div class="col-md-6">
+                                             <div class="form-group">
+                                                <label>Terrasse</label>
+                                                <select class="form-select form-control" name="terace" required>
+                                                    <option selected disabled value="">Sélectionner</option>
+                                                    <option value="Yes">Oui</option>
+                                                    <option value="No">Non</option>
+                                                </select>
+                                             </div>
+                                         </div>
+                                         <div class="col-md-6">
+                                             <div class="form-group">
+                                                <label>Balcon</label>
+                                                <select class="form-select form-control" name="balcony" required>
+                                                    <option selected disabled value="">Sélectionner</option>
+                                                    <option value="Yes">Oui</option>
+                                                    <option value="No">Non</option>
+                                                </select>
+                                            </div>
+                                         </div>
+                                     {%endif%}
+                                     <p></p>
+                                     <div class="col-md-12">
+                                         <div class="form-group">
+                                            <textarea class="form-control" name="aditionnal_info" placeholder="Aviez-vous des informations supplémentaires à ajouter ?" ></textarea>
+                                         </div>
+                                     </div>
+                                     <p></p>
+                                     <div class="row">
+                                         <div class="col-sm-12 btn-block">
+                                             <button type="submit" class="btn btn-success" name="new_land" value="new_land" style="width:100%">Valider</button>
+                                         </div>
+                                     </div>
+                                     <p></p>
+                                     <p></p>
+                                     <p></p>
+                                 {% else %}
+                                    <div class="alert bg-info" role="alert">
+                                        <h5 class="text-white" align="center">
+                                             Tous les niveaux ont été renseignés, vous pouvez cliquer sur terminer
+                                        </h5>
+                                     </div>
+                                    <span class="pt-7"></span>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success" name="complete_construction_project_info" value="complete_construction_project_info">
+                                            Terminer
+                                        </button>
+                                    </form>
 
-                    <!-- Project gallery-->
-                    <section class="pt-4 mt-lg-2 pb-lg-0">
-                        <div class="gallery row">
-                            {% for img in images %}
-                                {% if img.construction_project_id == construction_project.id %}
-                                    <div class="col-md-4 col-sm-6 mb-grid-gutter">
-                                        <a class="gallery-item rounded-3" href="{{img.image.url}}">
-                                            <img src="{{img.image.url}}" style="height:150px">
-                                        </a>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                                 {% endif %}
+                             </div>
                         </div>
-                    </section></br></br>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-success" name="complete_construction_project_info" value="complete_construction_project_info" style="margin-left: 73%">
-                            Terminer
-                        </button>
                     </form>
 
                 </div>

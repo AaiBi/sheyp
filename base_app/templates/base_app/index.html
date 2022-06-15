@@ -21,11 +21,20 @@
                             Investir au Sénégal et faire un pilotage à distance.
                         </p>
                         <a class="d-inline-flex align-items-center text-decoration-none pt-2 mt-4 mb-5" href="#advertising" data-scroll>
-                            <span class="btn btn-icon rounded-circle border-light flex-shrink-0 px-3">
+                            <span class="btn btn-icon rounded-circle border-light btn-warning flex-shrink-0 px-3">
                                 <i class="ai-arrow-down h4 text-light my-1"></i>
                             </span>
                             <span class="ms-3 text-light fw-medium">Voir la vidéo publicitaire</span>
+                            <a class="d-inline-flex align-items-center text-decoration-none pt-2 mt-4 mb-5" href="#projects" data-scroll>
+                                <span class="ms-3 text-light fw-medium">
+                                    <span class="btn btn-icon btn-warning rounded-circle border-light flex-shrink-0 px-3">
+                                        <i class="ai-arrow-down h4 text-light my-1"></i>
+                                    </span>
+                                    Nos projets en cours
+                                </span>
+                            </a>
                         </a>
+
                         <hr class="hr-light mt-0 mb-5">
                         <div class="row">
                             <div class="col-sm-4 mb-4 mb-sm-0">
@@ -334,6 +343,41 @@
         </div>
     </section>
 
+    <!-- Success stories-->
+    <section class="py-5 py-md-6 mt-n4" style="background-color: #d4ac0d;" id="projects">
+        <div class="container py-2">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8 col-sm-10 text-center text-white">
+                    <h2>
+<!--                        Nos success stories -->
+                        Nos Projets en cours
+                    </h2>
+                    <p class="mb-5 pb-2">
+                        Ils nous font confiance.
+<!--                        Ils nous ont fait confiance et ne l'ont pas regretté-->
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 mb-grid-gutter">
+                    <div class="card border-0 shadow">
+                        <video width="100%" height="300" controls>
+                            <source src="{% static 'base_app/videos/projet_warehouse_gambia.mp4' %}" type="video/mp4" style="width: 100%">
+                        </video>
+                        <div class="card-body">
+                            <h3 class="h5 mb-0">
+                                Construction d'un hangar de stockage de 32m x 29m avec 8m de haut en Gambie.
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 mb-grid-gutter">
+
+                </div>
+            </div>
+        </div>
+    </section></br></br>
+
     <!-- Partners-->
     <section class="container pb-5 pb-lg-6">
         <h2 class="mb-5 text-center">Nous travaillons avec les meilleurs dans leur domaine.</h2>
@@ -624,46 +668,6 @@
             </div>
         </div>
       </section>
-
-    <!-- Success stories-->
-    <section class="py-5 py-md-6 mt-n4" style="background-color: #d4ac0d;">
-        <div class="container py-2">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 col-sm-10 text-center text-white">
-                    <h2>Nos success stories </h2>
-                    <p class="mb-5 pb-2">
-                        Ils nous ont fait confiance et ne l'ont pas regretté
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-                    <a class="card card-hover border-0 shadow mx-auto" style="max-width: 400px;">
-                        <img class="card-img-top" src="{% static 'base_app/img/agriculture1.jpg' %}" style="max-width: 400px; max-height: 220px;">
-                        <div class="card-body">
-                            <h3 class="h5 mb-0">Agriculture</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-                    <a class="card card-hover border-0 shadow mx-auto" style="max-width: 400px;">
-                        <img class="card-img-top" src="{% static 'base_app/img/elevage.jpg' %}" style="max-width: 400px; max-height: 220px;">
-                        <div class="card-body">
-                          <h3 class="h5 mb-0">Élevage</h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-grid-gutter">
-                    <a class="card card-hover border-0 shadow mx-auto" style="max-width: 400px;">
-                        <img class="card-img-top" src="{% static 'base_app/img/numerique.jpg' %}" style="max-width: 400px; max-height: 220px;">
-                        <div class="card-body">
-                            <h3 class="h5 mb-0">Numérique</h3>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Business provider -->
     <section class="bg-secondary">

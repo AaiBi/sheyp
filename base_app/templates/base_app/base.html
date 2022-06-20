@@ -167,8 +167,20 @@
                         <div class="offcanvas-body">
                         <!-- Menu-->
                             <ul class="navbar-nav">
-                                <li class="nav-item {% block construction_active %} {% endblock %}">
-                                    <a class="nav-link" href="{% url 'construction' %}" style="color: #737491">Construction</a>
+                                <li class="nav-item dropdown dropdown-mega {% block construction_active %} {% endblock %}">
+                                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="color: #737491">
+                                        Construction
+                                    </a>
+                                    <div class="dropdown-menu" style="width: 310px">
+                                        <div class="dropdown-column mb-2 mb-lg-0">
+                                            <a class="dropdown-item" href="{% url 'construction' %}">
+                                                <h5 class="dropdown-header">Accueil</h5>
+                                            </a>
+<!--                                            <a class="dropdown-item" href="{% url 'automatic_quote' %}">-->
+<!--                                                Obtenir un devis automatique-->
+<!--                                            </a>-->
+                                        </div>
+                                    </div>
                                 </li>
                                 <li class="nav-item dropdown dropdown-mega {% block real_estate_active %} {% endblock %}">
                                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="color: #737491">Immobilier</a>

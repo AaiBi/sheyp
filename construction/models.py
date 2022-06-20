@@ -40,3 +40,63 @@ class Construction_floor(models.Model):
     terace = models.CharField(max_length=5, default="No")
     balcony = models.CharField(max_length=5, default="No")
     construction_project = models.ForeignKey(Construction_Project, on_delete=models.CASCADE)
+
+
+# ###################################### Automatic quote #####################################################
+# ###################################### Automatic quote #####################################################
+class Country(models.Model):
+    name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
+
+
+class Quote_Project(models.Model):
+    full_name = models.CharField(max_length=300)
+    email = models.EmailField()
+    area = models.IntegerField()
+    level = models.IntegerField()
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, default="")
+
+    def __str__(self):
+        return self.full_name
+
+
+class Quote_Project_Step(models.Model): # The reference is based on 3.5m2
+    name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
+
+
+class Mesure_Unit(models.Model):
+    name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
+
+
+class Quote_Project_Ouvrage(models.Model):
+    name = models.CharField(max_length=300)
+    quantity = models.DecimalField(max_digits=19, decimal_places=5, default="")
+    mesure_unit = models.ForeignKey(Mesure_Unit, on_delete=models.CASCADE, default="")
+    quote_project_step = models.ForeignKey(Quote_Project_Step, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Materiaux(models.Model):
+    name = models.CharField(max_length=300)
+    mesure_unit = models.ForeignKey(Mesure_Unit, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Quote_Project_Materiaux(models.Model):
+    quantity = models.DecimalField(max_digits=19, decimal_places=5, default="")
+    materiaux = models.ForeignKey(Materiaux, on_delete=models.CASCADE, default="")
+    quote_project_ouvrage = models.ForeignKey(Quote_Project_Ouvrage, on_delete=models.CASCADE)
+# ###################################### End Automatic quote ##################################################
+# ###################################### End Automatic quote ##################################################

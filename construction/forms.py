@@ -1,5 +1,5 @@
 from django import forms
-from construction.models import Construction_Project, Construction_floor
+from construction.models import Construction_Project, Construction_floor, Country, Quote_Project
 
 
 class Construction_Project_Form(forms.ModelForm):
@@ -19,4 +19,12 @@ class Construction_floor_Form(forms.ModelForm):
             'floor_level', 'aditionnal_info', 'number_bedroom_with_bathroom', 'number_bedroom_without_bathroom',
             'number_shared_bathroom', 'garage', 'number_living_room', 'number_kitchen', 'closette', 'terace',
             'balcony'
+        ]
+
+
+class Devis_Form(forms.ModelForm):
+    class Meta:
+        model = Quote_Project
+        fields = [
+            'full_name', 'email', 'area', 'level', 'country'
         ]

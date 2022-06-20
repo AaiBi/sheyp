@@ -1,0 +1,2081 @@
+{% extends 'base_app/base.html' %}
+
+{% block title %} Résultat Devis Automatique {% endblock %}
+
+{% load static %}
+
+{% block css_styles %}
+
+{% endblock %}
+
+{% block content %}
+
+    <!-- Page content-->
+    <div class="container py-5 py-sm-6 py-md-7">
+        <div class="row justify-content-center pt-4">
+
+            {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" id="alert1" role="alert">
+                    {{ error }}
+                </div>
+            {% else %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {{message.tags}} alert-dismissible fade show" id="alert2" role="alert">
+                            {{message}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}</br>
+
+            <div class="col-lg-12">
+                <h1 class="h2 pb-3 text-center">
+                    Premier système automatique et 100% gratuit de calcul de devis de construction en Afrique.
+                </h1>
+                <hr>
+                <h3 class="text-danger text-center">
+                    Devis automatique pour une maison
+                    {% if quote_project.level == 1 %}
+                        rez-de-chaussée
+                    {% else %}
+                        de {{house_level}} étage(s)
+                    {% endif %}
+                    de {{quote_project.area}}m2 de surface.
+                </h3>
+                </br></br>
+
+                <div class="accordion" id="faq">
+
+                    <div class="accordion-item shadow">
+                        <h3 class="accordion-header" id="faq-heading-1">
+                            <button class="accordion-button bg-secondary text-center" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1" aria-expanded="true" aria-controls="faq-content-1">
+                                <h3>Fondation</h3>
+                            </button>
+                        </h3>
+                        <div class="accordion-collapse collapse" id="faq-content-1" aria-labelledby="faq-heading-1" data-bs-parent="#faq">
+                            <div class="accordion-body">
+
+                                <div class="table-responsive-lg border-0">
+                                    <table class="table table-striped align-middle table-bordered">
+                                        <!-- Table head -->
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="border-0 rounded-start">Ouvrage</th>
+                                                {% for materiel in materiaux %}
+                                                    <th scope="col" class="border-0">
+                                                        {{materiel.name}}({{materiel.mesure_unit.name}})
+                                                    </th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+
+                                        <!-- Table body START -->
+                                        <tbody>
+                                            <!-- Mur de soubassement -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{mur_soubassement.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{mur_soubassement_quantity}}
+                                                                    ({{mur_soubassement.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% for data in quote_project_materiaux_fondation_mur_soubassement %}
+                                                    {% if data.materiaux.name == "Ciment" %}
+                                                        {% if mur_soubassement_ciment_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{mur_soubassement_ciment_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Sable" %}
+                                                        {% if mur_soubassement_sable_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{mur_soubassement_sable_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Gravier" %}
+                                                        {% if mur_soubassement_gravier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{mur_soubassement_gravier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Eau" %}
+                                                        {% if mur_soubassement_eau_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{mur_soubassement_eau_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Acier" %}
+                                                        {% if mur_soubassement_acier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start bg-success">
+                                                                <b>{{mur_soubassement_acier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                            <!-- End Mur de soubassement -->
+
+                                            <!-- Béton de propreté -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{beton_proprete.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{beton_proprete_quantity}}
+                                                                    ({{beton_proprete.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% for data in quote_project_materiaux_fondation_beton_proprete %}
+                                                    {% if data.materiaux.name == "Ciment" %}
+                                                        {% if beton_proprete_ciment_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{beton_proprete_ciment_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Sable" %}
+                                                        {% if beton_proprete_sable_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{beton_proprete_sable_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Gravier" %}
+                                                        {% if beton_proprete_gravier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{beton_proprete_gravier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Eau" %}
+                                                        {% if beton_proprete_eau_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{beton_proprete_eau_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Acier" %}
+                                                        {% if beton_proprete_acier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{beton_proprete_acier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                            <!-- End Béton de propreté -->
+
+                                            <!-- Semelles -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{semelles.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{semelles_quantity}}
+                                                                    ({{semelles.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% for data in quote_project_materiaux_fondation_semelles %}
+                                                    {% if data.materiaux.name == "Ciment" %}
+                                                        {% if semelles_ciment_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{semelles_ciment_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Sable" %}
+                                                        {% if semelles_sable_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{semelles_sable_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Gravier" %}
+                                                        {% if semelles_gravier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{semelles_gravier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Eau" %}
+                                                        {% if semelles_eau_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{semelles_eau_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Acier" %}
+                                                        {% if semelles_acier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{semelles_acier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                            <!-- End Semelles -->
+
+                                            <!-- Amorces poteaux -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{amorces_poteaux.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{amorces_poteaux_quantity}}
+                                                                    ({{amorces_poteaux.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% for data in quote_project_materiaux_fondation_amorces_poteaux %}
+                                                    {% if data.materiaux.name == "Ciment" %}
+                                                        {% if amorces_poteaux_ciment_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{amorces_poteaux_ciment_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Sable" %}
+                                                        {% if amorces_poteaux_sable_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{amorces_poteaux_sable_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Gravier" %}
+                                                        {% if amorces_poteaux_gravier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{amorces_poteaux_gravier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Eau" %}
+                                                        {% if amorces_poteaux_eau_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{amorces_poteaux_eau_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Acier" %}
+                                                        {% if amorces_poteaux_acier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{amorces_poteaux_acier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                            <!-- End Amorces poteaux -->
+
+                                            <!-- Longrines -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{longrines.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{longrines_quantity}}
+                                                                    ({{longrines.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% for data in quote_project_materiaux_fondation_longrines %}
+                                                    {% if data.materiaux.name == "Ciment" %}
+                                                        {% if longrines_ciment_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{longrines_ciment_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Sable" %}
+                                                        {% if longrines_sable_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{longrines_sable_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Gravier" %}
+                                                        {% if longrines_gravier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{longrines_gravier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Eau" %}
+                                                        {% if longrines_eau_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{longrines_eau_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Acier" %}
+                                                        {% if longrines_acier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{longrines_acier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                            <!-- End Longrines -->
+
+                                            <!-- Remblais -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{remblais.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{remblais_quantity}}
+                                                                    ({{remblais.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% for data in quote_project_materiaux_fondation_remblais %}
+                                                    {% if data.materiaux.name == "Ciment" %}
+                                                        {% if remblais_ciment_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{remblais_ciment_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Sable" %}
+                                                        {% if remblais_sable_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{remblais_sable_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Gravier" %}
+                                                        {% if remblais_gravier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{remblais_gravier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Eau" %}
+                                                        {% if remblais_eau_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{remblais_eau_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% elif data.materiaux.name == "Acier" %}
+                                                        {% if remblais_acier_quantity == 0 %}
+                                                            <td class="text-center text-sm-start bg-danger"></td>
+                                                        {% else %}
+                                                            <td class="text-center text-sm-start">
+                                                                <b>{{remblais_acier_quantity}}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                            <!-- End Remblais -->
+
+                                            <!-- Total -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-secondary">
+                                                    <div class="" align="center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                Total
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_ciment}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start bg-secondary">
+                                                    <center><h5>{{total_quantity_sable}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_gravier}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start bg-secondary">
+                                                    <center><h5>{{total_quantity_eau}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_acier}}</h5></center>
+                                                </td>
+                                            </tr>
+                                            <!-- End Total -->
+                                        </tbody>
+                                        <!-- Table body END -->
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item shadow">
+                        <h3 class="accordion-header" id="faq-heading-2">
+                            <button class="accordion-button bg-secondary text-center" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-2" aria-expanded="true" aria-controls="faq-content-2">
+                                <h3>
+                                    Élévation
+                                    {% if quote_project.level == 1 %}
+                                        rez-de-chaussée
+                                    {% else %}
+                                        pour {{house_level}} étage(s)
+                                    {% endif %}
+                                </h3>
+                            </button>
+                        </h3>
+                        <div class="accordion-collapse collapse" id="faq-content-2" aria-labelledby="faq-heading-2" data-bs-parent="#faq">
+                            <div class="accordion-body">
+
+                                <div class="table-responsive-lg border-0">
+                                    <table class="table table-striped align-middle table-bordered">
+                                        <!-- Table head -->
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="border-0 rounded-start">Ouvrage</th>
+                                                {% for materiel in materiaux %}
+                                                    <th scope="col" class="border-0">
+                                                        {{materiel.name}}({{materiel.mesure_unit.name}})
+                                                    </th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+
+                                        <!-- Table body START -->
+                                        <tbody>
+                                            <!-- Maconnerie -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{maconnerie.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{maconnerie_quantity}}
+                                                                    ({{maconnerie.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if maconnerie_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{maconnerie_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if maconnerie_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{maconnerie_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if maconnerie_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{maconnerie_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if maconnerie_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{maconnerie_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if maconnerie_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start bg-success">
+                                                        <b>{{maconnerie_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Maconnerie -->
+
+                                            <!-- Linteaux -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{linteaux.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{linteaux_quantity}}
+                                                                    ({{linteaux.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if linteaux_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{linteaux_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if linteaux_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{linteaux_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if linteaux_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{linteaux_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if linteaux_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{linteaux_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if linteaux_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{linteaux_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Linteaux -->
+
+                                            <!-- poutre -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{poutre.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{poutre_quantity}}
+                                                                    ({{poutre.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if poutre_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poutre_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poutre_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poutre_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poutre_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poutre_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poutre_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poutre_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poutre_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poutre_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                            </tr>
+                                            <!-- End poutre -->
+
+                                            <!-- Coulage -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{coulage.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{coulage_quantity}}
+                                                                    ({{coulage.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if coulage_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if coulage_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if coulage_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if coulage_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if coulage_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Coulage -->
+
+                                            <!-- Mortier -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{mortier.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{mortier_quantity}}
+                                                                    ({{mortier.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if mortier_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if mortier_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if mortier_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if mortier_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if mortier_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Mortier -->
+
+                                            <!-- Enduits Interieur -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{enduits_interieur.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{enduits_interieur_quantity}}
+                                                                    ({{enduits_interieur.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if enduits_interieur_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_interieur_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_interieur_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_interieur_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_interieur_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Enduits Interieur -->
+
+                                            <!-- Enduits sous plafond -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{enduits_sous_plafond.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{enduits_sous_plafond_quantity}}
+                                                                    ({{enduits_sous_plafond.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if enduits_sous_plafond_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_sous_plafond_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_sous_plafond_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_sous_plafond_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_sous_plafond_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Enduits sous plafond -->
+
+                                            <!-- Enduits Exterieur -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{enduits_exterieur.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{enduits_exterieur_quantity}}
+                                                                    ({{enduits_exterieur.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if enduits_exterieur_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_exterieur_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_exterieur_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_exterieur_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_exterieur_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Enduits Exterieur -->
+
+                                            <!-- Poteaux -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{poteaux.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{poteaux_quantity}}
+                                                                    ({{poteaux.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if poteaux_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poteaux_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poteaux_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poteaux_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poteaux_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Poteaux -->
+
+                                            <!-- Escalier -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{escalier.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{escalier_quantity}}
+                                                                    ({{escalier.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if escalier_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{escalier_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if escalier_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{escalier_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if escalier_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{escalier_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if escalier_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{escalier_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if escalier_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{escalier_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Escalier -->
+
+                                            <!-- Dallage sol -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{dallage_sol.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{dallage_sol_quantity}}
+                                                                    ({{dallage_sol.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if dallage_sol_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{dallage_sol_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if dallage_sol_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{dallage_sol_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if dallage_sol_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{dallage_sol_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if dallage_sol_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{dallage_sol_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if dallage_sol_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{dallage_sol_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Dallage sol -->
+
+                                            <!-- Fosse sceptique -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{fosse_sceptique.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{fosse_sceptique_quantity}}
+                                                                    ({{fosse_sceptique.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if fosse_sceptique_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{fosse_sceptique_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if fosse_sceptique_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{fosse_sceptique_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if fosse_sceptique_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{fosse_sceptique_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if fosse_sceptique_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{fosse_sceptique_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if fosse_sceptique_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{fosse_sceptique_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Fosse sceptique -->
+
+                                            <!-- Total -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-secondary">
+                                                    <div class="" align="center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                Total
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_ciment_elevation}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start bg-secondary">
+                                                    <center><h5>{{total_quantity_sable_elevation}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_gravier_elevation}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start bg-secondary">
+                                                    <center><h5>{{total_quantity_eau_elevation}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_acier_elevation}}</h5></center>
+                                                </td>
+                                            </tr>
+                                            <!-- End Total -->
+                                        </tbody>
+                                        <!-- Table body END -->
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item shadow">
+                        <h3 class="accordion-header" id="faq-heading-3">
+                            <button class="accordion-button bg-secondary text-center" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-3" aria-expanded="true" aria-controls="faq-content-3">
+                                <h3>Terrasse</h3>
+                            </button>
+                        </h3>
+                        <div class="accordion-collapse collapse" id="faq-content-3" aria-labelledby="faq-heading-3" data-bs-parent="#faq">
+                            <div class="accordion-body">
+
+                                <div class="table-responsive-lg border-0">
+                                    <table class="table table-striped align-middle table-bordered">
+                                        <!-- Table head -->
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="border-0 rounded-start">Ouvrage</th>
+                                                {% for materiel in materiaux %}
+                                                    <th scope="col" class="border-0">
+                                                        {{materiel.name}}({{materiel.mesure_unit.name}})
+                                                    </th>
+                                                {% endfor %}
+                                            </tr>
+                                        </thead>
+
+                                        <!-- Table body START -->
+                                        <tbody>
+                                            <!-- Maconnerie -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{maconnerie.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{maconnerie_quantity}}
+                                                                    ({{maconnerie.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if maconnerie_terrasse_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{maconnerie_terrasse_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if maconnerie_terrasse_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{maconnerie_terrasse_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if maconnerie_terrasse_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{maconnerie_terrasse_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if maconnerie_terrasse_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{maconnerie_terrasse_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if maconnerie_terrasse_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start bg-success">
+                                                        <b>{{maconnerie_terrasse_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Maconnerie -->
+
+                                            <!-- Coulage cage escalier -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{coulage_cage_escalier_terrasse.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{coulage_cage_escalier_terrasse_quantity}}
+                                                                    ({{coulage_cage_escalier_terrasse.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if coulage_cage_escalier_terrasse_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_cage_escalier_terrasse_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if coulage_cage_escalier_terrasse_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_cage_escalier_terrasse_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if coulage_cage_escalier_terrasse_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_cage_escalier_terrasse_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if coulage_cage_escalier_terrasse_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_cage_escalier_terrasse_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if coulage_cage_escalier_terrasse_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{coulage_cage_escalier_terrasse_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Coulage cage escalier -->
+
+                                            <!-- Mortier -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{mortier_terrasse.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{mortier_terrasse_quantity}}
+                                                                    ({{mortier_terrasse.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if mortier_terrasse_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_terrasse_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if mortier_terrasse_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_terrasse_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if mortier_terrasse_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_terrasse_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if mortier_terrasse_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_terrasse_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if mortier_terrasse_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{mortier_terrasse_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Mortier -->
+
+                                            <!-- Enduits Interieur -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{enduits_interieur_terrasse.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{enduits_interieur_terrasse_quantity}}
+                                                                    ({{enduits_interieur_terrasse.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if enduits_interieur_terrasse_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_terrasse_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_interieur_terrasse_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_terrasse_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_interieur_terrasse_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_terrasse_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_interieur_terrasse_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_terrasse_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_interieur_terrasse_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_interieur_terrasse_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Enduits Interieur -->
+
+                                            <!-- Enduits sous plafond -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{enduits_sous_plafond_terrasse.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{enduits_sous_plafond_terrasse_quantity}}
+                                                                    ({{enduits_sous_plafond_terrasse.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if enduits_sous_plafond_terrasse_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_terrasse_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_sous_plafond_terrasse_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_terrasse_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_sous_plafond_terrasse_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_terrasse_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_sous_plafond_terrasse_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_terrasse_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_sous_plafond_terrasse_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_sous_plafond_terrasse_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Enduits sous plafond -->
+
+                                            <!-- Enduits Exterieur -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{enduits_exterieur_terrasse.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{enduits_exterieur_terrasse_quantity}}
+                                                                    ({{enduits_exterieur_terrasse.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if enduits_exterieur_terrasse_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_terrasse_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_exterieur_terrasse_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_terrasse_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_exterieur_terrasse_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_terrasse_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_exterieur_terrasse_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_terrasse_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if enduits_exterieur_terrasse_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{enduits_exterieur_terrasse_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Enduits Exterieur -->
+
+                                            <!-- Poteaux -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-success">
+                                                    <div class="d-flex align-items-center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                {{poteaux_terrasse.name}}
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+                                                                <p class="h6 mb-0 me-3">
+                                                                    <b>{{poteaux_terrasse_quantity}}
+                                                                    ({{poteaux_terrasse.mesure_unit.name}}
+                                                                        )</b>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- Enrolled item -->
+                                                {% if poteaux_terrasse_ciment_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_terrasse_ciment_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poteaux_terrasse_sable_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_terrasse_sable_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poteaux_terrasse_gravier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_terrasse_gravier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poteaux_terrasse_eau_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_terrasse_eau_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+
+                                                {% if poteaux_terrasse_acier_quantity == 0 %}
+                                                    <td class="text-center text-sm-start bg-danger"></td>
+                                                {% else %}
+                                                    <td class="text-center text-sm-start">
+                                                        <b>{{poteaux_terrasse_acier_quantity}}</b>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                            <!-- End Poteaux -->
+
+                                            <!-- Total -->
+                                            <tr>
+                                                <!-- Table item -->
+                                                <td class="bg-secondary">
+                                                    <div class="" align="center">
+                                                        <!-- Image -->
+                                                        <div class="w-100px">
+
+                                                        </div>
+                                                        <div class="mb-0 ms-2">
+                                                            <!-- Title -->
+                                                            <h5>
+                                                                Total
+                                                            </h5>
+                                                            <!-- Info -->
+                                                            <div class="d-sm-flex">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_ciment_terrasse}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start bg-secondary">
+                                                    <center><h5>{{total_quantity_sable_terrasse}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_gravier_terrasse}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start bg-secondary">
+                                                    <center><h5>{{total_quantity_eau_terrasse}}</h5></center>
+                                                </td>
+                                                <td class="text-center text-sm-start">
+                                                    <center><h5>{{total_quantity_acier_terrasse}}</h5></center>
+                                                </td>
+                                            </tr>
+                                            <!-- End Total -->
+                                        </tbody>
+                                        <!-- Table body END -->
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border rounded-3">
+                        <!-- Card header START -->
+                        <div class="card-header border-bottom text-center">
+                            <h3 class="mb-0">Récapitulatif</h3>
+                            <span class="text-warning">Important: Les chiffres ont été arrondis</span>
+                        </div>
+                        <!-- Card header END -->
+
+                        <!-- Card body START -->
+                        <div class="card-body">
+                            Pour la construction d'une maison
+                            {% if quote_project.level == 1 %}
+                                <b>rez-de-chaussée</b>
+                            {% else %}
+                                de <b>{{house_level}} étage(s)</b>
+                            {% endif %}
+                            de <b>{{quote_project.area}}m2</b> il vous faudra:
+                            <ul>
+                                <li>
+                                    Fondation: <b>{{total_quantity_ciment_int}} Tonnes de ciment</b>,
+                                    <b>{{total_quantity_sable_int}} m3(mètre cube) de Sable</b>,
+                                    <b>{{total_quantity_gravier_int}} m3(mètre cube) de Gravier</b> et
+                                    <b>{{total_quantity_acier_int}} Tonnes d'Acier</b>.
+                                </li>
+                                <li>
+                                    Élévation: <b>{{total_quantity_ciment_elevation_int}} Tonnes de ciment</b>,
+                                    <b>{{total_quantity_sable_elevation_int}} m3(mètre cube) de Sable</b>,
+                                    <b>{{total_quantity_gravier_elevation_int}} m3(mètre cube) de Gravier</b> et
+                                    <b>{{total_quantity_acier_elevation_int}} Tonnes d'Acier</b>.
+                                </li>
+                                <li>
+                                    Terrasse: <b>{{total_quantity_ciment_terrasse_int}} Tonnes de ciment</b>,
+                                    <b>{{total_quantity_sable_terrasse_int}} m3(mètre cube) de Sable</b>,
+                                    <b>{{total_quantity_gravier_terrasse_int}} m3(mètre cube) de Gravier</b> et
+                                    <b>{{total_quantity_acier_terrasse_int}} Tonnes d'Acier</b>.
+                                </li>
+                                <li class="text-danger">
+                                    Total: <b>{{total_quantity_ciment_house}} Tonnes de ciment</b>,
+                                    <b>{{total_quantity_sable_house}} m3(mètre cube) de Sable</b>,
+                                    <b>{{total_quantity_gravier_house}} m3(mètre cube) de Gravier</b> et
+                                    <b>{{total_quantity_acier_house}} Tonnes d'Acier</b>.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div></br></br></br></br></br></br></br></br></br></br>
+
+{% endblock %}
+
+{% block footer %}
+    <footer class="footer bg-dark pt-5 pt-md-6 pt-lg-7">
+      <div class="container pt-3 pt-md-0">
+        <div class="pb-md-4 text-center">
+          <h3 class="text-light fw-light mb-3">Still not convinced?</h3>
+          <h2 class="text-light mb-5">Add premium support and lifetime updates to this.</h2><a class="btn btn-primary" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener"><i class="ai-shopping-cart fs-lg me-2"></i>Buy Around</a>
+        </div>
+        <hr class="hr-light my-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 col-md-7 pb-md-4 text-center">
+            <h4 class="text-light mb-grid-gutter">Subscribe to Newsletter</h4>
+            <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+              <div class="input-group flex-nowrap"><i class="ai-mail position-absolute top-50 start-0 translate-middle-y text-muted ms-3"></i>
+                <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="Your email">
+                <button class="btn btn-primary" type="submit" name="subscribe">Subscribe*</button>
+              </div>
+              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+              <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
+              </div>
+              <div class="form-text text-light opacity-50">*Subscribe to our newsletter to receive early discount offers and new templates info.</div>
+              <div class="subscription-status"></div>
+            </form>
+          </div>
+        </div>
+        <hr class="hr-light my-5">
+        <p class="fs-sm text-center mb-0 pb-5"><span class="text-light opacity-50 me-1">© All rights reserved. Made by</span><a class="nav-link-style nav-link-light" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a></p>
+      </div>
+    </footer>
+{% endblock %}

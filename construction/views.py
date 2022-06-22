@@ -147,6 +147,8 @@ def automatic_quote_result(request, quote_pk):
     quote_project = get_object_or_404(Quote_Project, pk=quote_pk)
     if quote_project.level > 1:
         house_level = quote_project.level - 1
+    else:
+        house_level = quote_project.level
     countries = Country.objects.all()
     mesure_units = Mesure_Unit.objects.all()
     materiaux = Materiaux.objects.all()

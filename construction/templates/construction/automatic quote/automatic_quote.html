@@ -10,15 +10,18 @@
 
 {% block content %}
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
     <!-- Page content-->
     <div class="container py-5 py-sm-6 py-md-7">
         <div class="row justify-content-center pt-4">
 
-            <div class="col-lg-10" align="center">
-                <h1 class="h2 pb-3">
-                    Premier système automatique et 100% gratuit de calcul de devis de construction en Afrique.
+            <div class="col-lg-10">
+                <h1 class="h2 pb-3" align="center">
+                    Premier système automatique et 100% gratuit de calcul estimatif de devis de construction en Afrique.
                 </h1>
-                <p class="fs-sm">
+                <p class="fs-sm" align="center">
                     Nous innovons sans cesse pour vous apporter le meilleur service de qualité possible !
                 </p>
                 </br></br>
@@ -37,6 +40,29 @@
                             {% endfor %}
                         {% endif %}
                     {% endif %}</br>
+
+                    <div id="myModal" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content card">
+                                <div class="modal-header card-header">
+                                    <h2 class="modal-title">Important</h2>
+                                </div>
+                                <div class="modal-body card-body">
+                                    <h5 class="text-warning">
+                                        Le résultat que vous allez obtenir n'est qu'une estimation dont le but est de
+                                        vous donner une idée sur les quantités de Ciment, Sable, Gravier et Acier pour
+                                        chacun des Ouvrages d'un projet de construction. </br>
+                                        Nous avons créé ce système en prenant comme référence une surface de 3,5m2.</br>
+                                        Il faut savoir que plus le nombre de pièces est élevés, plus la quantité des
+                                        matériaux va augmenter. Donc si vous voulez un devis sur mesure, vous
+                                        pouvez nous contacter par e-mail ou téléphone
+                                        (contact disponible dans la page contact).
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <form class="needs-validation p-2 row" method="POST">
                         {% csrf_token %}
@@ -110,35 +136,15 @@
         </div>
     </div></br></br></br></br></br></br></br></br></br></br>
 
-{% endblock %}
+    <script type="text/javascript">
+    $(window).load(function(){
+        setTimeout(function(){
+           $('#myModal').modal('show');
+        }, 1000);
+        setTimeout(function(){
+           $('#myModal').modal('hide');
+        }, 20000);
+    });
+</script>
 
-{% block footer %}
-    <footer class="footer bg-dark pt-5 pt-md-6 pt-lg-7">
-      <div class="container pt-3 pt-md-0">
-        <div class="pb-md-4 text-center">
-          <h3 class="text-light fw-light mb-3">Still not convinced?</h3>
-          <h2 class="text-light mb-5">Add premium support and lifetime updates to this.</h2><a class="btn btn-primary" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener"><i class="ai-shopping-cart fs-lg me-2"></i>Buy Around</a>
-        </div>
-        <hr class="hr-light my-5">
-        <div class="row justify-content-center">
-          <div class="col-lg-6 col-md-7 pb-md-4 text-center">
-            <h4 class="text-light mb-grid-gutter">Subscribe to Newsletter</h4>
-            <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-              <div class="input-group flex-nowrap"><i class="ai-mail position-absolute top-50 start-0 translate-middle-y text-muted ms-3"></i>
-                <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="Your email">
-                <button class="btn btn-primary" type="submit" name="subscribe">Subscribe*</button>
-              </div>
-              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-              <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
-              </div>
-              <div class="form-text text-light opacity-50">*Subscribe to our newsletter to receive early discount offers and new templates info.</div>
-              <div class="subscription-status"></div>
-            </form>
-          </div>
-        </div>
-        <hr class="hr-light my-5">
-        <p class="fs-sm text-center mb-0 pb-5"><span class="text-light opacity-50 me-1">© All rights reserved. Made by</span><a class="nav-link-style nav-link-light" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a></p>
-      </div>
-    </footer>
 {% endblock %}

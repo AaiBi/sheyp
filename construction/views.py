@@ -132,8 +132,6 @@ def automatic_quote(request):
             else:
                 devis_form.country = get_object_or_404(Country, id=request.POST.get('country'))
                 devis_form.save()
-
-                messages.success(request, 'Excellent !')
                 return redirect('automatic_quote_result', quote_pk=devis_form.id)
         else:
             messages.error(request, 'Le formulaire est invalide, mauvaises données saisies !')

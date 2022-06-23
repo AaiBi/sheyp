@@ -2,8 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
-from real_estate.models import Lands, Land_Project
-from user.models import Customer, Land_Projet_Tracker_Offer, Property_Projet_Tracker_Offer
+from user.models import Customer
 
 
 class SignUpForm(forms.ModelForm):
@@ -87,37 +86,3 @@ class EditUserPasswordForm(PasswordChangeForm):
     def clean(self):
         cleaned_data = super(EditUserPasswordForm, self).clean()
         password = cleaned_data.get('password')
-
-
-class Land_Form(forms.ModelForm):
-    class Meta:
-        model = Lands
-        fields = [
-            'region', 'adress', 'area', 'additional_info', 'price', 'minimum_price', 'maximum_price'
-        ]
-
-
-class Land_Project_Form(forms.ModelForm):
-    class Meta:
-        model = Land_Project
-        fields = [
-            'real_estate_project_type', 'land_type', 'service_type'
-        ]
-
-
-class Land_Projet_Tracker_Offer_Form(forms.ModelForm):
-    class Meta:
-        model = Land_Projet_Tracker_Offer
-        fields = [
-            'full_name', 'phone_number', 'amount', 'additional_info', 'land_region', 'land_adress', 'land_area',
-            'land_price', 'land_plan_situation_id', 'land_paper_type_id', 'user_id', 'accepted'
-        ]
-
-
-class Property_Projet_Tracker_Offer_Form(forms.ModelForm):
-    class Meta:
-        model = Property_Projet_Tracker_Offer
-        fields = [
-            'full_name', 'phone_number', 'amount', 'additional_info', 'property_region', 'property_adress', 'property_area',
-            'property_price', 'property_type_id', 'user_id', 'accepted'
-        ]

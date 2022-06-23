@@ -4,6 +4,7 @@ from django.contrib import messages
 from base_app.forms import Notation_System_Form
 from base_app.models import contact_message, Notation_System
 
+
 def index(request):
     reviews = Notation_System.objects.all()
     if request.method == 'GET':
@@ -21,9 +22,7 @@ def index(request):
             else:
                 messages.error(request, 'Le nombre doit être compris entre 1 et 5 ! ')
         except ValueError:
-            return render(request, 'base_app/index.html', {'notation_system_form': notation_system_form, 'reviews': reviews,
-                                                              'error': 'Mauvaises données saisies !'})
-    #return render(request, 'base_app/index.html', {'reviews': reviews})
+            return render(request, 'base_app/index.html', {'reviews': reviews, 'error': 'Mauvaises données saisies !'})
 
 
 def contact_page(request):

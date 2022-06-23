@@ -146,7 +146,7 @@
                     <div class="d-flex align-items-center order-lg-3 ms-lg-auto">
                         {%if user.is_authenticated %}
                             <div class="navbar-tool me-2">
-                                <a class="navbar-tool-icon-box" href="{% url 'cart' %}">
+                                <a class="navbar-tool-icon-box" href="">
                                     <i class="ai-shopping-cart" style="color: #d4ac0d;"></i>
                                 </a>
                             </div>
@@ -234,9 +234,21 @@
                             <div class="widget">
                                 <h4 class="widget-title text-white">Services</h4>
                                 <ul>
-                                    <li><a class="widget-link text-white" href="{% url 'construction' %}">Construction</a></li>
-                                    <li><a class="widget-link text-white" href="real_estate">Immobilier</a></li>
-                                    <li><a class="widget-link text-white" href="#">Gestion d'Investissements</a></li>
+                                    <li>
+                                        <a class="widget-link text-white" href="{% url 'construction' %}">
+                                            Construction
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="widget-link text-white" href="{% url 'real_estate' %}">
+                                            Immobilier
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="widget-link text-white" href="{% url 'investment' %}">
+                                            Gestion d'Investissements
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

@@ -33,69 +33,91 @@
         {% endif %}
 
         <!-- Content-->
-        <div class="container pt-3 pb-4 pt-lg-0">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mt-lg-n7 pb-5 mb-sm-3 mb-lg-0 pb-lg-0 text-center text-lg-start">
-                    <h1 class="display-4">La Construction c'est de l'art</h1>
-                    <p class="pb-2">Nous donnons vies à vos projets les plus fous</p>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <a type="button" class="btn btn-outline-primary" href="{% url 'construction_part1' %}">
-                            <i class="fas fa-plus"></i>Commencer mon projet
-                        </a>
-<!--                        <button type="submit" class="btn btn-outline-primary" name="construction_project_submit" value="construction_project_submit">-->
-<!--                            <i class="fas fa-plus"></i>Construire ma maison-->
-<!--                        </button>-->
-                    </form>
-                </div>
-                <div class="col-lg-7">
-                    <div class="parallax mx-auto" style="max-width: 705px;">
-                        <div class="parallax-layer position-relative" data-depth="0.1">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer01.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.35">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer02.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.2">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer03.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.5">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer04.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.6">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer05.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.4">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer06.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.25">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer07.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.35">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer08.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.6">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer09.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.45">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer10.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.7">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer11.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.3">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer12.svg' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.15">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer13.png' %}" alt="Layer">
-                        </div>
-                        <div class="parallax-layer" data-depth="0.9">
-                            <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer14.svg' %}" alt="Layer">
+        <div class="bg-secondary">
+            <div class="container-fluid">
+                <div class="row g-4 g-lg-5 align-items-center">
+                    <div class="col-xl-7 order-2 order-xl-1">
+                        <div class="row mt-0 mt-xl-5">
+                            <!-- Review -->
+                            <div class="col-md-12 position-relative">
+                                <div class="shadow bg-light text-center p-4 rounded-3 position-relative mb-5 mb-md-0">
+                                    <h1 class="display-4">La Construction c'est de l'art</h1>
+                                    <p class="pb-2">Nous donnons vies à vos projets les plus fous</p>
+
+                                    <a type="button" class="btn btn-outline-primary" href="{% url 'construction_part1' %}">
+                                        <i class="fas fa-plus"></i>Commencer mon projet
+                                    </a>
+
+                                    <a type="button" class="btn btn-outline-dark" href="">
+                                        <i class="fas fa-plus"></i>Obtenir un devis estimatif automatique
+                                    </a>
+                                </div>
+                            </div>
+                        </div> <!-- Row END -->
+
+                        <div class="row mt-5 mt-xl-0">
+                            <!-- Review -->
+                            <div class="col-md-12 mt-n6 mb-0 mb-md-5">
+                                <div class=" text-center p-4 rounded-3" style="margin-top: 90px;">
+                                    <h6 class="display-6">
+                                        Historique de l'évolution du prix de la tonne de ciment au Sénégal.
+                                    </h6>
+                                    <!-- Apex chart -->
+							        <div id="chart"></div>
+                                </div>
+                            </div>
+                        </div> <!-- Row END -->
+                    </div>
+                    <div class="col-xl-5 order-1 text-center text-xl-start">
+                        <div class="parallax mx-auto" style="max-width: 705px;">
+                            <div class="parallax-layer position-relative" data-depth="0.1">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer01.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.35">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer02.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.2">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer03.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.5">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer04.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.6">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer05.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.4">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer06.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.25">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer07.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.35">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer08.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.6">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer09.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.45">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer10.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.7">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer11.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.3">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer12.svg' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.15">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer13.png' %}" alt="Layer">
+                            </div>
+                            <div class="parallax-layer" data-depth="0.9">
+                                <img src="{% static 'base_app/img/demo/creative-agency/parallax/layer14.svg' %}" alt="Layer">
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div> <!-- Row END -->
             </div>
-        </div>
+        </div></br></br>
+
     </section>
 
     <!-- About-->
@@ -690,35 +712,5 @@
             </ul>
         </div>
     </section>
-{% endblock %}
 
-{% block footer %}
-    <footer class="footer bg-dark pt-5 pt-md-6 pt-lg-7">
-      <div class="container pt-3 pt-md-0">
-        <div class="pb-md-4 text-center">
-          <h3 class="text-light fw-light mb-3">Still not convinced?</h3>
-          <h2 class="text-light mb-5">Add premium support and lifetime updates to this.</h2><a class="btn btn-primary" href="https://themes.getbootstrap.com/product/around-multipurpose-template-ui-kit/" target="_blank" rel="noopener"><i class="ai-shopping-cart fs-lg me-2"></i>Buy Around</a>
-        </div>
-        <hr class="hr-light my-5">
-        <div class="row justify-content-center">
-          <div class="col-lg-6 col-md-7 pb-md-4 text-center">
-            <h4 class="text-light mb-grid-gutter">Subscribe to Newsletter</h4>
-            <form class="subscription-form validate" action="https://studio.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=29ca296126" method="post" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-              <div class="input-group flex-nowrap"><i class="ai-mail position-absolute top-50 start-0 translate-middle-y text-muted ms-3"></i>
-                <input class="form-control rounded-start" type="email" name="EMAIL" placeholder="Your email">
-                <button class="btn btn-primary" type="submit" name="subscribe">Subscribe*</button>
-              </div>
-              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-              <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                <input class="subscription-form-antispam" type="text" name="b_c7103e2c981361a6639545bd5_29ca296126" tabindex="-1">
-              </div>
-              <div class="form-text text-light opacity-50">*Subscribe to our newsletter to receive early discount offers and new templates info.</div>
-              <div class="subscription-status"></div>
-            </form>
-          </div>
-        </div>
-        <hr class="hr-light my-5">
-        <p class="fs-sm text-center mb-0 pb-5"><span class="text-light opacity-50 me-1">© All rights reserved. Made by</span><a class="nav-link-style nav-link-light" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a></p>
-      </div>
-    </footer>
 {% endblock %}

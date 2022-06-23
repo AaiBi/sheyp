@@ -18,6 +18,7 @@
 <!--        <link rel="mask-icon" color="#5bbad5" href="{% static 'base_app/safari-pinned-tab.svg' %}">-->
         <meta name="msapplication-TileColor" content="#766df4">
         <meta name="theme-color" content="#ffffff">
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <!-- Page loading styles-->
         <style>
             .page-loading {
@@ -85,6 +86,13 @@
                     transform: rotate(360deg);
                 }
             }
+
+            @import url(https://fonts.googleapis.com/css?family=Roboto);
+
+            #chart {
+              width: 70%;
+              margin: 35px auto;
+            }
         </style>
         {% block css_styles %} {% endblock %}
         <style>
@@ -140,17 +148,6 @@
                             <div class="navbar-tool me-2">
                                 <a class="navbar-tool-icon-box" href="{% url 'cart' %}">
                                     <i class="ai-shopping-cart" style="color: #d4ac0d;"></i>
-<!--                                    {% if cart_count %}-->
-<!--                                        {% for cart in cart_count %}-->
-<!--                                            {% if cart.user_id == user.id %}-->
-<!--                                                <span class="navbar-tool-badge">{{cart.count}}</span>-->
-<!--                                            {% else %}-->
-<!--                                                <span class="navbar-tool-badge">0</span>-->
-<!--                                            {%endif%}-->
-<!--                                        {%endfor%}-->
-<!--                                    {% else %}-->
-<!--                                            <span class="navbar-tool-badge">0</span>-->
-<!--                                    {%endif%}-->
                                 </a>
                             </div>
                         {% else %}
@@ -320,6 +317,9 @@
 
         <!-- Main theme script-->
         <script src="{% static 'base_app/js/theme.min.js' %}"></script>
+
+        <!-- Template Functions -->
+
         <script>
             var alert1 = document.getElementById("alert1");
             var alert2 = document.getElementById("alert2");
@@ -331,11 +331,26 @@
             }, 15000);
             // Timeout is 15 sec, you can change it
 
+            var options = {
+            chart: {
+                    type: 'bar'
+                },
+                series: [{
+                    name: 'Prix',
+                    data: [49000,52680,56144,60000,65000,68000]
+                }],
+                xaxis: {
+                    categories: [1999,2002,2010,2018,2019,2022]
+                },
+                fill: {
+                    colors: ['#d4ac0d']
+                }
+            }
 
-            $(document).ready(function(){
-                $("#myModal").modal('show');
-            });
 
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+            chart.render();
         </script>
         {% block js %} {% endblock %}
   </body>
